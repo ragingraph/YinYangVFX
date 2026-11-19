@@ -37,6 +37,23 @@ Package Manager 裡選 `YinYang VFX`，按 `Update`。
 > 套件資料夾本身是唯讀的，所以 Prefab 和材質是產生在你自己的 `Assets` 裡，可以隨意修改。
 > 重新執行建置會覆蓋這些檔案，想保留自己的修改，請先複製一份再改。
 
+## 橫砍刀光
+
+原本的刀光是由上往下斜劈。橫砍版是一道寬而扁的月牙，由左掃到右，位置正好在你指定的點的中央：
+
+- 選單 `Tools > YinYang VFX > Build Sword Slash (Horizontal)`：9 種發光顏色，Prefab 叫 `VFX_SwordSlashH_<顏色>`
+- 選單 `Tools > YinYang VFX > Build Ink Slash (Horizontal, Dark)`：4 種暗色，Prefab 叫 `VFX_InkSlashH_<名稱>`
+
+```csharp
+// 角色朝右：由左掃到右；朝左：mirror = true，由右掃到左
+SlashEffect.Spawn(horizontalSlash, hitPoint, 0f, facingLeft, 1f);
+
+// 想斜一點：第三個參數是角度（度），例如 20 度往上斜
+SlashEffect.Spawn(horizontalSlash, hitPoint, 20f, facingLeft, 1f);
+```
+
+橫砍和斜劈共用同一組材質和顏色，兩種都建置也不會重複。
+
 ## 暗色（陰）刀光
 
 選單 `Tools > YinYang VFX > Build Ink Slash (Dark)`，會產生 4 種暗色刀光（Yin 白邊、Violet 紫邊、Crimson 紅邊、Jade 綠邊）：

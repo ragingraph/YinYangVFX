@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0
+
+- Horizontal sword slash: wide, flat crescent swinging left to right, centred on the spawn position.
+  Menus `Build Sword Slash (Horizontal)` (9 glow colours) and `Build Ink Slash (Horizontal, Dark)` (4 ink colours).
+  Prefabs `VFX_SwordSlashH_<Colour>` / `VFX_InkSlashH_<Name>`. Existing vertical slashes are unchanged.
+- Builder: slash geometry (centre angle, span, radius, quad size) is now a `SlashShape` preset.
+
 ## 0.3.0
 
 - Yin-yang vortex: spinning taiji disc twisted into a vortex, light/dark spiral arms drifting inward, orbiting light and ink motes.

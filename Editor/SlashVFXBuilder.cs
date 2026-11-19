@@ -31,7 +31,14 @@ namespace YinYangVFX.EditorTools
         public static void Build()
         {
             BuildSet("Sword Slash", Presets, false, "VFX_SwordSlash_", "VFX_SwordSlash_Test",
-                new Color(0.03f, 0.03f, 0.06f, 1f));
+                new Color(0.03f, 0.03f, 0.06f, 1f), VerticalShape);
+        }
+
+        [MenuItem("Tools/YinYang VFX/Build Sword Slash (Horizontal)")]
+        public static void BuildHorizontal()
+        {
+            BuildSet("Horizontal Sword Slash", Presets, false, "VFX_SwordSlashH_", "VFX_SwordSlashH_Test",
+                new Color(0.03f, 0.03f, 0.06f, 1f), HorizontalShape);
         }
 
         [MenuItem("Tools/YinYang VFX/Build Ink Slash (Dark)")]
@@ -39,11 +46,48 @@ namespace YinYangVFX.EditorTools
         {
             // Light grey background so the black blade is visible in the test scene.
             BuildSet("Ink Slash", InkPresets, true, "VFX_InkSlash_", "VFX_InkSlash_Test",
-                new Color(0.50f, 0.52f, 0.58f, 1f));
+                new Color(0.50f, 0.52f, 0.58f, 1f), VerticalShape);
         }
 
+        [MenuItem("Tools/YinYang VFX/Build Ink Slash (Horizontal, Dark)")]
+        public static void BuildInkHorizontal()
+        {
+            BuildSet("Horizontal Ink Slash", InkPresets, true, "VFX_InkSlashH_", "VFX_InkSlashH_Test",
+                new Color(0.50f, 0.52f, 0.58f, 1f), HorizontalShape);
+        }
+
+        // Geometry of the blade arc. Angles are in degrees, 0 = to the right, 90 = up.
+        // The sweep always runs clockwise from the "top" end, so a centre angle of 90 gives a flat rainbow-shaped arc
+        // swinging left to right (mirror = true in Spawn flips it to right to left).
+        struct SlashShape
+        {
+            public float centerAngle;
+            public float halfSpan;
+            public float radius;
+            public Vector2 quadSize;   // world units across at scale 1 (x wider than y flattens the circle into an ellipse)
+            public float sweepDuration;
+            public bool centerOnArc;   // move the arc so its visual middle sits on the object's position
+
+            public SlashShape(float centerAngle, float halfSpan, float radius, Vector2 quadSize,
+                              float sweepDuration, bool centerOnArc)
+            {
+                this.centerAngle = centerAngle;
+                this.halfSpan = halfSpan;
+                this.radius = radius;
+                this.quadSize = quadSize;
+                this.sweepDuration = sweepDuration;
+                this.centerOnArc = centerOnArc;
+            }
+        }
+
+        // Top to bottom, arc on the right side of the position (the original slash).
+        static readonly SlashShape VerticalShape = new SlashShape(0f, 78f, 0.62f, new Vector2(4f, 4f), 0.26f, false);
+
+        // Wide, flat crescent swinging left to right, centred on the position.
+        static readonly SlashShape HorizontalShape = new SlashShape(90f, 70f, 0.62f, new Vector2(5f, 2.5f), 0.24f, true);
+
         static void BuildSet(string label, ColorPreset[] presets, bool ink, string prefabPrefix,
-                             string sceneName, Color background)
+                             string sceneName, Color background, SlashShape shape)
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode)
             {
@@ -121,7 +165,7 @@ namespace YinYangVFX.EditorTools
                 EditorUtility.SetDirty(moteMat);
 
                 prefabPaths[i] = PrefabDir + "/" + prefabPrefix + p.name + ".prefab";
-                BuildPrefab(prefabPaths[i], quad, arcMain, arcGlow, sparkMat, moteMat);
+                BuildPrefab(prefabPaths[i], quad, arcMain, arcGlow, sparkMat, moteMat, shape);
             }
 
             // ---- test scene (also builds the bloom profile)
@@ -340,16 +384,18 @@ namespace YinYangVFX.EditorTools
         // ------------------------------------------------------------------ prefab
 
         static SlashEffect BuildPrefab(string path, Sprite quad, Material arcMain, Material arcGlow,
-                                       Material sparkMat, Material moteMat)
+                                       Material sparkMat, Material moteMat, SlashShape shape)
         {
             GameObject root = new GameObject(Path.GetFileNameWithoutExtension(path));
             SlashEffect fx = root.AddComponent<SlashEffect>();
 
-            const float arcSize = 4f; // world units across at scale 1
+            Vector3 arcScale = new Vector3(shape.quadSize.x, shape.quadSize.y, 1f);
+            Vector3 arcOffset = shape.centerOnArc ? ArcCenterOffset(shape) : Vector3.zero;
 
             GameObject glowGo = new GameObject("ArcGlow");
             glowGo.transform.SetParent(root.transform, false);
-            glowGo.transform.localScale = new Vector3(arcSize, arcSize, 1f);
+            glowGo.transform.localPosition = arcOffset;
+            glowGo.transform.localScale = arcScale;
             SpriteRenderer glowSr = glowGo.AddComponent<SpriteRenderer>();
             glowSr.sprite = quad;
             glowSr.sharedMaterial = arcGlow;
@@ -357,7 +403,8 @@ namespace YinYangVFX.EditorTools
 
             GameObject mainGo = new GameObject("ArcMain");
             mainGo.transform.SetParent(root.transform, false);
-            mainGo.transform.localScale = new Vector3(arcSize, arcSize, 1f);
+            mainGo.transform.localPosition = arcOffset;
+            mainGo.transform.localScale = arcScale;
             SpriteRenderer mainSr = mainGo.AddComponent<SpriteRenderer>();
             mainSr.sprite = quad;
             mainSr.sharedMaterial = arcMain;
@@ -366,6 +413,10 @@ namespace YinYangVFX.EditorTools
             ParticleSystem sparks = CreateParticleChild(root.transform, "Sparks", sparkMat, 2, true);
             ParticleSystem motes = CreateParticleChild(root.transform, "Motes", moteMat, 1, false);
 
+            fx.arcCenterAngle = shape.centerAngle;
+            fx.arcHalfSpan = shape.halfSpan;
+            fx.arcRadius = shape.radius;
+            fx.sweepDuration = shape.sweepDuration;
             fx.arcMain = mainSr;
             fx.arcGlow = glowSr;
             fx.sparks = sparks;
@@ -376,6 +427,25 @@ namespace YinYangVFX.EditorTools
             GameObject saved = PrefabUtility.SaveAsPrefabAsset(root, path);
             Object.DestroyImmediate(root);
             return saved.GetComponent<SlashEffect>();
+        }
+
+        // Local offset that puts the middle of the visible arc (not the middle of its circle) on the object's origin.
+        static Vector3 ArcCenterOffset(SlashShape shape)
+        {
+            float minX = float.MaxValue, maxX = float.MinValue, minY = float.MaxValue, maxY = float.MinValue;
+            for (int i = 0; i <= 8; i++)
+            {
+                float a = (shape.centerAngle - shape.halfSpan + 2f * shape.halfSpan * i / 8f) * Mathf.Deg2Rad;
+                float x = Mathf.Cos(a) * shape.radius;
+                float y = Mathf.Sin(a) * shape.radius;
+                minX = Mathf.Min(minX, x);
+                maxX = Mathf.Max(maxX, x);
+                minY = Mathf.Min(minY, y);
+                maxY = Mathf.Max(maxY, y);
+            }
+
+            // Disc units (-1..1 across the quad) -> local units: the quad is 1 unit wide at scale 1, so 0.5 * size per disc unit.
+            return new Vector3(-(minX + maxX) * 0.25f * shape.quadSize.x, -(minY + maxY) * 0.25f * shape.quadSize.y, 0f);
         }
 
         static ParticleSystem CreateParticleChild(Transform parent, string name, Material mat, int sortingOrder, bool streak)
