@@ -1,0 +1,16 @@
+{
+  "name": "com.ragingraph.yinyangvfx",
+  "version": "0.1.0",
+  "displayName": "YinYang VFX",
+  "description": "Procedural 2D effects for URP: glowing sword slash in 9 colours, additive HDR particle shader, pooled playback script and a one-click builder.",
+  "unity": "6000.0",
+  "keywords": [
+    "vfx",
+    "2d",
+    "urp",
+    "slash"
+  ],
+  "author": {
+    "name": "ragingraph"
+  }
+}
