@@ -37,6 +37,15 @@ Package Manager 裡選 `YinYang VFX`，按 `Update`。
 > 套件資料夾本身是唯讀的，所以 Prefab 和材質是產生在你自己的 `Assets` 裡，可以隨意修改。
 > 重新執行建置會覆蓋這些檔案，想保留自己的修改，請先複製一份再改。
 
+## 暗色（陰）刀光
+
+選單 `Tools > YinYang VFX > Build Ink Slash (Dark)`，會產生 4 種暗色刀光（Yin 白邊、Violet 紫邊、Crimson 紅邊、Jade 綠邊）：
+黑色不透明的刀身，前緣有一條發光細邊。Prefab 在 `Assets/YinYangVFX/SwordSlash/Prefabs/VFX_InkSlash_<名稱>.prefab`，
+測試場景是 `VFX_InkSlash_Test`（背景刻意用淺灰色，黑色才看得到）。
+
+用法和發光刀光完全一樣，`SlashEffect.Spawn(...)`。
+注意：暗色刀光用一般透明混合，在很暗的背景上會看不清楚，適合明亮或中間亮度的場景。
+
 ## 在遊戲裡使用
 
 ```csharp

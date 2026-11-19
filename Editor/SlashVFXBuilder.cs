@@ -30,9 +30,24 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/Build Sword Slash")]
         public static void Build()
         {
+            BuildSet("Sword Slash", Presets, false, "VFX_SwordSlash_", "VFX_SwordSlash_Test",
+                new Color(0.03f, 0.03f, 0.06f, 1f));
+        }
+
+        [MenuItem("Tools/YinYang VFX/Build Ink Slash (Dark)")]
+        public static void BuildInk()
+        {
+            // Light grey background so the black blade is visible in the test scene.
+            BuildSet("Ink Slash", InkPresets, true, "VFX_InkSlash_", "VFX_InkSlash_Test",
+                new Color(0.50f, 0.52f, 0.58f, 1f));
+        }
+
+        static void BuildSet(string label, ColorPreset[] presets, bool ink, string prefabPrefix,
+                             string sceneName, Color background)
+        {
             if (EditorApplication.isPlayingOrWillChangePlaymode)
             {
-                EditorUtility.DisplayDialog("Sword Slash", "Stop Play mode first, then run Build Sword Slash again.", "OK");
+                EditorUtility.DisplayDialog(label, "Stop Play mode first, then run the build again.", "OK");
                 return;
             }
 
@@ -40,7 +55,7 @@ namespace YinYangVFX.EditorTools
             // leaving new prefabs next to an old test scene.
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
             {
-                Debug.LogWarning("Sword slash build cancelled (scene save prompt was cancelled). Nothing was changed.");
+                Debug.LogWarning(label + " build cancelled (scene save prompt was cancelled). Nothing was changed.");
                 return;
             }
 
@@ -48,7 +63,7 @@ namespace YinYangVFX.EditorTools
             Shader particleShader = AssetDatabase.LoadAssetAtPath<Shader>(ParticleShaderPath);
             if (arcShader == null || particleShader == null)
             {
-                Debug.LogError("Sword slash: shaders not found under " + PackageRoot + "/Shaders. Let Unity finish importing, then try again.");
+                Debug.LogError(label + ": shaders not found under " + PackageRoot + "/Shaders. Let Unity finish importing, then try again.");
                 return;
             }
 
@@ -64,27 +79,39 @@ namespace YinYangVFX.EditorTools
 
             // ---- one set of materials + one prefab per colour preset
             // Only paths are kept: object references to assets get unloaded when the new scene opens.
-            string[] prefabPaths = new string[Presets.Length];
-            for (int i = 0; i < Presets.Length; i++)
+            string[] prefabPaths = new string[presets.Length];
+            for (int i = 0; i < presets.Length; i++)
             {
-                ColorPreset p = Presets[i];
+                ColorPreset p = presets[i];
+                string tag = ink ? "Ink_" + p.name : p.name;
 
-                Material arcMain = GetOrCreateMaterial(MatDir + "/MAT_SlashArc_Main_" + p.name + ".mat", arcShader);
-                ConfigureArcMain(arcMain, p.edge, p.core);
+                Material arcMain = GetOrCreateMaterial(MatDir + "/MAT_SlashArc_Main_" + tag + ".mat", arcShader);
+                if (ink)
+                {
+                    // Ink: the wide blade body is the dark colour, the thin leading edge glows.
+                    // (In the shader the "core" colour sits on the leading edge, "edge" colour on the wide body.)
+                    ConfigureArcInk(arcMain, p.edge, p.core);
+                }
+                else
+                {
+                    ConfigureArcMain(arcMain, p.edge, p.core);
+                }
 
-                Material arcGlow = GetOrCreateMaterial(MatDir + "/MAT_SlashArc_Glow_" + p.name + ".mat", arcShader);
-                ConfigureArcGlow(arcGlow, p.edge);
+                // For ink the additive glow behind the blade is only a faint aura.
+                Material arcGlow = GetOrCreateMaterial(MatDir + "/MAT_SlashArc_Glow_" + tag + ".mat", arcShader);
+                ConfigureArcGlow(arcGlow, ink ? p.edge * 0.12f : p.edge);
 
-                // Sparks run hotter (pushed toward white) than the blade edge; motes are the plain hue.
-                Color sparkTint = p.edge * 0.8f + new Color(0.9f, 0.9f, 0.9f, 0f);
+                // Glow: sparks run hotter (pushed toward white) than the edge; motes are the plain hue.
+                // Ink: sparks are the rim colour, motes are dimmer.
+                Color sparkTint = ink ? p.edge * 1.2f : p.edge * 0.8f + new Color(0.9f, 0.9f, 0.9f, 0f);
                 sparkTint.a = 1f;
-                Material sparkMat = GetOrCreateMaterial(MatDir + "/MAT_SlashSpark_" + p.name + ".mat", particleShader);
+                Material sparkMat = GetOrCreateMaterial(MatDir + "/MAT_SlashSpark_" + tag + ".mat", particleShader);
                 sparkMat.SetTexture("_MainTex", softDot);
                 sparkMat.SetColor("_Tint", sparkTint);
 
-                Color moteTint = p.edge * 0.8f;
+                Color moteTint = ink ? p.edge * 0.5f : p.edge * 0.8f;
                 moteTint.a = 1f;
-                Material moteMat = GetOrCreateMaterial(MatDir + "/MAT_SlashMote_" + p.name + ".mat", particleShader);
+                Material moteMat = GetOrCreateMaterial(MatDir + "/MAT_SlashMote_" + tag + ".mat", particleShader);
                 moteMat.SetTexture("_MainTex", softDot);
                 moteMat.SetColor("_Tint", moteTint);
 
@@ -93,7 +120,7 @@ namespace YinYangVFX.EditorTools
                 EditorUtility.SetDirty(sparkMat);
                 EditorUtility.SetDirty(moteMat);
 
-                prefabPaths[i] = PrefabDir + "/VFX_SwordSlash_" + p.name + ".prefab";
+                prefabPaths[i] = PrefabDir + "/" + prefabPrefix + p.name + ".prefab";
                 BuildPrefab(prefabPaths[i], quad, arcMain, arcGlow, sparkMat, moteMat);
             }
 
@@ -101,15 +128,15 @@ namespace YinYangVFX.EditorTools
             string profilePath = ProfileDir + "/VFX_Bloom_Profile.asset";
             GetOrCreateBloomProfile(profilePath);
             AssetDatabase.SaveAssets(); // make sure the profile is on disk before the scene swap
-            BuildTestScene(SceneDir + "/VFX_SwordSlash_Test.unity", prefabPaths, profilePath);
+            BuildTestScene(SceneDir + "/" + sceneName + ".unity", prefabPaths, profilePath, prefabPrefix, background);
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-            Debug.Log("Sword slash built (" + Presets.Length + " colours). Open " + SceneDir +
-                      "/VFX_SwordSlash_Test.unity and press Play. Prefabs: " + PrefabDir + "/VFX_SwordSlash_<Colour>.prefab");
-            EditorUtility.DisplayDialog("Sword Slash",
-                "Built " + Presets.Length + " colours.\nThe test scene VFX_SwordSlash_Test is now open with all colours " +
-                "in a 3x3 grid. Press Play to see them.", "OK");
+            Debug.Log(label + " built (" + presets.Length + " colours). Open " + SceneDir + "/" + sceneName +
+                      ".unity and press Play. Prefabs: " + PrefabDir + "/" + prefabPrefix + "<Colour>.prefab");
+            EditorUtility.DisplayDialog(label,
+                "Built " + presets.Length + " colours.\nThe test scene " + sceneName + " is now open with all colours " +
+                "in a grid. Press Play to see them.", "OK");
         }
 
         // ------------------------------------------------------------------ colour presets
@@ -143,6 +170,16 @@ namespace YinYangVFX.EditorTools
             new ColorPreset("White",  new Color(1.60f, 1.60f, 2.00f), new Color(3.2f, 3.2f, 3.2f)),
         };
 
+        // Ink (dark) slashes. edge = HDR colour of the glowing leading edge (keep it moderate, ~1.3-2.2, or Bloom
+        // spreads it over the black body). core = the near-black body colour.
+        static readonly ColorPreset[] InkPresets =
+        {
+            new ColorPreset("Yin",     new Color(1.30f, 1.40f, 1.80f), new Color(0.015f, 0.015f, 0.020f)),
+            new ColorPreset("Violet",  new Color(1.20f, 0.20f, 2.20f), new Color(0.030f, 0.000f, 0.060f)),
+            new ColorPreset("Crimson", new Color(2.20f, 0.10f, 0.18f), new Color(0.060f, 0.000f, 0.010f)),
+            new ColorPreset("Jade",    new Color(0.15f, 1.90f, 0.90f), new Color(0.000f, 0.040f, 0.020f)),
+        };
+
         // ------------------------------------------------------------------ materials
 
         static void ConfigureArcMain(Material m, Color edge, Color core)
@@ -163,6 +200,31 @@ namespace YinYangVFX.EditorTools
             m.SetFloat("_Distort", 0.35f);
             m.SetFloat("_Streak", 0.45f);
             m.SetFloat("_DissolveScale", 3f);
+        }
+
+        static void ConfigureArcInk(Material m, Color rim, Color body)
+        {
+            rim.a = 1f;
+            body.a = 1f;
+            m.SetColor("_CoreColor", rim);   // thin glowing leading edge
+            m.SetColor("_EdgeColor", body);  // wide dark body
+            m.SetFloat("_Thickness", 0.30f);
+            m.SetFloat("_OuterRatio", 0.12f);
+            m.SetFloat("_TipSharp", 0.8f);
+            m.SetFloat("_HeadTaper", 0.16f);
+            m.SetFloat("_TrailPow", 1.2f);
+            m.SetFloat("_CorePower", 8f);
+            m.SetFloat("_InnerFalloff", 1.0f);
+            m.SetVector("_NoiseScale", new Vector4(3f, 14f, 0f, 0f));
+            m.SetFloat("_NoiseSpeed", 2f);
+            m.SetFloat("_Distort", 0.35f);
+            m.SetFloat("_Streak", 0.45f);
+            m.SetFloat("_DissolveScale", 3f);
+
+            // Normal alpha blending so the body can be black; boost makes the dark body opaque.
+            m.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            m.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            m.SetFloat("_AlphaBoost", 4f);
         }
 
         static void ConfigureArcGlow(Material m, Color edge)
@@ -407,7 +469,8 @@ namespace YinYangVFX.EditorTools
             return profile;
         }
 
-        static void BuildTestScene(string path, string[] prefabPaths, string profilePath)
+        static void BuildTestScene(string path, string[] prefabPaths, string profilePath,
+                                   string prefabPrefix, Color background)
         {
             Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
@@ -418,7 +481,7 @@ namespace YinYangVFX.EditorTools
             cam.orthographic = true;
             cam.orthographicSize = 3.5f;
             cam.clearFlags = CameraClearFlags.SolidColor;
-            cam.backgroundColor = new Color(0.03f, 0.03f, 0.06f, 1f);
+            cam.backgroundColor = background;
             cam.allowHDR = true;
             UniversalAdditionalCameraData camData = cam.GetUniversalAdditionalCameraData();
             camData.renderPostProcessing = true;
@@ -439,7 +502,7 @@ namespace YinYangVFX.EditorTools
                 SlashEffect prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPaths[i]).GetComponent<SlashEffect>();
                 int cx = i % columns;
                 int cy = i / columns;
-                GameObject demoGo = new GameObject("Slash Demo " + Path.GetFileNameWithoutExtension(prefabPaths[i]).Replace("VFX_SwordSlash_", ""));
+                GameObject demoGo = new GameObject("Slash Demo " + Path.GetFileNameWithoutExtension(prefabPaths[i]).Replace(prefabPrefix, ""));
                 demoGo.transform.position = new Vector3((cx - (columns - 1) * 0.5f) * spacingX,
                                                         ((rows - 1) * 0.5f - cy) * spacingY, 0f);
                 SlashEffectDemo demo = demoGo.AddComponent<SlashEffectDemo>();

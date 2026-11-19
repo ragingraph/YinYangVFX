@@ -35,6 +35,12 @@ Shader "YinYangVFX/SlashArc"
         _Distort ("Edge Distortion", Range(0, 1)) = 0.35
         _Streak ("Streak Amount", Range(0, 1)) = 0.45
         _DissolveScale ("Dissolve Noise Scale", Float) = 3
+
+        // Blend mode. Default = additive glow (SrcAlpha, One).
+        // Ink / dark slashes use SrcAlpha, OneMinusSrcAlpha and an Alpha Boost > 1 so the dark body is opaque.
+        [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend ("Src Blend", Float) = 5
+        [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend ("Dst Blend", Float) = 1
+        _AlphaBoost ("Alpha Boost", Range(0.5, 6)) = 1
     }
 
     SubShader
@@ -47,7 +53,7 @@ Shader "YinYangVFX/SlashArc"
             "IgnoreProjector" = "True"
         }
 
-        Blend SrcAlpha One
+        Blend [_SrcBlend] [_DstBlend]
         Cull Off
         ZWrite Off
 
@@ -76,6 +82,7 @@ Shader "YinYangVFX/SlashArc"
             float _Distort;
             float _Streak;
             float _DissolveScale;
+            float _AlphaBoost;
         CBUFFER_END
 
         struct Attributes
@@ -180,7 +187,7 @@ Shader "YinYangVFX/SlashArc"
             float thr = lerp(-0.12, 1.0, _Dissolve);
             a *= smoothstep(thr, thr + 0.12, dn);
 
-            return float4(col * streak * i.color.rgb, a * i.color.a);
+            return float4(col * streak * i.color.rgb, saturate(a * _AlphaBoost) * i.color.a);
         }
         ENDHLSL
 
