@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0
+
+- Toward-camera slash: a chop that starts small and dim far away, speeds up while growing, and arcs over the target.
+  Menus `Build Sword Slash (Toward Camera)` (9 glow colours) and `Build Ink Slash (Toward Camera, Dark)` (4 ink colours).
+  Prefabs `VFX_SwordSlashZ_<Colour>` / `VFX_InkSlashZ_<Name>`.
+- `SlashEffect`: `approach` mode (`startScale`, `endScale`, `scaleCurve`, `startAlpha`, `alphaRiseTime`) and an `onImpact` UnityEvent
+  (`impactTime`) for camera shake / hit-stop / hit sparks. Existing slashes behave as before.
+- Arc centre offsets now follow the mirror flip.
+
 ## 0.4.0
 
 - Horizontal sword slash: wide, flat crescent swinging left to right, centred on the spawn position.

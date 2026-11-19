@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace YinYangVFX
 {
@@ -54,6 +55,22 @@ namespace YinYangVFX
         public Vector2 moteSize = new Vector2(0.01f, 0.03f);
         public Vector2 moteSpeed = new Vector2(0.05f, 0.3f);
 
+        [Header("Approach (a slash that comes toward the camera)")]
+        [Tooltip("Grows the arc from far (small, dim) to near (big, bright) while it sweeps.")]
+        public bool approach = false;
+        public float startScale = 0.3f;
+        public float endScale = 1.3f;
+        [Tooltip("0..1 over the whole effect. Ease-in makes it speed up as it comes closer.")]
+        public AnimationCurve scaleCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+        [Range(0f, 1f)] public float startAlpha = 0.35f;
+        [Tooltip("Seconds for the arc to reach full brightness.")]
+        public float alphaRiseTime = 0.12f;
+
+        [Header("Impact event (works for every slash)")]
+        [Tooltip("Seconds after the start when onImpact fires. Hook camera shake / hit-stop / hit sparks here.")]
+        public float impactTime = 0.2f;
+        public UnityEvent onImpact = new UnityEvent();
+
         [Header("Lifecycle")]
         [Tooltip("Only used for instances that were not created by Spawn().")]
         public bool destroyWhenDone = false;
@@ -78,6 +95,12 @@ namespace YinYangVFX
         float _moteAcc;
         MaterialPropertyBlock _mpb;
         SlashEffect _sourcePrefab;
+        Vector3 _baseMain;
+        Vector3 _baseGlow;
+        Vector3 _posMain;
+        Vector3 _posGlow;
+        bool _baseCached;
+        bool _impactFired;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void ResetStatics()
@@ -147,6 +170,8 @@ namespace YinYangVFX
 
             arcMain.enabled = true;
             arcGlow.enabled = true;
+            _impactFired = false;
+            ApplyApproach(0f);
             ApplyShader(0f, 0f, 0f, 0f);
 
             if (sparks != null)
@@ -202,6 +227,13 @@ namespace YinYangVFX
             float prevTime = _time;
             _time += dt;
 
+            ApplyApproach(_time);
+            if (!_impactFired && _time >= impactTime)
+            {
+                _impactFired = true;
+                onImpact.Invoke();
+            }
+
             float progress = EvalProgress(_time);
             float prevProgress = EvalProgress(prevTime);
             ApplyShader(progress, EvalDissolve(_time), EvalProgress(_time - glowDelay), EvalDissolve(_time - glowDelay));
@@ -215,6 +247,65 @@ namespace YinYangVFX
                 if (motes != null) motes.Stop(true, ParticleSystemStopBehavior.StopEmitting);
                 _state = State.Draining;
             }
+        }
+
+        // ------------------------------------------------------------------ approach (far -> near)
+
+        void CacheBase()
+        {
+            if (_baseCached)
+            {
+                return;
+            }
+
+            _baseMain = AbsScale(arcMain.transform.localScale);
+            _baseGlow = AbsScale(arcGlow.transform.localScale);
+            _posMain = arcMain.transform.localPosition;
+            _posGlow = arcGlow.transform.localPosition;
+            _baseCached = true;
+        }
+
+        static Vector3 AbsScale(Vector3 s)
+        {
+            return new Vector3(Mathf.Abs(s.x), Mathf.Abs(s.y), Mathf.Abs(s.z));
+        }
+
+        void ApplyApproach(float time)
+        {
+            CacheBase();
+            if (!approach && time > 0f)
+            {
+                return; // normal slashes keep their prefab scale; only the start frame resets it
+            }
+
+            float k = 1f;
+            float alpha = 1f;
+            if (approach)
+            {
+                float n = Mathf.Clamp01(time / Mathf.Max(0.0001f, totalDuration));
+                k = Mathf.Lerp(startScale, endScale, scaleCurve.Evaluate(n));
+                alpha = Mathf.Lerp(startAlpha, 1f, Mathf.Clamp01(time / Mathf.Max(0.0001f, alphaRiseTime)));
+            }
+
+            SetScale(arcMain.transform, _baseMain, _posMain, k);
+            SetScale(arcGlow.transform, _baseGlow, _posGlow, k);
+            SetAlpha(arcMain, alpha);
+            SetAlpha(arcGlow, alpha);
+        }
+
+        static void SetScale(Transform t, Vector3 baseScale, Vector3 basePos, float k)
+        {
+            float sign = t.localScale.x < 0f ? -1f : 1f; // keep the mirror flip
+            t.localScale = new Vector3(sign * baseScale.x * k, baseScale.y * k, baseScale.z);
+            // The arc's centre offset scales with the arc (so it grows around the object's position) and flips with the mirror.
+            t.localPosition = new Vector3(sign * basePos.x * k, basePos.y * k, basePos.z * k);
+        }
+
+        static void SetAlpha(SpriteRenderer sr, float alpha)
+        {
+            Color c = sr.color;
+            c.a = alpha;
+            sr.color = c;
         }
 
         // ------------------------------------------------------------------ timeline
@@ -364,6 +455,10 @@ namespace YinYangVFX
             sweepDuration = Mathf.Max(0.02f, sweepDuration);
             totalDuration = Mathf.Max(sweepDuration + 0.05f, totalDuration);
             arcHalfSpan = Mathf.Clamp(arcHalfSpan, 20f, 89f);
+            startScale = Mathf.Max(0.05f, startScale);
+            endScale = Mathf.Max(startScale, endScale);
+            alphaRiseTime = Mathf.Max(0.01f, alphaRiseTime);
+            impactTime = Mathf.Max(0f, impactTime);
         }
     }
 }

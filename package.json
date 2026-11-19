@@ -1,6 +1,6 @@
 {
   "name": "com.ragingraph.yinyangvfx",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "displayName": "YinYang VFX",
   "description": "Procedural 2D effects for URP: glowing and ink (dark) sword slashes, yin-yang vortex, additive/alpha HDR particle shader, pooled playback scripts and one-click builders.",
   "unity": "6000.0",

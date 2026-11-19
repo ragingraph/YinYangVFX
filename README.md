@@ -37,6 +37,25 @@ Package Manager 裡選 `YinYang VFX`，按 `Update`。
 > 套件資料夾本身是唯讀的，所以 Prefab 和材質是產生在你自己的 `Assets` 裡，可以隨意修改。
 > 重新執行建置會覆蓋這些檔案，想保留自己的修改，請先複製一份再改。
 
+## 朝鏡頭劈來的刀光（遠到近）
+
+刀光從畫面深處開始，又小又暗，一邊揮一邊變大、變亮、越揮越快，最後大幅度劈過目標，像劈到螢幕前面。
+以你給的位置為中心放大。
+
+- 選單 `Tools > YinYang VFX > Build Sword Slash (Toward Camera)`：9 種發光顏色，Prefab 叫 `VFX_SwordSlashZ_<顏色>`
+- 選單 `Tools > YinYang VFX > Build Ink Slash (Toward Camera, Dark)`：4 種暗色，Prefab 叫 `VFX_InkSlashZ_<名稱>`
+
+```csharp
+// 劈在敵人身上；角度可以調斜，例如 -25 度；朝左就 mirror = true
+var slash = SlashEffect.Spawn(approachSlash, enemy.position, -25f, facingLeft, 1f);
+
+// 命中的瞬間（預設揮出後 0.22 秒）：接鏡頭震動、頓幀、命中火花
+slash.onImpact.AddListener(() => cameraShake.Play());
+```
+
+`onImpact` 也可以在 Prefab 的 Inspector 裡直接設定，所有刀光（斜劈、橫砍）都有這個事件。
+想調整遠近的感覺：Prefab 上 `SlashEffect` 的 `Start Scale`（起始大小）、`End Scale`（結束大小）、`Start Alpha`（遠處亮度）。
+
 ## 橫砍刀光
 
 原本的刀光是由上往下斜劈。橫砍版是一道寬而扁的月牙，由左掃到右，位置正好在你指定的點的中央：

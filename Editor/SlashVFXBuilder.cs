@@ -41,6 +41,20 @@ namespace YinYangVFX.EditorTools
                 new Color(0.03f, 0.03f, 0.06f, 1f), HorizontalShape);
         }
 
+        [MenuItem("Tools/YinYang VFX/Build Sword Slash (Toward Camera)")]
+        public static void BuildApproach()
+        {
+            BuildSet("Toward-Camera Sword Slash", Presets, false, "VFX_SwordSlashZ_", "VFX_SwordSlashZ_Test",
+                new Color(0.03f, 0.03f, 0.06f, 1f), ApproachShape);
+        }
+
+        [MenuItem("Tools/YinYang VFX/Build Ink Slash (Toward Camera, Dark)")]
+        public static void BuildInkApproach()
+        {
+            BuildSet("Toward-Camera Ink Slash", InkPresets, true, "VFX_InkSlashZ_", "VFX_InkSlashZ_Test",
+                new Color(0.50f, 0.52f, 0.58f, 1f), ApproachShape);
+        }
+
         [MenuItem("Tools/YinYang VFX/Build Ink Slash (Dark)")]
         public static void BuildInk()
         {
@@ -67,10 +81,12 @@ namespace YinYangVFX.EditorTools
             public Vector2 quadSize;   // world units across at scale 1 (x wider than y flattens the circle into an ellipse)
             public float sweepDuration;
             public bool centerOnArc;   // move the arc so its visual middle sits on the object's position
+            public bool approach;      // grows from small/dim to big/bright (comes toward the camera)
 
             public SlashShape(float centerAngle, float halfSpan, float radius, Vector2 quadSize,
-                              float sweepDuration, bool centerOnArc)
+                              float sweepDuration, bool centerOnArc, bool approach = false)
             {
+                this.approach = approach;
                 this.centerAngle = centerAngle;
                 this.halfSpan = halfSpan;
                 this.radius = radius;
@@ -82,6 +98,9 @@ namespace YinYangVFX.EditorTools
 
         // Top to bottom, arc on the right side of the position (the original slash).
         static readonly SlashShape VerticalShape = new SlashShape(0f, 78f, 0.62f, new Vector2(4f, 4f), 0.26f, false);
+
+        // Chop that comes toward the camera: starts small and dim far away, grows and speeds up, arcs over the position.
+        static readonly SlashShape ApproachShape = new SlashShape(0f, 78f, 0.62f, new Vector2(4f, 4f), 0.30f, true, true);
 
         // Wide, flat crescent swinging left to right, centred on the position.
         static readonly SlashShape HorizontalShape = new SlashShape(90f, 70f, 0.62f, new Vector2(5f, 2.5f), 0.24f, true);
@@ -417,6 +436,19 @@ namespace YinYangVFX.EditorTools
             fx.arcHalfSpan = shape.halfSpan;
             fx.arcRadius = shape.radius;
             fx.sweepDuration = shape.sweepDuration;
+            if (shape.approach)
+            {
+                fx.approach = true;
+                fx.startScale = 0.3f;
+                fx.endScale = 1.3f;
+                fx.startAlpha = 0.35f;
+                fx.totalDuration = 0.6f;
+                fx.impactTime = 0.22f;
+                // Ease-in: the blade speeds up as it comes closer.
+                fx.sweepCurve = new AnimationCurve(
+                    new Keyframe(0f, 0f, 0f, 0.3f),
+                    new Keyframe(1f, 1f, 2.4f, 0f));
+            }
             fx.arcMain = mainSr;
             fx.arcGlow = glowSr;
             fx.sparks = sparks;
