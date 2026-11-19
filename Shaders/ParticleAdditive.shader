@@ -6,6 +6,10 @@ Shader "YinYangVFX/ParticleAdditive"
     {
         _MainTex ("Texture", 2D) = "white" {}
         [HDR] _Tint ("Tint (HDR)", Color) = (2, 2, 2, 1)
+
+        // Default = additive glow (SrcAlpha, One). Dark motes use SrcAlpha, OneMinusSrcAlpha.
+        [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend ("Src Blend", Float) = 5
+        [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend ("Dst Blend", Float) = 1
     }
 
     SubShader
@@ -18,7 +22,7 @@ Shader "YinYangVFX/ParticleAdditive"
             "IgnoreProjector" = "True"
         }
 
-        Blend SrcAlpha One
+        Blend [_SrcBlend] [_DstBlend]
         Cull Off
         ZWrite Off
 

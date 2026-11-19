@@ -249,7 +249,7 @@ namespace YinYangVFX.EditorTools
             m.SetFloat("_DissolveScale", 3f);
         }
 
-        static Material GetOrCreateMaterial(string path, Shader shader)
+        internal static Material GetOrCreateMaterial(string path, Shader shader)
         {
             Material m = AssetDatabase.LoadAssetAtPath<Material>(path);
             if (m == null)
@@ -267,7 +267,7 @@ namespace YinYangVFX.EditorTools
 
         // ------------------------------------------------------------------ textures
 
-        static Sprite CreateWhiteSquareSprite(string path)
+        internal static Sprite CreateWhiteSquareSprite(string path)
         {
             const int size = 64;
             Texture2D tex = new Texture2D(size, size, TextureFormat.RGBA32, false);
@@ -302,7 +302,7 @@ namespace YinYangVFX.EditorTools
             return AssetDatabase.LoadAssetAtPath<Sprite>(path);
         }
 
-        static Texture2D CreateSoftDotTexture(string path)
+        internal static Texture2D CreateSoftDotTexture(string path)
         {
             const int size = 64;
             Texture2D tex = new Texture2D(size, size, TextureFormat.RGBA32, false);
@@ -442,7 +442,7 @@ namespace YinYangVFX.EditorTools
 
         // ------------------------------------------------------------------ bloom + scene
 
-        static VolumeProfile GetOrCreateBloomProfile(string path)
+        internal static VolumeProfile GetOrCreateBloomProfile(string path)
         {
             VolumeProfile profile = AssetDatabase.LoadAssetAtPath<VolumeProfile>(path);
             if (profile == null)
@@ -517,7 +517,7 @@ namespace YinYangVFX.EditorTools
 
         // ------------------------------------------------------------------ util
 
-        static void EnsureFolder(string path)
+        internal static void EnsureFolder(string path)
         {
             if (AssetDatabase.IsValidFolder(path))
             {

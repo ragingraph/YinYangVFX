@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0
+
+- Yin-yang vortex: spinning taiji disc twisted into a vortex, light/dark spiral arms drifting inward, orbiting light and ink motes.
+  4 presets (Classic, Ice, Violet, Crimson). Menu `Tools > YinYang VFX > Build Yin-Yang Swirl`.
+- `YinYangSwirl` component: one-shot or looping, `Stop()` fades out, pooled via `Spawn`.
+- `ParticleAdditive` shader: selectable blend mode (`_SrcBlend` / `_DstBlend`). Defaults keep the old additive look.
+
 ## 0.2.0
 
 - Ink (dark) sword slash: opaque black blade with a glowing leading edge, 4 presets (Yin, Violet, Crimson, Jade).
