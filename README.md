@@ -122,6 +122,23 @@ swirl.Stop();   // 淡出後自動回到物件池
 
 `size` 是太極圓盤的半徑（世界單位）。圓盤本身用一般透明混合，所以黑色那一半是真的黑色，背景太暗的場景會看不出來。
 
+## 中式武器特效（長槍・槌・劍氣・連斬）
+
+選單 `Tools > YinYang VFX > Weapons >`：`Build Spear Thrust`（長槍刺擊）、`Build Spear Sweep`（長槍旋轉掃）、
+`Build Hammer Smash`（槌重砸）、`Build Sword Qi`（劍氣）、`Build Cross Slash (X)`（連斬），或 `Build ALL Weapon Effects` 一次全做。
+每種 6 個顏色（Ice / Crimson / Jade / Gold / Violet / Azure），輸出在 `Assets/YinYangVFX/Weapons/`，並開啟測試場景。
+
+```csharp
+[SerializeField] WeaponEffect thrustFx;
+WeaponEffect.Spawn(thrustFx, handPosition, angleDegrees: 0f, mirror: facingLeft, size: 1f);
+```
+
+- 生成位置：刺擊、劍氣、重砸＝武器所在的手；旋轉掃＝角色身體；連斬＝目標（X 以此為中心）。
+- `mirror = true` 朝左；`angleDegrees` 旋轉整個特效；`size` 整體縮放（1 ≈ 角色高 1 單位）。
+- `onImpact`：命中瞬間觸發（重砸落地、刺擊到最遠、連斬交會），可接震屏與頓幀。
+- Prefab 上可調：`thickness`（粗細）、`reach`（刺擊距離）、`impactOffset`（槌落點）、`qiTravel`（劍氣飛行距離）、`sweepRadius`、`groundY`、三個 HDR 顏色。
+- 美術小提醒：需要 URP 2D + Bloom（測試場景已附）。
+
 ## 在遊戲裡使用（刀光）
 
 ```csharp

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0
+
+- Chinese-weapon attack effects (new `WeaponEffect` component, 6 colours each, procedural, no sprites needed):
+  spear thrust, spear spin sweep, hammer smash (cracks, shockwave, debris), sword qi flying crescent, X cross slash.
+  Menus under `Tools/YinYang VFX/Weapons/` (one per effect + `Build ALL Weapon Effects`).
+  Prefabs `VFX_<SpearThrust|SpearSweep|HammerSmash|SwordQi|CrossSlash>_<Ice|Crimson|Jade|Gold|Violet|Azure>`.
+- `onImpact` event on every weapon effect (screen shake / hit-stop trigger point).
+
 ## 0.6.0
 
 - Forward sweep: the side-scroller slash. Starts as a small point far away, runs to the right getting thicker,
