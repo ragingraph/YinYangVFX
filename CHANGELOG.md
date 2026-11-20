@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.0
+
+- Forward sweep: the side-scroller slash. Starts as a small point far away, runs to the right getting thicker,
+  swings round toward the camera and ends big and thick back near the character.
+  Menus `Build Sword Slash (Forward Sweep)` (9 glow colours) and `Build Ink Slash (Forward Sweep, Dark)` (4 ink colours).
+  Prefabs `VFX_SwordSlashS_<Colour>` / `VFX_InkSlashS_<Name>`.
+- `SlashArc` shader: `_Ramp` / `_RampPow` (width grows along the arc) and `_RadiusRamp` (later part is bigger). Defaults keep the crescent look.
+- `SlashEffect`: `radiusRamp`, `growAlongBlade` (sparks scale with the blade width); arc half span can go up to 175 degrees.
+
 ## 0.5.0
 
 - Toward-camera slash: a chop that starts small and dim far away, speeds up while growing, and arcs over the target.

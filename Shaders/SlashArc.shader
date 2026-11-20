@@ -41,6 +41,11 @@ Shader "YinYangVFX/SlashArc"
         [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend ("Src Blend", Float) = 5
         [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend ("Dst Blend", Float) = 1
         _AlphaBoost ("Alpha Boost", Range(0.5, 6)) = 1
+
+        // Forward-sweep look (thin and far at the start, thick and near at the end). 0 = off, the normal crescent.
+        _Ramp ("Width Ramp (0 = crescent, 1 = grows along the arc)", Range(0, 1)) = 0
+        _RampPow ("Width Ramp Power", Range(0.3, 4)) = 1.6
+        _RadiusRamp ("Radius Ramp (later part is bigger)", Range(0, 1)) = 0
     }
 
     SubShader
@@ -83,6 +88,9 @@ Shader "YinYangVFX/SlashArc"
             float _Streak;
             float _DissolveScale;
             float _AlphaBoost;
+            float _Ramp;
+            float _RampPow;
+            float _RadiusRamp;
         CBUFFER_END
 
         struct Attributes
@@ -153,6 +161,8 @@ Shader "YinYangVFX/SlashArc"
             float t = 0.5 - delta / (2.0 * _ArcHalfSpan);
             float inSpan = step(0.0, t) * step(t, 1.0);
             float prof = pow(saturate(sin(PI * t)), _TipSharp) * inSpan;
+            float rampProf = pow(saturate(t), _RampPow) * saturate((1.0 - t) / 0.06) * inSpan;
+            prof = lerp(prof, rampProf, _Ramp);
 
             // Moving window: the head leads, the tail follows.
             float tHead = _Progress * (1.0 + _TailLength);
@@ -162,7 +172,7 @@ Shader "YinYangVFX/SlashArc"
 
             float w = _Thickness * prof * taper * (0.5 + 0.5 * trail);
 
-            float s = r - _Radius;
+            float s = r - _Radius * (1.0 + _RadiusRamp * saturate(t));
             float2 nuv = float2(t * _NoiseScale.x - _Time.y * _NoiseSpeed + _Seed,
                                 s * _NoiseScale.y + _Seed * 1.7);
             float n = fbm(nuv);

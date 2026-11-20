@@ -40,6 +40,10 @@ namespace YinYangVFX
         public float arcHalfSpan = 78f;
         [Range(0.1f, 0.95f)] public float arcRadius = 0.62f;
         public float tailLength = 0.85f;
+        [Tooltip("Later parts of the arc have a bigger radius (perspective: nearer to the camera). 0 = a plain circle arc.")]
+        [Range(0f, 1f)] public float radiusRamp = 0f;
+        [Tooltip("Sparks and motes get smaller / fewer at the thin start of the arc and bigger / more at the thick end.")]
+        public bool growAlongBlade = false;
 
         [Header("Sparks (sizes and speeds are relative to the arc size)")]
         public int sparksPerSweep = 70;
@@ -84,6 +88,7 @@ namespace YinYangVFX
         static readonly int ID_ArcHalfSpan = Shader.PropertyToID("_ArcHalfSpan");
         static readonly int ID_Radius = Shader.PropertyToID("_Radius");
         static readonly int ID_TailLength = Shader.PropertyToID("_TailLength");
+        static readonly int ID_RadiusRamp = Shader.PropertyToID("_RadiusRamp");
 
         static readonly Dictionary<SlashEffect, Stack<SlashEffect>> Pools =
             new Dictionary<SlashEffect, Stack<SlashEffect>>();
@@ -351,6 +356,7 @@ namespace YinYangVFX
             _mpb.SetFloat(ID_ArcHalfSpan, arcHalfSpan);
             _mpb.SetFloat(ID_Radius, arcRadius);
             _mpb.SetFloat(ID_TailLength, tail);
+            _mpb.SetFloat(ID_RadiusRamp, radiusRamp);
             sr.SetPropertyBlock(_mpb);
         }
 
@@ -368,27 +374,29 @@ namespace YinYangVFX
 
             float span = t1 - t0;
             float size = Mathf.Abs(arcMain.transform.lossyScale.x);
+            // Thin start of the arc -> fewer, smaller sparks; thick end -> more, bigger ones.
+            float w = growAlongBlade ? Mathf.Lerp(0.3f, 1f, Mathf.Clamp01((t0 + t1) * 0.5f)) : 1f;
 
             if (sparks != null)
             {
-                _sparkAcc += span * sparksPerSweep;
+                _sparkAcc += span * sparksPerSweep * w;
                 int n = (int)_sparkAcc;
                 _sparkAcc -= n;
                 for (int i = 0; i < n; i++)
                 {
-                    EmitParticle(sparks, Mathf.Lerp(t0, t1, Random.value), size,
+                    EmitParticle(sparks, Mathf.Lerp(t0, t1, Random.value), size * w,
                         Random.Range(-0.02f, 0.06f), sparkLifetime, sparkSize, sparkOutSpeed, sparkAlongSpeed, sparkSpread);
                 }
             }
 
             if (motes != null)
             {
-                _moteAcc += span * motesPerSweep;
+                _moteAcc += span * motesPerSweep * w;
                 int n = (int)_moteAcc;
                 _moteAcc -= n;
                 for (int i = 0; i < n; i++)
                 {
-                    EmitParticle(motes, Mathf.Lerp(t0, t1, Random.value), size,
+                    EmitParticle(motes, Mathf.Lerp(t0, t1, Random.value), size * w,
                         -Random.Range(0f, 0.18f), moteLifetime, moteSize, moteSpeed, moteSpeed, 0.3f);
                 }
             }
@@ -402,7 +410,7 @@ namespace YinYangVFX
             Vector2 tangent = new Vector2(dir.y, -dir.x); // direction the blade is travelling
 
             Transform arc = arcMain.transform;
-            float radius = arcRadius + radialOffset;
+            float radius = arcRadius * (1f + radiusRamp * Mathf.Clamp01(t)) + radialOffset;
 
             // The arc sprite is 1 unit wide, so a point at "p" (-1..1) sits at p * 0.5 in its local space.
             Vector3 position = arc.TransformPoint(new Vector3(dir.x, dir.y, 0f) * (radius * 0.5f));
@@ -454,7 +462,7 @@ namespace YinYangVFX
         {
             sweepDuration = Mathf.Max(0.02f, sweepDuration);
             totalDuration = Mathf.Max(sweepDuration + 0.05f, totalDuration);
-            arcHalfSpan = Mathf.Clamp(arcHalfSpan, 20f, 89f);
+            arcHalfSpan = Mathf.Clamp(arcHalfSpan, 20f, 175f);
             startScale = Mathf.Max(0.05f, startScale);
             endScale = Mathf.Max(startScale, endScale);
             alphaRiseTime = Mathf.Max(0.01f, alphaRiseTime);

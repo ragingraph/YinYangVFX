@@ -41,6 +41,20 @@ namespace YinYangVFX.EditorTools
                 new Color(0.03f, 0.03f, 0.06f, 1f), HorizontalShape);
         }
 
+        [MenuItem("Tools/YinYang VFX/Build Sword Slash (Forward Sweep)")]
+        public static void BuildSweep()
+        {
+            BuildSet("Forward Sweep Sword Slash", Presets, false, "VFX_SwordSlashS_", "VFX_SwordSlashS_Test",
+                new Color(0.03f, 0.03f, 0.06f, 1f), SweepShape);
+        }
+
+        [MenuItem("Tools/YinYang VFX/Build Ink Slash (Forward Sweep, Dark)")]
+        public static void BuildInkSweep()
+        {
+            BuildSet("Forward Sweep Ink Slash", InkPresets, true, "VFX_InkSlashS_", "VFX_InkSlashS_Test",
+                new Color(0.50f, 0.52f, 0.58f, 1f), SweepShape);
+        }
+
         [MenuItem("Tools/YinYang VFX/Build Sword Slash (Toward Camera)")]
         public static void BuildApproach()
         {
@@ -82,11 +96,16 @@ namespace YinYangVFX.EditorTools
             public float sweepDuration;
             public bool centerOnArc;   // move the arc so its visual middle sits on the object's position
             public bool approach;      // grows from small/dim to big/bright (comes toward the camera)
+            public bool sweep;         // forward sweep: thin and far at the start, thick and near at the end; origin = middle of the two ends
+            public float radiusRamp;   // later parts of the arc have a bigger radius (sweep only)
 
             public SlashShape(float centerAngle, float halfSpan, float radius, Vector2 quadSize,
-                              float sweepDuration, bool centerOnArc, bool approach = false)
+                              float sweepDuration, bool centerOnArc, bool approach = false,
+                              bool sweep = false, float radiusRamp = 0f)
             {
                 this.approach = approach;
+                this.sweep = sweep;
+                this.radiusRamp = radiusRamp;
                 this.centerAngle = centerAngle;
                 this.halfSpan = halfSpan;
                 this.radius = radius;
@@ -101,6 +120,10 @@ namespace YinYangVFX.EditorTools
 
         // Chop that comes toward the camera: starts small and dim far away, grows and speeds up, arcs over the position.
         static readonly SlashShape ApproachShape = new SlashShape(0f, 78f, 0.62f, new Vector2(4f, 4f), 0.30f, true, true);
+
+        // Perspective loop for a side-scroller: starts as a small point far away, runs to the right getting thicker,
+        // swings round toward the camera and ends big and thick near the starting point (the character's position).
+        static readonly SlashShape SweepShape = new SlashShape(0f, 150f, 0.62f, new Vector2(5.2f, 2.6f), 0.5f, true, false, true, 0.18f);
 
         // Wide, flat crescent swinging left to right, centred on the position.
         static readonly SlashShape HorizontalShape = new SlashShape(90f, 70f, 0.62f, new Vector2(5f, 2.5f), 0.24f, true);
@@ -147,6 +170,10 @@ namespace YinYangVFX.EditorTools
             {
                 ColorPreset p = presets[i];
                 string tag = ink ? "Ink_" + p.name : p.name;
+                if (shape.sweep)
+                {
+                    tag += "_Sweep"; // sweep needs different blade parameters, so it gets its own materials
+                }
 
                 Material arcMain = GetOrCreateMaterial(MatDir + "/MAT_SlashArc_Main_" + tag + ".mat", arcShader);
                 if (ink)
@@ -163,6 +190,12 @@ namespace YinYangVFX.EditorTools
                 // For ink the additive glow behind the blade is only a faint aura.
                 Material arcGlow = GetOrCreateMaterial(MatDir + "/MAT_SlashArc_Glow_" + tag + ".mat", arcShader);
                 ConfigureArcGlow(arcGlow, ink ? p.edge * 0.12f : p.edge);
+
+                if (shape.sweep)
+                {
+                    ApplySweepMaterial(arcMain, ink, false);
+                    ApplySweepMaterial(arcGlow, ink, true);
+                }
 
                 // Glow: sparks run hotter (pushed toward white) than the edge; motes are the plain hue.
                 // Ink: sparks are the rim colour, motes are dimmer.
@@ -263,6 +296,36 @@ namespace YinYangVFX.EditorTools
             m.SetFloat("_Distort", 0.35f);
             m.SetFloat("_Streak", 0.45f);
             m.SetFloat("_DissolveScale", 3f);
+        }
+
+        // Blade parameters for the forward sweep: the width grows along the arc instead of tapering at both ends.
+        static void ApplySweepMaterial(Material m, bool ink, bool glowLayer)
+        {
+            m.SetFloat("_Ramp", 1f);
+            m.SetFloat("_RampPow", 1.6f);
+            m.SetFloat("_HeadTaper", 0.10f);
+            m.SetFloat("_TrailPow", 1.0f);
+            m.SetFloat("_Distort", glowLayer ? 0.2f : 0.25f);
+
+            if (glowLayer)
+            {
+                m.SetFloat("_Thickness", 0.5f);
+                m.SetFloat("_OuterRatio", 0.5f);
+                m.SetFloat("_CorePower", 1.5f);
+                m.SetFloat("_InnerFalloff", 1.2f);
+                m.SetFloat("_Streak", 0.2f);
+            }
+            else if (ink)
+            {
+                m.SetFloat("_Thickness", 0.34f); // the other ink values (thin glowing edge, opaque dark body) stay
+            }
+            else
+            {
+                m.SetFloat("_Thickness", 0.30f);
+                m.SetFloat("_OuterRatio", 0.5f);
+                m.SetFloat("_CorePower", 3f);
+                m.SetFloat("_InnerFalloff", 1.4f);
+            }
         }
 
         static void ConfigureArcInk(Material m, Color rim, Color body)
@@ -436,6 +499,22 @@ namespace YinYangVFX.EditorTools
             fx.arcHalfSpan = shape.halfSpan;
             fx.arcRadius = shape.radius;
             fx.sweepDuration = shape.sweepDuration;
+            if (shape.sweep)
+            {
+                fx.radiusRamp = shape.radiusRamp;
+                fx.growAlongBlade = true;
+                fx.tailLength = 1.0f;       // the whole arc stays visible while the head travels along it
+                fx.glowDelay = 0.04f;
+                fx.totalDuration = 0.85f;
+                fx.impactTime = 0.28f;
+                fx.sparksPerSweep = 110;
+                fx.motesPerSweep = 60;
+                // Slightly eased-in: the blade picks up speed as it comes toward the camera.
+                fx.sweepCurve = new AnimationCurve(
+                    new Keyframe(0f, 0f, 0f, 0.6f),
+                    new Keyframe(1f, 1f, 1.5f, 0f));
+            }
+
             if (shape.approach)
             {
                 fx.approach = true;
@@ -464,6 +543,17 @@ namespace YinYangVFX.EditorTools
         // Local offset that puts the middle of the visible arc (not the middle of its circle) on the object's origin.
         static Vector3 ArcCenterOffset(SlashShape shape)
         {
+            if (shape.sweep)
+            {
+                // The sweep starts and ends beside the character: put the middle of the two end points on the origin.
+                float aStart = (shape.centerAngle + shape.halfSpan) * Mathf.Deg2Rad;
+                float aEnd = (shape.centerAngle - shape.halfSpan) * Mathf.Deg2Rad;
+                float rEnd = shape.radius * (1f + shape.radiusRamp);
+                float midX = (Mathf.Cos(aStart) * shape.radius + Mathf.Cos(aEnd) * rEnd) * 0.5f;
+                float midY = (Mathf.Sin(aStart) * shape.radius + Mathf.Sin(aEnd) * rEnd) * 0.5f;
+                return new Vector3(-midX * 0.5f * shape.quadSize.x, -midY * 0.5f * shape.quadSize.y, 0f);
+            }
+
             float minX = float.MaxValue, maxX = float.MinValue, minY = float.MaxValue, maxY = float.MinValue;
             for (int i = 0; i <= 8; i++)
             {

@@ -37,6 +37,26 @@ Package Manager 裡選 `YinYang VFX`，按 `Update`。
 > 套件資料夾本身是唯讀的，所以 Prefab 和材質是產生在你自己的 `Assets` 裡，可以隨意修改。
 > 重新執行建置會覆蓋這些檔案，想保留自己的修改，請先複製一份再改。
 
+## 橫向角色向右橫劈：由遠到近的環繞刀光（Forward Sweep）
+
+給橫向捲軸遊戲用。刀光從一個小光點開始（遠處），往右邊飛出去、逐漸變粗，
+接著繞向鏡頭這一側，變成最粗最亮，最後回到角色身前附近，然後燒蝕消失。
+位置參數就是「起點和終點的中間」，也就是角色身前（揮劍的位置）。
+
+- 選單 `Tools > YinYang VFX > Build Sword Slash (Forward Sweep)`：9 種發光顏色，Prefab 叫 `VFX_SwordSlashS_<顏色>`
+- 選單 `Tools > YinYang VFX > Build Ink Slash (Forward Sweep, Dark)`：4 種暗色，Prefab 叫 `VFX_InkSlashS_<名稱>`
+
+```csharp
+// 角色朝右：預設就是往右；朝左就 mirror = true。size 調大小（1 約 3.4 個世界單位寬）
+var slash = SlashEffect.Spawn(sweepSlash, swordPoint.position, 0f, facingLeft, 1f);
+
+// 命中瞬間（預設揮出後約 0.28 秒，大約在最粗的時候）
+slash.onImpact.AddListener(() => cameraShake.Play());
+```
+
+調整造型：Prefab 上 `SlashEffect` 的 `Radius Ramp`（越大，後半段越大、越靠近鏡頭）；材質上的 `Width Ramp Power`（越大，前段越細、後段才突然變粗）。
+如果想要軌跡更扁或更圓，調 Prefab 裡 `ArcMain` 和 `ArcGlow` 兩個子物件的 Scale 的 Y（例如 2.6 改 3.2 會更圓）。
+
 ## 朝鏡頭劈來的刀光（遠到近）
 
 刀光從畫面深處開始，又小又暗，一邊揮一邊變大、變亮、越揮越快，最後大幅度劈過目標，像劈到螢幕前面。
