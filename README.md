@@ -126,7 +126,7 @@ swirl.Stop();   // 淡出後自動回到物件池
 
 選單 `Tools > YinYang VFX > Weapons >`：`Build Spear Thrust`（長槍刺擊）、`Build Spear Sweep`（長槍旋轉掃）、
 `Build Hammer Smash`（槌重砸）、`Build Sword Qi`（劍氣）、`Build Cross Slash (X)`（連斬），或 `Build ALL Weapon Effects` 一次全做。
-每種 6 個顏色（Ice / Crimson / Jade / Gold / Violet / Azure），輸出在 `Assets/YinYangVFX/Weapons/`，並開啟測試場景。
+每種 6 個單色版本（Ice / Crimson / Jade / Gold / Violet / Azure），輸出在 `Assets/YinYangVFX/Weapons/`，並開啟測試場景。
 
 ```csharp
 [SerializeField] WeaponEffect thrustFx;

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.1
+
+- Weapon effects are now a single colour each (all layers share one hue). Re-run the Weapons build menu to update existing prefabs.
+
 ## 0.7.0
 
 - Chinese-weapon attack effects (new `WeaponEffect` component, 6 colours each, procedural, no sprites needed):

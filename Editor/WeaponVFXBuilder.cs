@@ -39,14 +39,20 @@ namespace YinYangVFX.EditorTools
             }
         }
 
+        // One colour per prefab: all three layers use the same hue (the hot core still glows near white).
+        static Palette One(string name, Color c)
+        {
+            return new Palette(name, c, c, c);
+        }
+
         static readonly Palette[] Palettes =
         {
-            new Palette("Ice", new Color(0.25f, 1.0f, 3.0f), new Color(3.0f, 0.8f, 0.12f), new Color(1.4f, 0.45f, 3.0f)),
-            new Palette("Crimson", new Color(3.0f, 0.25f, 0.2f), new Color(3.0f, 1.4f, 0.15f), new Color(2.2f, 0.3f, 1.4f)),
-            new Palette("Jade", new Color(0.2f, 3.0f, 0.8f), new Color(2.4f, 2.8f, 0.4f), new Color(0.2f, 1.6f, 2.8f)),
-            new Palette("Gold", new Color(3.0f, 1.5f, 0.15f), new Color(3.0f, 0.5f, 0.1f), new Color(2.4f, 2.4f, 0.7f)),
-            new Palette("Violet", new Color(1.6f, 0.4f, 3.0f), new Color(3.0f, 0.5f, 1.6f), new Color(0.4f, 1.4f, 3.0f)),
-            new Palette("Azure", new Color(0.1f, 0.5f, 3.0f), new Color(0.2f, 2.4f, 2.6f), new Color(2.6f, 1.0f, 2.6f)),
+            One("Ice", new Color(0.25f, 1.0f, 3.0f)),
+            One("Crimson", new Color(3.0f, 0.25f, 0.2f)),
+            One("Jade", new Color(0.2f, 3.0f, 0.8f)),
+            One("Gold", new Color(3.0f, 1.5f, 0.15f)),
+            One("Violet", new Color(1.6f, 0.4f, 3.0f)),
+            One("Azure", new Color(0.1f, 0.5f, 3.0f)),
         };
 
         struct KindInfo
