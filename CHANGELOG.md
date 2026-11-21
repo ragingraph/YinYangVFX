@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.0
+
+- 16 more weapon effects (all single colour, 6 colours each): spear rising / flurry, hammer sweep / quake (charge + ground slam),
+  sword slash / whirl / lunge, blade chop / drag (big sabre), halberd crescent / lift-thrust, whip lash, nunchaku flurry,
+  palm wave, dart throw, arrow shot. Menus `Tools/YinYang VFX/Weapons/Build <name>`; `Build ALL Weapon Effects` now builds all 21.
+
 ## 0.7.2
 
 - Weapon effects: flashes and the hot core are tinted with the effect colour instead of near-white, so each prefab reads as one colour.

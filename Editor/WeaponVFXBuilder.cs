@@ -82,6 +82,22 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.HammerSmash, "Hammer Smash", "HammerSmash", 1.2f, 4.2f, 0.9f),
             new KindInfo(WeaponKind.SwordQi, "Sword Qi", "SwordQi", 1.3f, 4.6f, 1.6f),
             new KindInfo(WeaponKind.CrossSlash, "Cross Slash (X)", "CrossSlash", 0.95f, 3.0f, 0f),
+            new KindInfo(WeaponKind.SpearRising, "Spear Rising", "SpearRising", 0.7f, 4.0f, 0.8f),
+            new KindInfo(WeaponKind.SpearFlurry, "Spear Flurry", "SpearFlurry", 0.9f, 4.2f, 1.1f),
+            new KindInfo(WeaponKind.HammerSweep, "Hammer Sweep", "HammerSweep", 1.0f, 4.6f, 1.0f),
+            new KindInfo(WeaponKind.HammerQuake, "Hammer Quake", "HammerQuake", 1.6f, 4.6f, 1.0f),
+            new KindInfo(WeaponKind.SwordSlash, "Sword Slash", "SwordSlash", 0.55f, 3.2f, 0.6f),
+            new KindInfo(WeaponKind.SwordWhirl, "Sword Whirl", "SwordWhirl", 1.0f, 3.4f, 0.0f),
+            new KindInfo(WeaponKind.SwordLunge, "Sword Lunge", "SwordLunge", 0.5f, 3.4f, 0.9f),
+            new KindInfo(WeaponKind.BladeChop, "Blade Chop", "BladeChop", 0.8f, 4.4f, 1.0f),
+            new KindInfo(WeaponKind.BladeDrag, "Blade Drag", "BladeDrag", 1.0f, 4.0f, 0.9f),
+            new KindInfo(WeaponKind.HalberdCrescent, "Halberd Crescent", "HalberdCrescent", 0.7f, 4.0f, 0.8f),
+            new KindInfo(WeaponKind.HalberdLiftThrust, "Halberd Lift-Thrust", "HalberdLiftThrust", 0.9f, 4.0f, 1.0f),
+            new KindInfo(WeaponKind.WhipLash, "Whip Lash", "WhipLash", 0.9f, 4.4f, 1.0f),
+            new KindInfo(WeaponKind.NunchakuFlurry, "Nunchaku Flurry", "NunchakuFlurry", 1.0f, 3.6f, 0.7f),
+            new KindInfo(WeaponKind.PalmWave, "Palm Wave", "PalmWave", 0.8f, 4.6f, 0.7f),
+            new KindInfo(WeaponKind.Dart, "Dart Throw", "Dart", 0.9f, 4.8f, 1.2f),
+            new KindInfo(WeaponKind.ArrowShot, "Arrow Shot", "ArrowShot", 1.0f, 5.0f, 1.4f),
         };
 
         // ------------------------------------------------------------------ menu
@@ -101,10 +117,59 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/Weapons/Build Cross Slash (X)")]
         public static void BuildCross() { Run(WeaponKind.CrossSlash); }
 
-        [MenuItem("Tools/YinYang VFX/Weapons/Build ALL Weapon Effects")]
+        [MenuItem("Tools/YinYang VFX/Weapons/Build Spear Rising", false, 11)]
+        public static void BuildSpearRising() { Run(WeaponKind.SpearRising); }
+
+        [MenuItem("Tools/YinYang VFX/Weapons/Build Spear Flurry", false, 12)]
+        public static void BuildSpearFlurry() { Run(WeaponKind.SpearFlurry); }
+
+        [MenuItem("Tools/YinYang VFX/Weapons/Build Hammer Sweep", false, 13)]
+        public static void BuildHammerSweep() { Run(WeaponKind.HammerSweep); }
+
+        [MenuItem("Tools/YinYang VFX/Weapons/Build Hammer Quake", false, 14)]
+        public static void BuildHammerQuake() { Run(WeaponKind.HammerQuake); }
+
+        [MenuItem("Tools/YinYang VFX/Weapons/Build Sword Slash", false, 15)]
+        public static void BuildSwordSlash() { Run(WeaponKind.SwordSlash); }
+
+        [MenuItem("Tools/YinYang VFX/Weapons/Build Sword Whirl", false, 16)]
+        public static void BuildSwordWhirl() { Run(WeaponKind.SwordWhirl); }
+
+        [MenuItem("Tools/YinYang VFX/Weapons/Build Sword Lunge", false, 17)]
+        public static void BuildSwordLunge() { Run(WeaponKind.SwordLunge); }
+
+        [MenuItem("Tools/YinYang VFX/Weapons/Build Blade Chop", false, 18)]
+        public static void BuildBladeChop() { Run(WeaponKind.BladeChop); }
+
+        [MenuItem("Tools/YinYang VFX/Weapons/Build Blade Drag", false, 19)]
+        public static void BuildBladeDrag() { Run(WeaponKind.BladeDrag); }
+
+        [MenuItem("Tools/YinYang VFX/Weapons/Build Halberd Crescent", false, 20)]
+        public static void BuildHalberdCrescent() { Run(WeaponKind.HalberdCrescent); }
+
+        [MenuItem("Tools/YinYang VFX/Weapons/Build Halberd Lift-Thrust", false, 21)]
+        public static void BuildHalberdLiftThrust() { Run(WeaponKind.HalberdLiftThrust); }
+
+        [MenuItem("Tools/YinYang VFX/Weapons/Build Whip Lash", false, 22)]
+        public static void BuildWhipLash() { Run(WeaponKind.WhipLash); }
+
+        [MenuItem("Tools/YinYang VFX/Weapons/Build Nunchaku Flurry", false, 23)]
+        public static void BuildNunchakuFlurry() { Run(WeaponKind.NunchakuFlurry); }
+
+        [MenuItem("Tools/YinYang VFX/Weapons/Build Palm Wave", false, 24)]
+        public static void BuildPalmWave() { Run(WeaponKind.PalmWave); }
+
+        [MenuItem("Tools/YinYang VFX/Weapons/Build Dart Throw", false, 25)]
+        public static void BuildDart() { Run(WeaponKind.Dart); }
+
+        [MenuItem("Tools/YinYang VFX/Weapons/Build Arrow Shot", false, 26)]
+        public static void BuildArrowShot() { Run(WeaponKind.ArrowShot); }
+
+        [MenuItem("Tools/YinYang VFX/Weapons/Build ALL Weapon Effects", false, 100)]
         public static void BuildAll()
         {
-            Run(WeaponKind.SpearThrust, WeaponKind.SpearSweep, WeaponKind.HammerSmash, WeaponKind.SwordQi, WeaponKind.CrossSlash);
+            WeaponKind[] all = (WeaponKind[])Enum.GetValues(typeof(WeaponKind));
+            Run(all);
         }
 
         // ------------------------------------------------------------------ build
@@ -213,7 +278,7 @@ namespace YinYangVFX.EditorTools
             camGo.transform.position = new Vector3(0f, 0f, -10f);
             Camera cam = camGo.AddComponent<Camera>();
             cam.orthographic = true;
-            cam.orthographicSize = 3.7f;
+            cam.orthographicSize = Mathf.Max(3.7f, 3f * info.cellWidth * 0.5f / 1.7f);
             cam.clearFlags = CameraClearFlags.SolidColor;
             cam.backgroundColor = new Color(0.035f, 0.04f, 0.075f, 1f);
             cam.allowHDR = true;

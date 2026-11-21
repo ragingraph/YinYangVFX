@@ -133,6 +133,20 @@ swirl.Stop();   // 淡出後自動回到物件池
 WeaponEffect.Spawn(thrustFx, handPosition, angleDegrees: 0f, mirror: facingLeft, size: 1f);
 ```
 
+全部動作（每種 6 個單色版本，prefab 名 `VFX_<Id>_<Colour>`）：
+
+| 武器 | 動作（Id） | 生成位置 |
+|---|---|---|
+| 長槍 | 刺擊 SpearThrust、旋轉掃 SpearSweep、上挑 SpearRising、連刺 SpearFlurry | 手／身體 |
+| 槌 | 重砸 HammerSmash、橫掃 HammerSweep、蓄力震地 HammerQuake | 手 |
+| 劍 | 劍氣 SwordQi、連斬 CrossSlash、揮砍 SwordSlash、旋風斬 SwordWhirl、突刺 SwordLunge | 手／身體／目標 |
+| 大刀 | 劈砍 BladeChop、拖刀斬 BladeDrag | 手 |
+| 戟 | 月牙橫斬 HalberdCrescent、挑刺 HalberdLiftThrust | 手 |
+| 鞭／雙截棍 | 甩擊 WhipLash、連環打 NunchakuFlurry | 手 |
+| 拳掌 | 氣功波 PalmWave | 手 |
+| 暗器 | 投擲 Dart | 手 |
+| 弓箭 | 射擊 ArrowShot | 弓 |
+
 - 生成位置：刺擊、劍氣、重砸＝武器所在的手；旋轉掃＝角色身體；連斬＝目標（X 以此為中心）。
 - `mirror = true` 朝左；`angleDegrees` 旋轉整個特效；`size` 整體縮放（1 ≈ 角色高 1 單位）。
 - `onImpact`：命中瞬間觸發（重砸落地、刺擊到最遠、連斬交會），可接震屏與頓幀。

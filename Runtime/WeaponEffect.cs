@@ -11,6 +11,22 @@ namespace YinYangVFX
         HammerSmash = 2,
         SwordQi = 3,
         CrossSlash = 4,
+        SpearRising = 5,
+        SpearFlurry = 6,
+        HammerSweep = 7,
+        HammerQuake = 8,
+        SwordSlash = 9,
+        SwordWhirl = 10,
+        SwordLunge = 11,
+        BladeChop = 12,
+        BladeDrag = 13,
+        HalberdCrescent = 14,
+        HalberdLiftThrust = 15,
+        WhipLash = 16,
+        NunchakuFlurry = 17,
+        PalmWave = 18,
+        Dart = 19,
+        ArrowShot = 20,
     }
 
     /// <summary>
@@ -31,7 +47,7 @@ namespace YinYangVFX
     /// Hit-stop (Time.timeScale = 0) freezes it, unless useUnscaledTime is on.
     /// </summary>
     [DisallowMultipleComponent]
-    public class WeaponEffect : MonoBehaviour
+    public partial class WeaponEffect : MonoBehaviour
     {
         [Header("Kind")]
         public WeaponKind kind = WeaponKind.SpearThrust;
@@ -104,6 +120,8 @@ namespace YinYangVFX
         float _seed;
         float _scale = 1f;
         float _acc;
+        int _flags;
+        float _crackScale = 1f;
         Color _core;
         Matrix4x4 _l2w;
         Vector2[][] _cracks;
@@ -166,11 +184,13 @@ namespace YinYangVFX
             _t = 0f;
             _fired = false;
             _acc = 0f;
+            _flags = 0;
+            _crackScale = kind == WeaponKind.HammerQuake ? 1.7f : 1f;
             _seed = Random.value * 100f;
             _core = Color.Lerp(primary, new Color(3f, 3.2f, 3.4f, 1f), 0.45f);
             ClearParticles();
             HideAllLines();
-            if (kind == WeaponKind.HammerSmash)
+            if (kind == WeaponKind.HammerSmash || kind == WeaponKind.HammerQuake)
             {
                 BuildCracks();
             }
@@ -230,6 +250,22 @@ namespace YinYangVFX
                 case WeaponKind.HammerSmash: AnimHammer(); break;
                 case WeaponKind.SwordQi: AnimQi(); break;
                 case WeaponKind.CrossSlash: AnimCross(); break;
+                case WeaponKind.SpearRising: AnimRising(); break;
+                case WeaponKind.SpearFlurry: AnimFlurry(); break;
+                case WeaponKind.HammerSweep: AnimHammerSweep(); break;
+                case WeaponKind.HammerQuake: AnimQuake(); break;
+                case WeaponKind.SwordSlash: AnimSwordSlash(); break;
+                case WeaponKind.SwordWhirl: AnimWhirl(); break;
+                case WeaponKind.SwordLunge: AnimLunge(); break;
+                case WeaponKind.BladeChop: AnimChop(); break;
+                case WeaponKind.BladeDrag: AnimDrag(); break;
+                case WeaponKind.HalberdCrescent: AnimHalberdCrescent(); break;
+                case WeaponKind.HalberdLiftThrust: AnimHalberdLift(); break;
+                case WeaponKind.WhipLash: AnimWhip(); break;
+                case WeaponKind.NunchakuFlurry: AnimNunchaku(); break;
+                case WeaponKind.PalmWave: AnimPalm(); break;
+                case WeaponKind.Dart: AnimDart(); break;
+                case WeaponKind.ArrowShot: AnimArrow(); break;
             }
 
             EndFrame();
@@ -731,7 +767,7 @@ namespace YinYangVFX
             for (int j = 0; j < count; j++)
             {
                 float phi = (Mathf.Lerp(-170f, 170f, j / (float)(count - 1)) + (Rnd(j) - 0.5f) * 16f) * Mathf.Deg2Rad;
-                float len = 0.7f + 0.8f * Rnd(j, 1);
+                float len = (0.7f + 0.8f * Rnd(j, 1)) * _crackScale;
                 float off = 0f;
                 for (int i = 0; i < pts; i++)
                 {
