@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.2
+
+- Weapon effects: flashes and the hot core are tinted with the effect colour instead of near-white, so each prefab reads as one colour.
+
 ## 0.7.1
 
 - Weapon effects are now a single colour each (all layers share one hue). Re-run the Weapons build menu to update existing prefabs.

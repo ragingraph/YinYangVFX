@@ -167,7 +167,7 @@ namespace YinYangVFX
             _fired = false;
             _acc = 0f;
             _seed = Random.value * 100f;
-            _core = Color.Lerp(primary, new Color(3f, 3.2f, 3.4f, 1f), 0.8f);
+            _core = Color.Lerp(primary, new Color(3f, 3.2f, 3.4f, 1f), 0.45f);
             ClearParticles();
             HideAllLines();
             if (kind == WeaponKind.HammerSmash)
@@ -611,7 +611,7 @@ namespace YinYangVFX
                 {
                     _fired = true;
                     if (onImpact != null) onImpact.Invoke();
-                    Emit(_dots, tip + 0.05f, 0f, 0f, 0f, 1.5f, 0.22f, Color.white);
+                    Emit(_dots, tip + 0.05f, 0f, 0f, 0f, 1.5f, 0.22f, Hue(primary));
                     Emit(_dots, tip + 0.05f, 0f, 0f, 0f, 0.9f, 0.45f, Hue(primary));
                     for (int j = 0; j < 22; j++)
                     {
@@ -696,7 +696,7 @@ namespace YinYangVFX
 
             if (p < 1f)
             {
-                Emit(_dots, headPos.x, headPos.y, 0f, 0f, 0.5f, 0.07f, Color.white);
+                Emit(_dots, headPos.x, headPos.y, 0f, 0f, 0.5f, 0.07f, Hue(primary));
             }
 
             if (!_fired && p >= 0.55f)
@@ -792,7 +792,7 @@ namespace YinYangVFX
                     {
                         Draw(Taper.Head, n, 0.1f * thickness, _core, 1f);
                         Vector3 hp = _buf[n - 1];
-                        Emit(_dots, hp.x, hp.y, 0f, 0f, 0.7f, 0.08f, Color.white);
+                        Emit(_dots, hp.x, hp.y, 0f, 0f, 0.7f, 0.08f, Hue(primary));
                         Emit(_stars, hp.x + (Random.value - 0.5f) * 0.3f, hp.y + (Random.value - 0.5f) * 0.3f, 0f, 0f, 0.15f, 0.3f, Pick(Random.Range(0, 3)));
                     }
                 }
@@ -808,7 +808,7 @@ namespace YinYangVFX
                     _fired = true;
                     if (onImpact != null) onImpact.Invoke();
 
-                    Emit(_dots, imp.x, imp.y + 0.05f, 0f, 0f, 2.6f, 0.25f, Color.white);
+                    Emit(_dots, imp.x, imp.y + 0.05f, 0f, 0f, 2.6f, 0.25f, Hue(primary));
                     Emit(_dots, imp.x, imp.y + 0.1f, 0f, 0f, 1.5f, 0.45f, Hue(primary));
                     for (int j = 0; j < 9; j++)
                     {
@@ -985,7 +985,7 @@ namespace YinYangVFX
                 if (!done)
                 {
                     Vector3 hp = _buf[n - 1];
-                    Emit(_dots, hp.x, hp.y, 0f, 0f, 0.45f, 0.07f, Color.white);
+                    Emit(_dots, hp.x, hp.y, 0f, 0f, 0.45f, 0.07f, Hue(primary));
                     Emit(_stars, hp.x + (Random.value - 0.5f) * 0.3f, hp.y + (Random.value - 0.5f) * 0.3f, 0f, 0f, 0.12f + 0.1f * Random.value, 0.35f, Hue(col));
                 }
             }
@@ -997,7 +997,7 @@ namespace YinYangVFX
                     _fired = true;
                     if (onImpact != null) onImpact.Invoke();
 
-                    Emit(_dots, 0f, 0f, 0f, 0f, 2.4f, 0.22f, Color.white);
+                    Emit(_dots, 0f, 0f, 0f, 0f, 2.4f, 0.22f, Hue(primary));
                     Emit(_dots, 0f, 0f, 0f, 0f, 1.6f, 0.4f, Hue(tertiary));
                     for (int j = 0; j < 26; j++)
                     {
