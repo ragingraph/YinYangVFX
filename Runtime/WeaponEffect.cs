@@ -27,6 +27,22 @@ namespace YinYangVFX
         PalmWave = 18,
         Dart = 19,
         ArrowShot = 20,
+        ShieldOrb = 21,
+        ShieldArc = 22,
+        YinYangShield = 23,
+        BlockSparks = 24,
+        PerfectBlock = 25,
+        ShieldRipple = 26,
+        ReflectWave = 27,
+        ProjectileReturn = 28,
+        DodgeAfterimage = 29,
+        RollDust = 30,
+        Blink = 31,
+        IronBody = 32,
+        HealPillar = 33,
+        InvincibleGlow = 34,
+        ShieldBreak = 35,
+        StunStars = 36,
     }
 
     /// <summary>
@@ -82,6 +98,13 @@ namespace YinYangVFX
         [Tooltip("Height of the ground, relative to the position (ground ring, dust, qi ground streak).")]
         public float groundY = -0.68f;
 
+        [Header("Looping (shields, buffs, stun)")]
+        [Tooltip("Keeps playing until Stop() is called. Set by the builder for shield / buff / stun effects.")]
+        public bool loop = false;
+        [Tooltip("Optional: the effect follows this transform every frame (the character).")]
+        public Transform follow;
+        public Vector2 followOffset = Vector2.zero;
+
         [Header("Events")]
         public UnityEvent onImpact;
 
@@ -122,6 +145,9 @@ namespace YinYangVFX
         float _acc;
         int _flags;
         float _crackScale = 1f;
+        float _gm = 1f;
+        float _pulse;
+        float _outT = -1f;
         Color _core;
         Matrix4x4 _l2w;
         Vector2[][] _cracks;
@@ -185,6 +211,9 @@ namespace YinYangVFX
             _fired = false;
             _acc = 0f;
             _flags = 0;
+            _gm = 1f;
+            _pulse = 0f;
+            _outT = -1f;
             _crackScale = kind == WeaponKind.HammerQuake ? 1.7f : 1f;
             _seed = Random.value * 100f;
             _core = Color.Lerp(primary, new Color(3f, 3.2f, 3.4f, 1f), 0.45f);
@@ -203,6 +232,21 @@ namespace YinYangVFX
             primary = primaryColor;
             secondary = secondaryColor;
             tertiary = tertiaryColor;
+        }
+
+        /// <summary>Looping effects: fades out, then returns to the pool.</summary>
+        public void Stop()
+        {
+            if (_playing && loop && _outT < 0f)
+            {
+                _outT = 0f;
+            }
+        }
+
+        /// <summary>Looping effects: flash brighter for a moment (call when the shield / body is hit).</summary>
+        public void Pulse()
+        {
+            _pulse = 1f;
         }
 
         public void StopImmediately()
@@ -240,6 +284,26 @@ namespace YinYangVFX
 
             _t += dt;
             _dt = dt;
+            if (follow != null)
+            {
+                transform.position = follow.position + new Vector3(followOffset.x, followOffset.y, 0f);
+            }
+
+            _pulse = Mathf.Max(0f, _pulse - dt * 3f);
+            if (loop)
+            {
+                if (_outT >= 0f)
+                {
+                    _outT += dt;
+                }
+
+                _gm = Mathf.Clamp01(_t / 0.25f) * (1f - Mathf.Clamp01(_outT / 0.35f));
+            }
+            else
+            {
+                _gm = 1f;
+            }
+
             _l2w = transform.localToWorldMatrix;
             _scale = Mathf.Abs(transform.lossyScale.y);
 
@@ -266,9 +330,35 @@ namespace YinYangVFX
                 case WeaponKind.PalmWave: AnimPalm(); break;
                 case WeaponKind.Dart: AnimDart(); break;
                 case WeaponKind.ArrowShot: AnimArrow(); break;
+                case WeaponKind.ShieldOrb: AnimShieldOrb(); break;
+                case WeaponKind.ShieldArc: AnimShieldArc(); break;
+                case WeaponKind.YinYangShield: AnimYinYangShield(); break;
+                case WeaponKind.BlockSparks: AnimBlockSparks(); break;
+                case WeaponKind.PerfectBlock: AnimPerfectBlock(); break;
+                case WeaponKind.ShieldRipple: AnimShieldRipple(); break;
+                case WeaponKind.ReflectWave: AnimReflectWave(); break;
+                case WeaponKind.ProjectileReturn: AnimProjectileReturn(); break;
+                case WeaponKind.DodgeAfterimage: AnimDodge(); break;
+                case WeaponKind.RollDust: AnimRoll(); break;
+                case WeaponKind.Blink: AnimBlink(); break;
+                case WeaponKind.IronBody: AnimIronBody(); break;
+                case WeaponKind.HealPillar: AnimHealPillar(); break;
+                case WeaponKind.InvincibleGlow: AnimInvincible(); break;
+                case WeaponKind.ShieldBreak: AnimShieldBreak(); break;
+                case WeaponKind.StunStars: AnimStun(); break;
             }
 
             EndFrame();
+
+            if (loop)
+            {
+                if (_outT >= 0.35f && (ParticlesDone() || _outT >= 1.5f))
+                {
+                    Release();
+                }
+
+                return;
+            }
 
             if (_t >= duration && (ParticlesDone() || _t >= duration + 1.5f))
             {
@@ -284,6 +374,7 @@ namespace YinYangVFX
 
             if (_sourcePrefab != null && Pools.TryGetValue(_sourcePrefab, out Stack<WeaponEffect> pool))
             {
+                follow = null;
                 gameObject.SetActive(false);
                 pool.Push(this);
             }
@@ -428,6 +519,7 @@ namespace YinYangVFX
         /// <summary>Draws the first n points of the scratch buffer (local space) as one light stroke.</summary>
         void Draw(Taper taper, int n, float width, Color tint, float gain)
         {
+            gain *= _gm * (1f + _pulse * 1.2f);
             if (n < 2 || gain <= 0.003f)
             {
                 return;

@@ -153,6 +153,32 @@ WeaponEffect.Spawn(thrustFx, handPosition, angleDegrees: 0f, mirror: facingLeft,
 - Prefab 上可調：`thickness`（粗細）、`reach`（刺擊距離）、`impactOffset`（槌落點）、`qiTravel`（劍氣飛行距離）、`sweepRadius`、`groundY`、三個 HDR 顏色。
 - 美術小提醒：需要 URP 2D + Bloom（測試場景已附）。
 
+## 防禦特效（護盾・格擋・反彈・迴避・強化・破防）
+
+選單 `Tools > YinYang VFX > Defense >`，每種一項，或 `Build ALL Defense Effects` 全做。每種 6 個單色版本，prefab 名 `VFX_<Id>_<Colour>`。
+
+| 類型 | 效果（Id） | 放置位置 |
+|---|---|---|
+| 護盾（持續） | 圓形能量盾 ShieldOrb、前方弧形盾 ShieldArc、陰陽護罩 YinYangShield | 角色 |
+| 格擋 | 格擋火花 BlockSparks、完美格擋 PerfectBlock、盾牌衝擊 ShieldRipple | 受擊點 |
+| 反彈 | 反彈波 ReflectWave、彈返子彈 ProjectileReturn | 角色／格擋點 |
+| 迴避 | 閃避殘影 DodgeAfterimage、翻滾塵土 RollDust、瞬步 Blink | 角色 |
+| 強化 | 金鐘罩 IronBody（持續）、回復光柱 HealPillar、無敵閃爍 InvincibleGlow（持續） | 角色 |
+| 破防 | 護盾破碎 ShieldBreak、破防眩暈 StunStars（持續） | 角色 |
+
+持續型（護盾、金鐘罩、無敵閃爍、眩暈）：
+
+```csharp
+var shield = WeaponEffect.Spawn(shieldPrefab, player.position);
+shield.follow = player.transform;   // 跟著角色
+shield.Pulse();                     // 被打到時閃亮一下
+shield.Stop();                      // 淡出並回收
+```
+
+- 身體類特效以 `sweepCenter`（預設 0,-0.2）為身體中心、`groundY` 為地面；角色約 1 單位高。
+- 受擊點類特效請放在命中的位置（例如盾牌前方）。
+- `onImpact` 會在格擋／反彈／破防的瞬間觸發，可接震屏與頓幀。
+
 ## 在遊戲裡使用（刀光）
 
 ```csharp

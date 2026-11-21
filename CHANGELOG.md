@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.0
+
+- 16 defence effects (single colour, 6 colours each), under `Tools/YinYang VFX/Defense/`:
+  shield orb, shield arc, yin-yang shield, block sparks, perfect block, shield ripple, reflect wave, projectile return,
+  dodge afterimage, roll dust, blink, iron body, heal pillar, invincible glow, shield break, stun stars.
+- `WeaponEffect` looping mode: `loop`, `follow`, `followOffset`, `Stop()`, `Pulse()` (shield / buff / stun effects stay until stopped).
+
 ## 0.8.0
 
 - 16 more weapon effects (all single colour, 6 colours each): spear rising / flurry, hammer sweep / quake (charge + ground slam),

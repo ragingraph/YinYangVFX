@@ -63,8 +63,10 @@ namespace YinYangVFX.EditorTools
             public float duration;
             public float cellWidth;
             public float originShift; // moves the spawn point left of the cell centre for effects that run to the right
+            public bool loop;
+            public float dummyDx;     // where the stand-in character is, relative to the spawn point
 
-            public KindInfo(WeaponKind kind, string label, string id, float duration, float cellWidth, float originShift)
+            public KindInfo(WeaponKind kind, string label, string id, float duration, float cellWidth, float originShift, bool loop = false, float dummyDx = 0f)
             {
                 this.kind = kind;
                 this.label = label;
@@ -72,6 +74,8 @@ namespace YinYangVFX.EditorTools
                 this.duration = duration;
                 this.cellWidth = cellWidth;
                 this.originShift = originShift;
+                this.loop = loop;
+                this.dummyDx = dummyDx;
             }
         }
 
@@ -98,6 +102,22 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.PalmWave, "Palm Wave", "PalmWave", 0.8f, 4.6f, 0.7f),
             new KindInfo(WeaponKind.Dart, "Dart Throw", "Dart", 0.9f, 4.8f, 1.2f),
             new KindInfo(WeaponKind.ArrowShot, "Arrow Shot", "ArrowShot", 1.0f, 5.0f, 1.4f),
+            new KindInfo(WeaponKind.ShieldOrb, "Shield Orb (loop)", "ShieldOrb", 1.0f, 3.0f, 0.0f, true, 0f),
+            new KindInfo(WeaponKind.ShieldArc, "Shield Arc (loop)", "ShieldArc", 1.0f, 3.0f, 0.0f, true, 0f),
+            new KindInfo(WeaponKind.YinYangShield, "Yin-Yang Shield (loop)", "YinYangShield", 1.0f, 3.0f, 0.0f, true, 0f),
+            new KindInfo(WeaponKind.BlockSparks, "Block Sparks", "BlockSparks", 0.6f, 3.0f, 0.0f, false, -0.9f),
+            new KindInfo(WeaponKind.PerfectBlock, "Perfect Block", "PerfectBlock", 0.8f, 4.0f, 0.0f, false, -0.9f),
+            new KindInfo(WeaponKind.ShieldRipple, "Shield Ripple", "ShieldRipple", 0.95f, 3.0f, 0.0f, false, -0.9f),
+            new KindInfo(WeaponKind.ReflectWave, "Reflect Wave", "ReflectWave", 0.9f, 5.4f, 0.0f, false, 0f),
+            new KindInfo(WeaponKind.ProjectileReturn, "Projectile Return", "ProjectileReturn", 0.9f, 4.4f, 1.0f, false, -0.9f),
+            new KindInfo(WeaponKind.DodgeAfterimage, "Dodge Afterimage", "DodgeAfterimage", 0.7f, 3.6f, 0.9f, false, 0f),
+            new KindInfo(WeaponKind.RollDust, "Roll Dust", "RollDust", 0.9f, 3.4f, 0.8f, false, 0f),
+            new KindInfo(WeaponKind.Blink, "Blink", "Blink", 0.7f, 4.6f, 1.4f, false, 0f),
+            new KindInfo(WeaponKind.IronBody, "Iron Body (loop)", "IronBody", 1.0f, 3.0f, 0.0f, true, 0f),
+            new KindInfo(WeaponKind.HealPillar, "Heal Pillar", "HealPillar", 1.4f, 3.0f, 0.0f, false, 0f),
+            new KindInfo(WeaponKind.InvincibleGlow, "Invincible Glow (loop)", "InvincibleGlow", 1.0f, 3.0f, 0.0f, true, 0f),
+            new KindInfo(WeaponKind.ShieldBreak, "Shield Break", "ShieldBreak", 1.0f, 3.2f, 0.0f, false, 0f),
+            new KindInfo(WeaponKind.StunStars, "Stun Stars (loop)", "StunStars", 1.0f, 3.0f, 0.0f, true, 0f),
         };
 
         // ------------------------------------------------------------------ menu
@@ -165,11 +185,76 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/Weapons/Build Arrow Shot", false, 26)]
         public static void BuildArrowShot() { Run(WeaponKind.ArrowShot); }
 
+        [MenuItem("Tools/YinYang VFX/Defense/Build Shield Orb", false, 201)]
+        public static void BuildShieldOrb() { Run(WeaponKind.ShieldOrb); }
+
+        [MenuItem("Tools/YinYang VFX/Defense/Build Shield Arc", false, 202)]
+        public static void BuildShieldArc() { Run(WeaponKind.ShieldArc); }
+
+        [MenuItem("Tools/YinYang VFX/Defense/Build Yin-Yang Shield", false, 203)]
+        public static void BuildYinYangShield() { Run(WeaponKind.YinYangShield); }
+
+        [MenuItem("Tools/YinYang VFX/Defense/Build Block Sparks", false, 204)]
+        public static void BuildBlockSparks() { Run(WeaponKind.BlockSparks); }
+
+        [MenuItem("Tools/YinYang VFX/Defense/Build Perfect Block", false, 205)]
+        public static void BuildPerfectBlock() { Run(WeaponKind.PerfectBlock); }
+
+        [MenuItem("Tools/YinYang VFX/Defense/Build Shield Ripple", false, 206)]
+        public static void BuildShieldRipple() { Run(WeaponKind.ShieldRipple); }
+
+        [MenuItem("Tools/YinYang VFX/Defense/Build Reflect Wave", false, 207)]
+        public static void BuildReflectWave() { Run(WeaponKind.ReflectWave); }
+
+        [MenuItem("Tools/YinYang VFX/Defense/Build Projectile Return", false, 208)]
+        public static void BuildProjectileReturn() { Run(WeaponKind.ProjectileReturn); }
+
+        [MenuItem("Tools/YinYang VFX/Defense/Build Dodge Afterimage", false, 209)]
+        public static void BuildDodgeAfterimage() { Run(WeaponKind.DodgeAfterimage); }
+
+        [MenuItem("Tools/YinYang VFX/Defense/Build Roll Dust", false, 210)]
+        public static void BuildRollDust() { Run(WeaponKind.RollDust); }
+
+        [MenuItem("Tools/YinYang VFX/Defense/Build Blink", false, 211)]
+        public static void BuildBlink() { Run(WeaponKind.Blink); }
+
+        [MenuItem("Tools/YinYang VFX/Defense/Build Iron Body", false, 212)]
+        public static void BuildIronBody() { Run(WeaponKind.IronBody); }
+
+        [MenuItem("Tools/YinYang VFX/Defense/Build Heal Pillar", false, 213)]
+        public static void BuildHealPillar() { Run(WeaponKind.HealPillar); }
+
+        [MenuItem("Tools/YinYang VFX/Defense/Build Invincible Glow", false, 214)]
+        public static void BuildInvincibleGlow() { Run(WeaponKind.InvincibleGlow); }
+
+        [MenuItem("Tools/YinYang VFX/Defense/Build Shield Break", false, 215)]
+        public static void BuildShieldBreak() { Run(WeaponKind.ShieldBreak); }
+
+        [MenuItem("Tools/YinYang VFX/Defense/Build Stun Stars", false, 216)]
+        public static void BuildStunStars() { Run(WeaponKind.StunStars); }
+
+        [MenuItem("Tools/YinYang VFX/Defense/Build ALL Defense Effects", false, 300)]
+        public static void BuildAllDefense()
+        {
+            System.Collections.Generic.List<WeaponKind> list = new System.Collections.Generic.List<WeaponKind>();
+            foreach (WeaponKind k in (WeaponKind[])Enum.GetValues(typeof(WeaponKind)))
+            {
+                if ((int)k >= (int)WeaponKind.ShieldOrb) list.Add(k);
+            }
+
+            Run(list.ToArray());
+        }
+
         [MenuItem("Tools/YinYang VFX/Weapons/Build ALL Weapon Effects", false, 100)]
         public static void BuildAll()
         {
-            WeaponKind[] all = (WeaponKind[])Enum.GetValues(typeof(WeaponKind));
-            Run(all);
+            System.Collections.Generic.List<WeaponKind> list = new System.Collections.Generic.List<WeaponKind>();
+            foreach (WeaponKind k in (WeaponKind[])Enum.GetValues(typeof(WeaponKind)))
+            {
+                if ((int)k < (int)WeaponKind.ShieldOrb) list.Add(k);
+            }
+
+            Run(list.ToArray());
         }
 
         // ------------------------------------------------------------------ build
@@ -258,6 +343,7 @@ namespace YinYangVFX.EditorTools
             WeaponEffect fx = root.AddComponent<WeaponEffect>();
             fx.kind = info.kind;
             fx.duration = info.duration;
+            fx.loop = info.loop;
             fx.primary = pal.primary;
             fx.secondary = pal.secondary;
             fx.tertiary = pal.tertiary;
@@ -304,7 +390,7 @@ namespace YinYangVFX.EditorTools
                 // a dim stand-in "character" and ground line so the scale and direction are readable
                 if (info.kind != WeaponKind.CrossSlash)
                 {
-                    MakeBlock("Dummy", square, new Vector3(cellX - info.originShift, cellY - 0.2f, 0f), new Vector3(0.14f, 1.0f, 1f), new Color(0.22f, 0.24f, 0.34f));
+                    MakeBlock("Dummy", square, new Vector3(cellX - info.originShift + info.dummyDx, cellY - 0.2f, 0f), new Vector3(0.14f, 1.0f, 1f), new Color(0.22f, 0.24f, 0.34f));
                 }
 
                 MakeBlock("Ground", square, new Vector3(cellX, cellY - 0.68f - 0.02f, 0f), new Vector3(info.cellWidth * 0.95f, 0.025f, 1f), new Color(0.16f, 0.17f, 0.25f));
@@ -313,7 +399,7 @@ namespace YinYangVFX.EditorTools
                 demoGo.transform.position = new Vector3(cellX - info.originShift, cellY, 0f);
                 WeaponEffectDemo demo = demoGo.AddComponent<WeaponEffectDemo>();
                 demo.prefab = prefab;
-                demo.interval = info.duration + 0.9f;
+                demo.interval = info.loop ? demo.holdSeconds + 1.2f : info.duration + 0.9f;
                 demo.startDelay = 0.4f + 0.15f * i;
             }
 
