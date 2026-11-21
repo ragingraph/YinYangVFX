@@ -118,6 +118,22 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.InvincibleGlow, "Invincible Glow (loop)", "InvincibleGlow", 1.0f, 3.0f, 0.0f, true, 0f),
             new KindInfo(WeaponKind.ShieldBreak, "Shield Break", "ShieldBreak", 1.0f, 3.2f, 0.0f, false, 0f),
             new KindInfo(WeaponKind.StunStars, "Stun Stars (loop)", "StunStars", 1.0f, 3.0f, 0.0f, true, 0f),
+            new KindInfo(WeaponKind.FireBall, "Fire Ball", "FireBall", 1.2f, 4.8f, 1.4f),
+            new KindInfo(WeaponKind.Flamethrower, "Flamethrower", "Flamethrower", 0.9f, 4.0f, 1.0f),
+            new KindInfo(WeaponKind.IceSpike, "Ice Spike", "IceSpike", 0.9f, 4.0f, 0.8f),
+            new KindInfo(WeaponKind.FreezeBurst, "Freeze Burst", "FreezeBurst", 1.0f, 3.6f, 0.0f),
+            new KindInfo(WeaponKind.LightningChain, "Lightning Chain", "LightningChain", 0.7f, 5.0f, 1.5f),
+            new KindInfo(WeaponKind.LightningStrike, "Lightning Strike", "LightningStrike", 0.8f, 4.0f, 1.0f),
+            new KindInfo(WeaponKind.WindBlade, "Wind Blade", "WindBlade", 1.2f, 4.8f, 1.6f),
+            new KindInfo(WeaponKind.Tornado, "Tornado", "Tornado", 1.8f, 4.0f, 1.0f),
+            new KindInfo(WeaponKind.WaterBall, "Water Ball", "WaterBall", 1.2f, 4.8f, 1.5f),
+            new KindInfo(WeaponKind.WaterColumn, "Water Column", "WaterColumn", 1.2f, 4.0f, 1.0f),
+            new KindInfo(WeaponKind.RockSpike, "Rock Spike", "RockSpike", 0.9f, 4.0f, 0.8f),
+            new KindInfo(WeaponKind.FallingRocks, "Falling Rocks", "FallingRocks", 1.2f, 4.0f, 0.8f),
+            new KindInfo(WeaponKind.PoisonMist, "Poison Mist", "PoisonMist", 2.0f, 4.0f, 0.8f),
+            new KindInfo(WeaponKind.PoisonShot, "Poison Shot", "PoisonShot", 1.2f, 4.8f, 1.5f),
+            new KindInfo(WeaponKind.HolyLight, "Holy Light", "HolyLight", 1.4f, 4.0f, 1.0f),
+            new KindInfo(WeaponKind.ShadowOrb, "Shadow Orb", "ShadowOrb", 1.6f, 4.0f, 1.0f),
         };
 
         // ------------------------------------------------------------------ menu
@@ -233,13 +249,67 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/Defense/Build Stun Stars", false, 216)]
         public static void BuildStunStars() { Run(WeaponKind.StunStars); }
 
+        [MenuItem("Tools/YinYang VFX/Elements/Build Fire Ball", false, 401)]
+        public static void BuildFireBall() { Run(WeaponKind.FireBall); }
+
+        [MenuItem("Tools/YinYang VFX/Elements/Build Flamethrower", false, 402)]
+        public static void BuildFlamethrower() { Run(WeaponKind.Flamethrower); }
+
+        [MenuItem("Tools/YinYang VFX/Elements/Build Ice Spike", false, 403)]
+        public static void BuildIceSpike() { Run(WeaponKind.IceSpike); }
+
+        [MenuItem("Tools/YinYang VFX/Elements/Build Freeze Burst", false, 404)]
+        public static void BuildFreezeBurst() { Run(WeaponKind.FreezeBurst); }
+
+        [MenuItem("Tools/YinYang VFX/Elements/Build Lightning Chain", false, 405)]
+        public static void BuildLightningChain() { Run(WeaponKind.LightningChain); }
+
+        [MenuItem("Tools/YinYang VFX/Elements/Build Lightning Strike", false, 406)]
+        public static void BuildLightningStrike() { Run(WeaponKind.LightningStrike); }
+
+        [MenuItem("Tools/YinYang VFX/Elements/Build Wind Blade", false, 407)]
+        public static void BuildWindBlade() { Run(WeaponKind.WindBlade); }
+
+        [MenuItem("Tools/YinYang VFX/Elements/Build Tornado", false, 408)]
+        public static void BuildTornado() { Run(WeaponKind.Tornado); }
+
+        [MenuItem("Tools/YinYang VFX/Elements/Build Water Ball", false, 409)]
+        public static void BuildWaterBall() { Run(WeaponKind.WaterBall); }
+
+        [MenuItem("Tools/YinYang VFX/Elements/Build Water Column", false, 410)]
+        public static void BuildWaterColumn() { Run(WeaponKind.WaterColumn); }
+
+        [MenuItem("Tools/YinYang VFX/Elements/Build Rock Spike", false, 411)]
+        public static void BuildRockSpike() { Run(WeaponKind.RockSpike); }
+
+        [MenuItem("Tools/YinYang VFX/Elements/Build Falling Rocks", false, 412)]
+        public static void BuildFallingRocks() { Run(WeaponKind.FallingRocks); }
+
+        [MenuItem("Tools/YinYang VFX/Elements/Build Poison Mist", false, 413)]
+        public static void BuildPoisonMist() { Run(WeaponKind.PoisonMist); }
+
+        [MenuItem("Tools/YinYang VFX/Elements/Build Poison Shot", false, 414)]
+        public static void BuildPoisonShot() { Run(WeaponKind.PoisonShot); }
+
+        [MenuItem("Tools/YinYang VFX/Elements/Build Holy Light", false, 415)]
+        public static void BuildHolyLight() { Run(WeaponKind.HolyLight); }
+
+        [MenuItem("Tools/YinYang VFX/Elements/Build Shadow Orb", false, 416)]
+        public static void BuildShadowOrb() { Run(WeaponKind.ShadowOrb); }
+
+        [MenuItem("Tools/YinYang VFX/Elements/Build ALL Elements", false, 500)]
+        public static void BuildAllElements()
+        {
+            RunRange((int)WeaponKind.FireBall, int.MaxValue);
+        }
+
         [MenuItem("Tools/YinYang VFX/Defense/Build ALL Defense Effects", false, 300)]
         public static void BuildAllDefense()
         {
             System.Collections.Generic.List<WeaponKind> list = new System.Collections.Generic.List<WeaponKind>();
             foreach (WeaponKind k in (WeaponKind[])Enum.GetValues(typeof(WeaponKind)))
             {
-                if ((int)k >= (int)WeaponKind.ShieldOrb) list.Add(k);
+                if ((int)k >= (int)WeaponKind.ShieldOrb && (int)k < (int)WeaponKind.FireBall) list.Add(k);
             }
 
             Run(list.ToArray());
@@ -258,6 +328,17 @@ namespace YinYangVFX.EditorTools
         }
 
         // ------------------------------------------------------------------ build
+
+        static void RunRange(int from, int toExclusive)
+        {
+            System.Collections.Generic.List<WeaponKind> list = new System.Collections.Generic.List<WeaponKind>();
+            foreach (WeaponKind k in (WeaponKind[])Enum.GetValues(typeof(WeaponKind)))
+            {
+                if ((int)k >= from && (int)k < toExclusive) list.Add(k);
+            }
+
+            Run(list.ToArray());
+        }
 
         static void Run(params WeaponKind[] kinds)
         {

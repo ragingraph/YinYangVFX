@@ -153,6 +153,13 @@ WeaponEffect.Spawn(thrustFx, handPosition, angleDegrees: 0f, mirror: facingLeft,
 - Prefab 上可調：`thickness`（粗細）、`reach`（刺擊距離）、`impactOffset`（槌落點）、`qiTravel`（劍氣飛行距離）、`sweepRadius`、`groundY`、三個 HDR 顏色。
 - 美術小提醒：需要 URP 2D + Bloom（測試場景已附）。
 
+## 元素攻擊（火・冰・雷・風・水・土・毒・聖・暗）
+
+選單 `Tools > YinYang VFX > Elements >`（每種一項，或 `Build ALL Elements`）。每種 6 個單色版本，請依元素選顏色（火＝Crimson、冰／水＝Ice／Azure、雷＝Gold、風／毒＝Jade、暗＝Violet…）。
+FireBall 火球、Flamethrower 火焰噴射、IceSpike 冰錐、FreezeBurst 冰凍爆、LightningChain 閃電鏈、LightningStrike 落雷、WindBlade 風刃、Tornado 龍捲風、
+WaterBall 水球、WaterColumn 水柱、RockSpike 岩刺、FallingRocks 落石、PoisonMist 毒霧、PoisonShot 毒彈、HolyLight 聖光、ShadowOrb 暗影球。
+用法同武器特效：`WeaponEffect.Spawn(prefab, 位置, 角度, 是否朝左, 大小)`，從施法者的手發出；`onImpact` 在命中瞬間觸發。
+
 ## 防禦特效（護盾・格擋・反彈・迴避・強化・破防）
 
 選單 `Tools > YinYang VFX > Defense >`，每種一項，或 `Build ALL Defense Effects` 全做。每種 6 個單色版本，prefab 名 `VFX_<Id>_<Colour>`。

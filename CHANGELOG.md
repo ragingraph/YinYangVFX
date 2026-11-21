@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.0
+
+- 16 elemental attack effects (fire ball / flamethrower, ice spike / freeze burst, lightning chain / strike, wind blade / tornado, water ball / column, rock spike / falling rocks, poison mist / shot, holy light, shadow orb). Menus under `Tools/YinYang VFX/Elements/`.
+
 ## 0.10.0
 
 - Weapon / defence effects: richer look. Strokes are ~30% thicker with a wide halo, mid glow and a winding energy ribbon;

@@ -43,6 +43,22 @@ namespace YinYangVFX
         InvincibleGlow = 34,
         ShieldBreak = 35,
         StunStars = 36,
+        FireBall = 37,
+        Flamethrower = 38,
+        IceSpike = 39,
+        FreezeBurst = 40,
+        LightningChain = 41,
+        LightningStrike = 42,
+        WindBlade = 43,
+        Tornado = 44,
+        WaterBall = 45,
+        WaterColumn = 46,
+        RockSpike = 47,
+        FallingRocks = 48,
+        PoisonMist = 49,
+        PoisonShot = 50,
+        HolyLight = 51,
+        ShadowOrb = 52,
     }
 
     /// <summary>
@@ -352,6 +368,22 @@ namespace YinYangVFX
                 case WeaponKind.InvincibleGlow: AnimInvincible(); break;
                 case WeaponKind.ShieldBreak: AnimShieldBreak(); break;
                 case WeaponKind.StunStars: AnimStun(); break;
+                case WeaponKind.FireBall: AnimFireball(); break;
+                case WeaponKind.Flamethrower: AnimFlamethrower(); break;
+                case WeaponKind.IceSpike: AnimIceSpike(); break;
+                case WeaponKind.FreezeBurst: AnimFreezeBurst(); break;
+                case WeaponKind.LightningChain: AnimLightningChain(); break;
+                case WeaponKind.LightningStrike: AnimLightningStrike(); break;
+                case WeaponKind.WindBlade: AnimWindBlade(); break;
+                case WeaponKind.Tornado: AnimTornado(); break;
+                case WeaponKind.WaterBall: AnimWaterBall(); break;
+                case WeaponKind.WaterColumn: AnimWaterColumn(); break;
+                case WeaponKind.RockSpike: AnimRockSpike(); break;
+                case WeaponKind.FallingRocks: AnimFallingRocks(); break;
+                case WeaponKind.PoisonMist: AnimPoisonMist(); break;
+                case WeaponKind.PoisonShot: AnimPoisonShot(); break;
+                case WeaponKind.HolyLight: AnimHolyLight(); break;
+                case WeaponKind.ShadowOrb: AnimShadowOrb(); break;
             }
 
             EndFrame();
