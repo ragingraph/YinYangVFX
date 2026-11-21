@@ -105,6 +105,12 @@ namespace YinYangVFX
         public Transform follow;
         public Vector2 followOffset = Vector2.zero;
 
+        [Header("Richness")]
+        [Tooltip("Spark / star particles are emitted this many times over (1 = original amount).")]
+        public float particleMultiplier = 2.5f;
+        [Tooltip("Chance per stroke per frame of a glittering star appearing on it.")]
+        [Range(0f, 1f)] public float sparkle = 0.3f;
+
         [Header("Events")]
         public UnityEvent onImpact;
 
@@ -457,7 +463,7 @@ namespace YinYangVFX
             main.startLifetime = 0.6f;
             main.startSpeed = 0f;
             main.startSize = 0.1f;
-            main.maxParticles = 400;
+            main.maxParticles = 1500;
             main.gravityModifier = gravity;
             main.useUnscaledTime = useUnscaledTime;
 
@@ -519,7 +525,8 @@ namespace YinYangVFX
         /// <summary>Draws the first n points of the scratch buffer (local space) as one light stroke.</summary>
         void Draw(Taper taper, int n, float width, Color tint, float gain)
         {
-            gain *= _gm * (1f + _pulse * 1.2f);
+            gain *= _gm * (1f + _pulse * 1.2f) * 1.25f;
+            width *= 1.3f;
             if (n < 2 || gain <= 0.003f)
             {
                 return;
@@ -546,6 +553,12 @@ namespace YinYangVFX
             l.mpb.SetColor(ID_Tint, c);
             l.lr.SetPropertyBlock(l.mpb);
             l.lr.enabled = true;
+
+            if (width >= 0.06f && gain > 0.3f && Random.value < sparkle)
+            {
+                Vector3 q = _buf[Random.Range(0, n)];
+                Emit(_stars, q.x, q.y, (Random.value - 0.5f) * 0.6f, (Random.value - 0.5f) * 0.6f, 0.1f + 0.14f * Random.value, 0.45f, Hue(primary));
+            }
         }
 
         void EndFrame()
@@ -636,13 +649,35 @@ namespace YinYangVFX
 
         void Emit(ParticleSystem ps, float x, float y, float vx, float vy, float size, float life, Color color)
         {
-            ParticleSystem.EmitParams ep = new ParticleSystem.EmitParams();
-            ep.position = _l2w.MultiplyPoint3x4(new Vector3(x, y, 0f));
-            ep.velocity = _l2w.MultiplyVector(new Vector3(vx, vy, 0f));
-            ep.startSize = size * _scale;
-            ep.startLifetime = life;
-            ep.startColor = color;
-            ps.Emit(ep, 1);
+            int copies = 1;
+            if (ps != _dots)
+            {
+                copies = Mathf.Max(1, Mathf.FloorToInt(particleMultiplier));
+                if (Random.value < particleMultiplier - Mathf.Floor(particleMultiplier))
+                {
+                    copies++;
+                }
+            }
+
+            for (int c = 0; c < copies; c++)
+            {
+                float jx = 0f, jy = 0f, jv = 1f, js = 1f;
+                if (c > 0)
+                {
+                    jx = (Random.value - 0.5f) * 0.12f;
+                    jy = (Random.value - 0.5f) * 0.12f;
+                    jv = 0.75f + 0.5f * Random.value;
+                    js = 0.7f + 0.6f * Random.value;
+                }
+
+                ParticleSystem.EmitParams ep = new ParticleSystem.EmitParams();
+                ep.position = _l2w.MultiplyPoint3x4(new Vector3(x + jx, y + jy, 0f));
+                ep.velocity = _l2w.MultiplyVector(new Vector3(vx * jv, vy * jv, 0f));
+                ep.startSize = size * js * _scale;
+                ep.startLifetime = life;
+                ep.startColor = color;
+                ps.Emit(ep, 1);
+            }
         }
 
         void ClearParticles()

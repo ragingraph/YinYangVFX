@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.10.0
+
+- Weapon / defence effects: richer look. Strokes are ~30% thicker with a wide halo, mid glow and a winding energy ribbon;
+  every stroke glitters with stars; spark and star particles are emitted 2.5x (`particleMultiplier`, `sparkle` on the prefab);
+  brighter materials and a stronger bloom profile for the test scenes (`VFX_Bloom_Weapons`). Re-run the build menu to update.
+- Recommended Bloom for your game: threshold 0.8, intensity 1.5, scatter 0.7.
+
 ## 0.9.0
 
 - 16 defence effects (single colour, 6 colours each), under `Tools/YinYang VFX/Defense/`:

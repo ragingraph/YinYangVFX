@@ -294,15 +294,15 @@ namespace YinYangVFX.EditorTools
             Texture2D softLine = AssetDatabase.LoadAssetAtPath<Texture2D>(TexDir + "/VFX_SoftLine.png");
             Texture2D star = AssetDatabase.LoadAssetAtPath<Texture2D>(TexDir + "/VFX_Star.png");
 
-            Material lineMat = MakeMaterial(MatDir + "/MAT_WeaponLine.mat", particleShader, softLine, new Color(2f, 2f, 2f, 1f));
-            Material dotMat = MakeMaterial(MatDir + "/MAT_WeaponDot.mat", particleShader, softDot, new Color(2.6f, 2.6f, 2.6f, 1f));
-            Material starMat = MakeMaterial(MatDir + "/MAT_WeaponStar.mat", particleShader, star, new Color(3.2f, 3.2f, 3.2f, 1f));
+            Material lineMat = MakeMaterial(MatDir + "/MAT_WeaponLine.mat", particleShader, softLine, new Color(2.4f, 2.4f, 2.4f, 1f));
+            Material dotMat = MakeMaterial(MatDir + "/MAT_WeaponDot.mat", particleShader, softDot, new Color(3.0f, 3.0f, 3.0f, 1f));
+            Material starMat = MakeMaterial(MatDir + "/MAT_WeaponStar.mat", particleShader, star, new Color(3.8f, 3.8f, 3.8f, 1f));
             string lineMatPath = AssetDatabase.GetAssetPath(lineMat);
             string dotMatPath = AssetDatabase.GetAssetPath(dotMat);
             string starMatPath = AssetDatabase.GetAssetPath(starMat);
 
-            string profilePath = ProfileDir + "/VFX_Bloom_Profile.asset";
-            SlashVFXBuilder.GetOrCreateBloomProfile(profilePath);
+            string profilePath = ProfileDir + "/VFX_Bloom_Weapons.asset";
+            MakeBloomProfile(profilePath);
             string squarePath = TexDir + "/VFX_WhiteSquare.png";
             SlashVFXBuilder.CreateWhiteSquareSprite(squarePath);
             AssetDatabase.SaveAssets();
@@ -419,6 +419,32 @@ namespace YinYangVFX.EditorTools
 
         // ------------------------------------------------------------------ textures / materials
 
+        // Stronger bloom than the slash set: the weapon / defence effects are built to glow.
+        static void MakeBloomProfile(string path)
+        {
+            VolumeProfile profile = AssetDatabase.LoadAssetAtPath<VolumeProfile>(path);
+            if (profile == null)
+            {
+                profile = ScriptableObject.CreateInstance<VolumeProfile>();
+                AssetDatabase.CreateAsset(profile, path);
+            }
+
+            if (!profile.TryGet(out Bloom bloom))
+            {
+                bloom = profile.Add<Bloom>(true);
+                AssetDatabase.AddObjectToAsset(bloom, profile);
+            }
+
+            bloom.active = true;
+            bloom.threshold.Override(0.8f);
+            bloom.intensity.Override(1.5f);
+            bloom.scatter.Override(0.7f);
+            bloom.tint.Override(Color.white);
+            bloom.highQualityFiltering.Override(false);
+            EditorUtility.SetDirty(bloom);
+            EditorUtility.SetDirty(profile);
+        }
+
         static Material MakeMaterial(string path, Shader shader, Texture2D tex, Color tint)
         {
             Material m = SlashVFXBuilder.GetOrCreateMaterial(path, shader);
@@ -434,7 +460,7 @@ namespace YinYangVFX.EditorTools
         static Color32 SoftLinePixel(int x, int y, int w, int h)
         {
             float v = Mathf.Abs(y / (float)(h - 1) * 2f - 1f);
-            float a = Mathf.Pow(Mathf.Clamp01(1f - v), 1.5f);
+            float a = Mathf.Pow(Mathf.Clamp01(1f - v), 1.1f);
             return new Color32(255, 255, 255, (byte)Mathf.RoundToInt(a * 255f));
         }
 

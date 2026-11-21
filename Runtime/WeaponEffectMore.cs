@@ -34,12 +34,39 @@ namespace YinYangVFX
             return true;
         }
 
-        /// <summary>Halo + body + hot core of the same colour.</summary>
+        /// <summary>Wide halo + mid glow + body + hot core + a thin energy ribbon, all in the same colour.</summary>
         void Beam(Taper tp, int n, float w, float g)
         {
-            Draw(tp, n, w * 2.3f * thickness, primary * 0.5f, g * 0.5f);
+            Draw(tp, n, w * 3.2f * thickness, primary * 0.35f, g * 0.45f);
+            Draw(tp, n, w * 1.7f * thickness, primary * 0.8f, g * 0.7f);
             Draw(tp, n, w * thickness, primary, g);
             Draw(tp, n, w * 0.4f * thickness, _core, g);
+
+            // ribbon winding around the stroke (modifies the scratch buffer, so it goes last)
+            if (n >= 4)
+            {
+                float amp = Mathf.Clamp(w * 0.7f, 0.05f, 0.22f);
+                Vector3 prev = _buf[0];
+                for (int i = 0; i < n; i++)
+                {
+                    Vector3 a = _buf[Mathf.Max(i - 1, 0)];
+                    Vector3 b = _buf[Mathf.Min(i + 1, n - 1)];
+                    Vector3 d = (b - a);
+                    d.z = 0f;
+                    if (d.sqrMagnitude > 1e-6f)
+                    {
+                        d.Normalize();
+                    }
+
+                    float s = i / (float)(n - 1);
+                    float off = amp * Mathf.Sin(s * 16f - _t * 28f) * Mathf.Sin(Mathf.PI * Mathf.Clamp01(s));
+                    Vector3 cur = _buf[i];
+                    _buf[i] = new Vector3(cur.x - d.y * off, cur.y + d.x * off, 0f);
+                    prev = cur;
+                }
+
+                Draw(tp, n, w * 0.22f * thickness, primary, g * 0.9f);
+            }
         }
 
         int BezPts(Vector2 a, Vector2 b, Vector2 c, float s0, float s1, int n)
@@ -68,6 +95,7 @@ namespace YinYangVFX
         {
             Emit(_dots, x, y, 0f, 0f, flash, 0.22f, Hue(primary));
             Emit(_dots, x, y, 0f, 0f, flash * 0.55f, 0.4f, Hue(primary));
+            Emit(_dots, x, y, 0f, 0f, flash * 1.9f, 0.5f, Tint(0.3f));
             for (int j = 0; j < sparks; j++)
             {
                 float a = Random.value * 6.2832f;
