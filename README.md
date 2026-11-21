@@ -153,6 +153,11 @@ WeaponEffect.Spawn(thrustFx, handPosition, angleDegrees: 0f, mirror: facingLeft,
 - Prefab 上可調：`thickness`（粗細）、`reach`（刺擊距離）、`impactOffset`（槌落點）、`qiTravel`（劍氣飛行距離）、`sweepRadius`、`groundY`、三個 HDR 顏色。
 - 美術小提醒：需要 URP 2D + Bloom（測試場景已附）。
 
+## 命中特效
+
+選單 `Tools > YinYang VFX > Hits >`（每種一項，或 `Build ALL Hits`）。放在敵人被打中的位置。
+HitSlash 斬擊命中、HitBlunt 鈍擊命中、HitElemental 元素命中、HitPierce 刺擊命中、CritHit 爆擊、CritBadge 暴擊字樣背光（文字請自己疊上去）、KillBurst 擊殺爆散。
+
 ## 元素攻擊（火・冰・雷・風・水・土・毒・聖・暗）
 
 選單 `Tools > YinYang VFX > Elements >`（每種一項，或 `Build ALL Elements`）。每種 6 個單色版本，請依元素選顏色（火＝Crimson、冰／水＝Ice／Azure、雷＝Gold、風／毒＝Jade、暗＝Violet…）。

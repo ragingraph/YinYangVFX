@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.0
+
+- 7 hit effects: slash / blunt / elemental / pierce hit, crit hit, crit badge (light behind a text), kill burst. Menus under `Tools/YinYang VFX/Hits/`.
+
 ## 0.11.0
 
 - 16 elemental attack effects (fire ball / flamethrower, ice spike / freeze burst, lightning chain / strike, wind blade / tornado, water ball / column, rock spike / falling rocks, poison mist / shot, holy light, shadow orb). Menus under `Tools/YinYang VFX/Elements/`.

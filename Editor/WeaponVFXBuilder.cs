@@ -134,6 +134,13 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.PoisonShot, "Poison Shot", "PoisonShot", 1.2f, 4.8f, 1.5f),
             new KindInfo(WeaponKind.HolyLight, "Holy Light", "HolyLight", 1.4f, 4.0f, 1.0f),
             new KindInfo(WeaponKind.ShadowOrb, "Shadow Orb", "ShadowOrb", 1.6f, 4.0f, 1.0f),
+            new KindInfo(WeaponKind.HitSlash, "Hit Slash", "HitSlash", 0.5f, 3.4f, 0f, false, -0.9f),
+            new KindInfo(WeaponKind.HitBlunt, "Hit Blunt", "HitBlunt", 0.6f, 3.4f, 0f, false, -0.9f),
+            new KindInfo(WeaponKind.HitElemental, "Hit Elemental", "HitElemental", 0.7f, 3.4f, 0f, false, -0.9f),
+            new KindInfo(WeaponKind.HitPierce, "Hit Pierce", "HitPierce", 0.5f, 3.4f, 0f, false, -0.9f),
+            new KindInfo(WeaponKind.CritHit, "Crit Hit", "CritHit", 0.8f, 3.4f, 0f, false, -0.9f),
+            new KindInfo(WeaponKind.CritBadge, "Crit Badge", "CritBadge", 1.0f, 3.4f, 0f, false, -0.9f),
+            new KindInfo(WeaponKind.KillBurst, "Kill Burst", "KillBurst", 1.2f, 3.4f, 0f, false, -0.9f),
         };
 
         // ------------------------------------------------------------------ menu
@@ -297,10 +304,37 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/Elements/Build Shadow Orb", false, 416)]
         public static void BuildShadowOrb() { Run(WeaponKind.ShadowOrb); }
 
+        [MenuItem("Tools/YinYang VFX/Hits/Build Hit Slash", false, 601)]
+        public static void BuildHitSlash() { Run(WeaponKind.HitSlash); }
+
+        [MenuItem("Tools/YinYang VFX/Hits/Build Hit Blunt", false, 602)]
+        public static void BuildHitBlunt() { Run(WeaponKind.HitBlunt); }
+
+        [MenuItem("Tools/YinYang VFX/Hits/Build Hit Elemental", false, 603)]
+        public static void BuildHitElemental() { Run(WeaponKind.HitElemental); }
+
+        [MenuItem("Tools/YinYang VFX/Hits/Build Hit Pierce", false, 604)]
+        public static void BuildHitPierce() { Run(WeaponKind.HitPierce); }
+
+        [MenuItem("Tools/YinYang VFX/Hits/Build Crit Hit", false, 605)]
+        public static void BuildCritHit() { Run(WeaponKind.CritHit); }
+
+        [MenuItem("Tools/YinYang VFX/Hits/Build Crit Badge (light behind your text)", false, 606)]
+        public static void BuildCritBadge() { Run(WeaponKind.CritBadge); }
+
+        [MenuItem("Tools/YinYang VFX/Hits/Build Kill Burst", false, 607)]
+        public static void BuildKillBurst() { Run(WeaponKind.KillBurst); }
+
+        [MenuItem("Tools/YinYang VFX/Hits/Build ALL Hits", false, 700)]
+        public static void BuildAllHits()
+        {
+            RunRange((int)WeaponKind.HitSlash, int.MaxValue);
+        }
+
         [MenuItem("Tools/YinYang VFX/Elements/Build ALL Elements", false, 500)]
         public static void BuildAllElements()
         {
-            RunRange((int)WeaponKind.FireBall, int.MaxValue);
+            RunRange((int)WeaponKind.FireBall, (int)WeaponKind.HitSlash);
         }
 
         [MenuItem("Tools/YinYang VFX/Defense/Build ALL Defense Effects", false, 300)]

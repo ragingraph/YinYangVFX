@@ -59,6 +59,13 @@ namespace YinYangVFX
         PoisonShot = 50,
         HolyLight = 51,
         ShadowOrb = 52,
+        HitSlash = 53,
+        HitBlunt = 54,
+        HitElemental = 55,
+        HitPierce = 56,
+        CritHit = 57,
+        CritBadge = 58,
+        KillBurst = 59,
     }
 
     /// <summary>
@@ -384,6 +391,13 @@ namespace YinYangVFX
                 case WeaponKind.PoisonShot: AnimPoisonShot(); break;
                 case WeaponKind.HolyLight: AnimHolyLight(); break;
                 case WeaponKind.ShadowOrb: AnimShadowOrb(); break;
+                case WeaponKind.HitSlash: AnimHitSlash(); break;
+                case WeaponKind.HitBlunt: AnimHitBlunt(); break;
+                case WeaponKind.HitElemental: AnimHitElemental(); break;
+                case WeaponKind.HitPierce: AnimHitPierce(); break;
+                case WeaponKind.CritHit: AnimCritHit(); break;
+                case WeaponKind.CritBadge: AnimCritBadge(); break;
+                case WeaponKind.KillBurst: AnimKillBurst(); break;
             }
 
             EndFrame();
