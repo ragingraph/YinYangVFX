@@ -141,6 +141,14 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.CritHit, "Crit Hit", "CritHit", 0.8f, 3.4f, 0f, false, -0.9f),
             new KindInfo(WeaponKind.CritBadge, "Crit Badge", "CritBadge", 1.0f, 3.4f, 0f, false, -0.9f),
             new KindInfo(WeaponKind.KillBurst, "Kill Burst", "KillBurst", 1.2f, 3.4f, 0f, false, -0.9f),
+            new KindInfo(WeaponKind.StatusBurn, "Status Burning (loop)", "StatusBurn", 1.0f, 3.0f, 0f, true, 0f),
+            new KindInfo(WeaponKind.StatusFrozen, "Status Frozen (loop)", "StatusFrozen", 1.0f, 3.0f, 0f, true, 0f),
+            new KindInfo(WeaponKind.StatusPoison, "Status Poisoned (loop)", "StatusPoison", 1.0f, 3.0f, 0f, true, 0f),
+            new KindInfo(WeaponKind.StatusParalyze, "Status Paralyzed (loop)", "StatusParalyze", 1.0f, 3.0f, 0f, true, 0f),
+            new KindInfo(WeaponKind.StatusSlow, "Status Slowed (loop)", "StatusSlow", 1.0f, 3.0f, 0f, true, 0f),
+            new KindInfo(WeaponKind.StatusSilence, "Status Silenced (loop)", "StatusSilence", 1.0f, 3.0f, 0f, true, 0f),
+            new KindInfo(WeaponKind.StatusCurse, "Status Cursed (loop)", "StatusCurse", 1.0f, 3.0f, 0f, true, 0f),
+            new KindInfo(WeaponKind.StatusBleed, "Status Bleeding (loop)", "StatusBleed", 1.0f, 3.0f, 0f, true, 0f),
         };
 
         // ------------------------------------------------------------------ menu
@@ -325,10 +333,40 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/Hits/Build Kill Burst", false, 607)]
         public static void BuildKillBurst() { Run(WeaponKind.KillBurst); }
 
+        [MenuItem("Tools/YinYang VFX/Status/Build Burning", false, 801)]
+        public static void BuildStatusBurn() { Run(WeaponKind.StatusBurn); }
+
+        [MenuItem("Tools/YinYang VFX/Status/Build Frozen", false, 802)]
+        public static void BuildStatusFrozen() { Run(WeaponKind.StatusFrozen); }
+
+        [MenuItem("Tools/YinYang VFX/Status/Build Poisoned", false, 803)]
+        public static void BuildStatusPoison() { Run(WeaponKind.StatusPoison); }
+
+        [MenuItem("Tools/YinYang VFX/Status/Build Paralyzed", false, 804)]
+        public static void BuildStatusParalyze() { Run(WeaponKind.StatusParalyze); }
+
+        [MenuItem("Tools/YinYang VFX/Status/Build Slowed", false, 805)]
+        public static void BuildStatusSlow() { Run(WeaponKind.StatusSlow); }
+
+        [MenuItem("Tools/YinYang VFX/Status/Build Silenced", false, 806)]
+        public static void BuildStatusSilence() { Run(WeaponKind.StatusSilence); }
+
+        [MenuItem("Tools/YinYang VFX/Status/Build Cursed", false, 807)]
+        public static void BuildStatusCurse() { Run(WeaponKind.StatusCurse); }
+
+        [MenuItem("Tools/YinYang VFX/Status/Build Bleeding", false, 808)]
+        public static void BuildStatusBleed() { Run(WeaponKind.StatusBleed); }
+
+        [MenuItem("Tools/YinYang VFX/Status/Build ALL Status Effects", false, 900)]
+        public static void BuildAllStatus()
+        {
+            RunRange((int)WeaponKind.StatusBurn, int.MaxValue);
+        }
+
         [MenuItem("Tools/YinYang VFX/Hits/Build ALL Hits", false, 700)]
         public static void BuildAllHits()
         {
-            RunRange((int)WeaponKind.HitSlash, int.MaxValue);
+            RunRange((int)WeaponKind.HitSlash, (int)WeaponKind.StatusBurn);
         }
 
         [MenuItem("Tools/YinYang VFX/Elements/Build ALL Elements", false, 500)]

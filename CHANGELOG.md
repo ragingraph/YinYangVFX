@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.0
+
+- 8 looping status effects: burning, frozen, poisoned, paralysed, slowed, silenced, cursed, bleeding. Menus under `Tools/YinYang VFX/Status/`.
+
 ## 0.12.0
 
 - 7 hit effects: slash / blunt / elemental / pierce hit, crit hit, crit badge (light behind a text), kill burst. Menus under `Tools/YinYang VFX/Hits/`.

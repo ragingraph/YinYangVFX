@@ -153,6 +153,18 @@ WeaponEffect.Spawn(thrustFx, handPosition, angleDegrees: 0f, mirror: facingLeft,
 - Prefab 上可調：`thickness`（粗細）、`reach`（刺擊距離）、`impactOffset`（槌落點）、`qiTravel`（劍氣飛行距離）、`sweepRadius`、`groundY`、三個 HDR 顏色。
 - 美術小提醒：需要 URP 2D + Bloom（測試場景已附）。
 
+## 狀態特效（持續型）
+
+選單 `Tools > YinYang VFX > Status >`（每種一項，或 `Build ALL Status Effects`）。全部是持續播放，掛在角色身上：
+
+```csharp
+var burn = WeaponEffect.Spawn(burnPrefab, player.position);
+burn.follow = player.transform;
+burn.Pulse();   // 每次跳傷害時閃一下
+burn.Stop();    // 狀態結束
+```
+StatusBurn 燃燒（Crimson）、StatusFrozen 冰凍（Ice）、StatusPoison 中毒（Jade）、StatusParalyze 麻痺（Gold）、StatusSlow 減速（Azure）、StatusSilence 沉默（Violet）、StatusCurse 詛咒（Violet）、StatusBleed 流血（Crimson）。顏色可自由換。
+
 ## 命中特效
 
 選單 `Tools > YinYang VFX > Hits >`（每種一項，或 `Build ALL Hits`）。放在敵人被打中的位置。

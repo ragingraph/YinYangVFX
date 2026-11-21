@@ -66,6 +66,14 @@ namespace YinYangVFX
         CritHit = 57,
         CritBadge = 58,
         KillBurst = 59,
+        StatusBurn = 60,
+        StatusFrozen = 61,
+        StatusPoison = 62,
+        StatusParalyze = 63,
+        StatusSlow = 64,
+        StatusSilence = 65,
+        StatusCurse = 66,
+        StatusBleed = 67,
     }
 
     /// <summary>
@@ -398,6 +406,14 @@ namespace YinYangVFX
                 case WeaponKind.CritHit: AnimCritHit(); break;
                 case WeaponKind.CritBadge: AnimCritBadge(); break;
                 case WeaponKind.KillBurst: AnimKillBurst(); break;
+                case WeaponKind.StatusBurn: AnimStatusBurn(); break;
+                case WeaponKind.StatusFrozen: AnimStatusFrozen(); break;
+                case WeaponKind.StatusPoison: AnimStatusPoison(); break;
+                case WeaponKind.StatusParalyze: AnimStatusParalyze(); break;
+                case WeaponKind.StatusSlow: AnimStatusSlow(); break;
+                case WeaponKind.StatusSilence: AnimStatusSilence(); break;
+                case WeaponKind.StatusCurse: AnimStatusCurse(); break;
+                case WeaponKind.StatusBleed: AnimStatusBleed(); break;
             }
 
             EndFrame();
