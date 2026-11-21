@@ -149,6 +149,12 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.StatusSilence, "Status Silenced (loop)", "StatusSilence", 1.0f, 3.0f, 0f, true, 0f),
             new KindInfo(WeaponKind.StatusCurse, "Status Cursed (loop)", "StatusCurse", 1.0f, 3.0f, 0f, true, 0f),
             new KindInfo(WeaponKind.StatusBleed, "Status Bleeding (loop)", "StatusBleed", 1.0f, 3.0f, 0f, true, 0f),
+            new KindInfo(WeaponKind.BuffAttackUp, "Attack Up", "BuffAttackUp", 1.3f, 3.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.BuffSpeedUp, "Speed Up", "BuffSpeedUp", 1.3f, 3.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.BuffDefenseUp, "Defense Up", "BuffDefenseUp", 1.3f, 3.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.BuffCritUp, "Crit Up", "BuffCritUp", 1.3f, 3.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.DebuffAttackDown, "Attack Down", "DebuffAttackDown", 1.3f, 3.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.DebuffDefenseDown, "Defense Down", "DebuffDefenseDown", 1.3f, 3.0f, 0f, false, 0f),
         };
 
         // ------------------------------------------------------------------ menu
@@ -357,10 +363,34 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/Status/Build Bleeding", false, 808)]
         public static void BuildStatusBleed() { Run(WeaponKind.StatusBleed); }
 
+        [MenuItem("Tools/YinYang VFX/Buffs/Build Attack Up", false, 1001)]
+        public static void BuildBuffAttackUp() { Run(WeaponKind.BuffAttackUp); }
+
+        [MenuItem("Tools/YinYang VFX/Buffs/Build Speed Up", false, 1002)]
+        public static void BuildBuffSpeedUp() { Run(WeaponKind.BuffSpeedUp); }
+
+        [MenuItem("Tools/YinYang VFX/Buffs/Build Defense Up", false, 1003)]
+        public static void BuildBuffDefenseUp() { Run(WeaponKind.BuffDefenseUp); }
+
+        [MenuItem("Tools/YinYang VFX/Buffs/Build Crit Up", false, 1004)]
+        public static void BuildBuffCritUp() { Run(WeaponKind.BuffCritUp); }
+
+        [MenuItem("Tools/YinYang VFX/Buffs/Build Attack Down", false, 1005)]
+        public static void BuildDebuffAttackDown() { Run(WeaponKind.DebuffAttackDown); }
+
+        [MenuItem("Tools/YinYang VFX/Buffs/Build Defense Down", false, 1006)]
+        public static void BuildDebuffDefenseDown() { Run(WeaponKind.DebuffDefenseDown); }
+
+        [MenuItem("Tools/YinYang VFX/Buffs/Build ALL Buff Effects", false, 1100)]
+        public static void BuildAllBuffs()
+        {
+            RunRange((int)WeaponKind.BuffAttackUp, int.MaxValue);
+        }
+
         [MenuItem("Tools/YinYang VFX/Status/Build ALL Status Effects", false, 900)]
         public static void BuildAllStatus()
         {
-            RunRange((int)WeaponKind.StatusBurn, int.MaxValue);
+            RunRange((int)WeaponKind.StatusBurn, (int)WeaponKind.BuffAttackUp);
         }
 
         [MenuItem("Tools/YinYang VFX/Hits/Build ALL Hits", false, 700)]

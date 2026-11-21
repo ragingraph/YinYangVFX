@@ -153,6 +153,12 @@ WeaponEffect.Spawn(thrustFx, handPosition, angleDegrees: 0f, mirror: facingLeft,
 - Prefab 上可調：`thickness`（粗細）、`reach`（刺擊距離）、`impactOffset`（槌落點）、`qiTravel`（劍氣飛行距離）、`sweepRadius`、`groundY`、三個 HDR 顏色。
 - 美術小提醒：需要 URP 2D + Bloom（測試場景已附）。
 
+## 強化／弱化特效（獲得時播放一次）
+
+選單 `Tools > YinYang VFX > Buffs >`（每種一項，或 `Build ALL Buff Effects`）。放在角色身上，約 1.3 秒。
+BuffAttackUp 攻擊提升（劍形圖示＋上升箭頭）、BuffSpeedUp 速度提升（向右箭頭＋速度線）、BuffDefenseUp 防禦提升（盾形外框）、BuffCritUp 暴擊提升（準星＋旋轉星芒）、
+DebuffAttackDown 攻擊下降（斷裂掉落的劍＋下沉箭頭）、DebuffDefenseDown 防禦下降（碎裂的盾＋下沉箭頭）。強化用亮色（Gold／Azure），弱化用暗色（Violet／Crimson）較好分辨。
+
 ## 狀態特效（持續型）
 
 選單 `Tools > YinYang VFX > Status >`（每種一項，或 `Build ALL Status Effects`）。全部是持續播放，掛在角色身上：

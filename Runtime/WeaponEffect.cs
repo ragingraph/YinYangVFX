@@ -74,6 +74,12 @@ namespace YinYangVFX
         StatusSilence = 65,
         StatusCurse = 66,
         StatusBleed = 67,
+        BuffAttackUp = 68,
+        BuffSpeedUp = 69,
+        BuffDefenseUp = 70,
+        BuffCritUp = 71,
+        DebuffAttackDown = 72,
+        DebuffDefenseDown = 73,
     }
 
     /// <summary>
@@ -414,6 +420,12 @@ namespace YinYangVFX
                 case WeaponKind.StatusSilence: AnimStatusSilence(); break;
                 case WeaponKind.StatusCurse: AnimStatusCurse(); break;
                 case WeaponKind.StatusBleed: AnimStatusBleed(); break;
+                case WeaponKind.BuffAttackUp: AnimBuffAttackUp(); break;
+                case WeaponKind.BuffSpeedUp: AnimBuffSpeedUp(); break;
+                case WeaponKind.BuffDefenseUp: AnimBuffDefenseUp(); break;
+                case WeaponKind.BuffCritUp: AnimBuffCritUp(); break;
+                case WeaponKind.DebuffAttackDown: AnimDebuffAttackDown(); break;
+                case WeaponKind.DebuffDefenseDown: AnimDebuffDefenseDown(); break;
             }
 
             EndFrame();

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.14.0
+
+- 6 buff / debuff effects: attack up, speed up, defence up, crit up, attack down, defence down. Menus under `Tools/YinYang VFX/Buffs/`.
+
 ## 0.13.0
 
 - 8 looping status effects: burning, frozen, poisoned, paralysed, slowed, silenced, cursed, bleeding. Menus under `Tools/YinYang VFX/Status/`.
