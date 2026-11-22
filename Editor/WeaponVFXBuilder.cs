@@ -183,6 +183,13 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.BeamCannon, "Beam Cannon", "BeamCannon", 2.2f, 11.0f, 3.0f, false, 0f),
             new KindInfo(WeaponKind.Laser, "Laser", "Laser", 0.6f, 11.0f, 2.0f, false, 0f),
             new KindInfo(WeaponKind.Shuriken, "Shuriken", "Shuriken", 1.1f, 6.5f, 2.0f, false, 0f),
+            new KindInfo(WeaponKind.CoinPickup, "Coin Pickup", "CoinPickup", 0.8f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.ChestOpen, "Chest Open", "ChestOpen", 1.8f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.ItemPickup, "Item Pickup", "ItemPickup", 1.0f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.HealItem, "Heal Item", "HealItem", 1.6f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.SavePoint, "Save Point (loop)", "SavePoint", 1.5f, 3.4f, 0f, true, 0f),
+            new KindInfo(WeaponKind.MechanismActivate, "Mechanism Activate", "MechanismActivate", 1.0f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.SpikeTrap, "Spike Trap", "SpikeTrap", 1.4f, 3.4f, 0f, false, 0f),
         };
 
         // ------------------------------------------------------------------ menu
@@ -493,10 +500,37 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/Projectiles/Build Shuriken", false, 2006)]
         public static void BuildShuriken() { Run(WeaponKind.Shuriken); }
 
+        [MenuItem("Tools/YinYang VFX/World/Build Coin Pickup", false, 2201)]
+        public static void BuildCoinPickup() { Run(WeaponKind.CoinPickup); }
+
+        [MenuItem("Tools/YinYang VFX/World/Build Chest Open", false, 2202)]
+        public static void BuildChestOpen() { Run(WeaponKind.ChestOpen); }
+
+        [MenuItem("Tools/YinYang VFX/World/Build Item Pickup", false, 2203)]
+        public static void BuildItemPickup() { Run(WeaponKind.ItemPickup); }
+
+        [MenuItem("Tools/YinYang VFX/World/Build Heal Item", false, 2204)]
+        public static void BuildHealItem() { Run(WeaponKind.HealItem); }
+
+        [MenuItem("Tools/YinYang VFX/World/Build Save Point (loop)", false, 2205)]
+        public static void BuildSavePoint() { Run(WeaponKind.SavePoint); }
+
+        [MenuItem("Tools/YinYang VFX/World/Build Mechanism Activate", false, 2206)]
+        public static void BuildMechanismActivate() { Run(WeaponKind.MechanismActivate); }
+
+        [MenuItem("Tools/YinYang VFX/World/Build Spike Trap", false, 2207)]
+        public static void BuildSpikeTrap() { Run(WeaponKind.SpikeTrap); }
+
+        [MenuItem("Tools/YinYang VFX/World/Build ALL World Effects", false, 2300)]
+        public static void BuildAllWorld()
+        {
+            RunRange((int)WeaponKind.CoinPickup, int.MaxValue);
+        }
+
         [MenuItem("Tools/YinYang VFX/Projectiles/Build ALL Projectile Effects", false, 2100)]
         public static void BuildAllProjectiles()
         {
-            RunRange((int)WeaponKind.EnergyBolt, int.MaxValue);
+            RunRange((int)WeaponKind.EnergyBolt, (int)WeaponKind.CoinPickup);
         }
 
         [MenuItem("Tools/YinYang VFX/Ultimate/Build ALL Ultimate Effects", false, 1900)]

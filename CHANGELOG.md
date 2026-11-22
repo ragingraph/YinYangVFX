@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.20.0
+
+- 7 pickup/environment effects: coin, chest, item pickup, heal item, save point (loop), mechanism, spike trap. Menus under `Tools/YinYang VFX/World/`.
+
 ## 0.19.0
 
 - 6 projectile effects: energy bolt, homing shot, boomerang, beam cannon, laser, shuriken. Menus under `Tools/YinYang VFX/Projectiles/`.

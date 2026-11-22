@@ -153,6 +153,11 @@ WeaponEffect.Spawn(thrustFx, handPosition, angleDegrees: 0f, mirror: facingLeft,
 - Prefab 上可調：`thickness`（粗細）、`reach`（刺擊距離）、`impactOffset`（槌落點）、`qiTravel`（劍氣飛行距離）、`sweepRadius`、`groundY`、三個 HDR 顏色。
 - 美術小提醒：需要 URP 2D + Bloom（測試場景已附）。
 
+## 拾取／環境特效
+
+選單 `Tools > YinYang VFX > World >`（每種一項，或 `Build ALL World Effects`）。原點放在物件中心（地面在 `groundY`）。
+CoinPickup 金幣拾取、ChestOpen 寶箱開啟（光芒噴出）、ItemPickup 道具拾取、HealItem 補血道具（十字上升）、SavePoint 存檔點（循環，`loop`）、MechanismActivate 機關啟動、SpikeTrap 地刺陷阱（先閃警示線再刺出）。
+
 ## 飛行物特效
 
 選單 `Tools > YinYang VFX > Projectiles >`（每種一項，或 `Build ALL Projectile Effects`）。原點放在發射點，往右飛約 `qiTravel × 1.4～1.5` 單位（向左要鏡像）；抵達時觸發 `onImpact`。

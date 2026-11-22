@@ -108,6 +108,13 @@ namespace YinYangVFX
         BeamCannon = 99,
         Laser = 100,
         Shuriken = 101,
+        CoinPickup = 102,
+        ChestOpen = 103,
+        ItemPickup = 104,
+        HealItem = 105,
+        SavePoint = 106,
+        MechanismActivate = 107,
+        SpikeTrap = 108,
     }
 
     /// <summary>
@@ -482,6 +489,13 @@ namespace YinYangVFX
                 case WeaponKind.BeamCannon: AnimBeamCannon(); break;
                 case WeaponKind.Laser: AnimLaser(); break;
                 case WeaponKind.Shuriken: AnimShuriken(); break;
+                case WeaponKind.CoinPickup: AnimCoinPickup(); break;
+                case WeaponKind.ChestOpen: AnimChestOpen(); break;
+                case WeaponKind.ItemPickup: AnimItemPickup(); break;
+                case WeaponKind.HealItem: AnimHealItem(); break;
+                case WeaponKind.SavePoint: AnimSavePoint(); break;
+                case WeaponKind.MechanismActivate: AnimMechanismActivate(); break;
+                case WeaponKind.SpikeTrap: AnimSpikeTrap(); break;
             }
 
             EndFrame();
