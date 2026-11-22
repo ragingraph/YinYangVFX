@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.24.0
+
+- New `InkSwords`: first effect with a solid, concrete shape (slender ink-style swords rising from the ground) via a procedural sword texture on cropped quads. New `swordMaterial` field. Menu: `Tools/YinYang VFX/Ground/Build Ink Swords` (also included in Build ALL Ground).
+
 ## 0.23.0
 
 - 6 rise-from-ground effects: spike wave, ground burst, rising blades, tendril rise, pillar rise, rise wall. Menus under `Tools/YinYang VFX/Ground/`.

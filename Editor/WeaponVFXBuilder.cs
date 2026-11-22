@@ -208,6 +208,7 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.TendrilRise, "Tendril Rise", "TendrilRise", 2.0f, 4.5f, 0.0f, false, 0f),
             new KindInfo(WeaponKind.PillarRise, "Pillar Rise", "PillarRise", 2.2f, 4.5f, 0.0f, false, 0f),
             new KindInfo(WeaponKind.RiseWall, "Rise Wall", "RiseWall", 2.2f, 7.0f, 0.0f, false, 0f),
+            new KindInfo(WeaponKind.InkSwords, "Ink Swords", "InkSwords", 2.4f, 4.5f, 0f, false, 0f),
         };
 
         // ------------------------------------------------------------------ menu
@@ -593,6 +594,9 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/Ground/Build Rise Wall", false, 2806)]
         public static void BuildRiseWall() { Run(WeaponKind.RiseWall); }
 
+        [MenuItem("Tools/YinYang VFX/Ground/Build Ink Swords", false, 2807)]
+        public static void BuildInkSwords() { Run(WeaponKind.InkSwords); }
+
         [MenuItem("Tools/YinYang VFX/Ground/Build ALL Ground Effects", false, 2900)]
         public static void BuildAllGround()
         {
@@ -746,6 +750,12 @@ namespace YinYangVFX.EditorTools
             Material lineMat = MakeMaterial(MatDir + "/MAT_WeaponLine.mat", particleShader, softLine, new Color(2.4f, 2.4f, 2.4f, 1f));
             Material dotMat = MakeMaterial(MatDir + "/MAT_WeaponDot.mat", particleShader, softDot, new Color(3.0f, 3.0f, 3.0f, 1f));
             Material starMat = MakeMaterial(MatDir + "/MAT_WeaponStar.mat", particleShader, star, new Color(3.8f, 3.8f, 3.8f, 1f));
+            WriteTexture(TexDir + "/VFX_InkSword.png", 192, 768, InkSwordPixel);
+            Texture2D inkSword = AssetDatabase.LoadAssetAtPath<Texture2D>(TexDir + "/VFX_InkSword.png");
+            Material swordMat = MakeMaterial(MatDir + "/MAT_WeaponSword.mat", particleShader, inkSword, new Color(1f, 1f, 1f, 1f));
+            swordMat.SetFloat("_SrcBlend", 5f);  // SrcAlpha
+            swordMat.SetFloat("_DstBlend", 10f); // OneMinusSrcAlpha -> solid ink body
+            EditorUtility.SetDirty(swordMat);
             string lineMatPath = AssetDatabase.GetAssetPath(lineMat);
             string dotMatPath = AssetDatabase.GetAssetPath(dotMat);
             string starMatPath = AssetDatabase.GetAssetPath(starMat);
@@ -799,6 +809,7 @@ namespace YinYangVFX.EditorTools
             fx.lineMaterial = AssetDatabase.LoadAssetAtPath<Material>(lineMatPath);
             fx.dotMaterial = AssetDatabase.LoadAssetAtPath<Material>(dotMatPath);
             fx.starMaterial = AssetDatabase.LoadAssetAtPath<Material>(starMatPath);
+            fx.swordMaterial = AssetDatabase.LoadAssetAtPath<Material>(MatDir + "/MAT_WeaponSword.mat");
 
             PrefabUtility.SaveAsPrefabAsset(root, path);
             UnityEngine.Object.DestroyImmediate(root);
@@ -925,6 +936,86 @@ namespace YinYangVFX.EditorTools
             float core = Mathf.Pow(Mathf.Clamp01(1f - Mathf.Sqrt(u * u + v * v) * 1.6f), 2f);
             float a = Mathf.Clamp01(Mathf.Max(spikeH, spikeV) + core);
             return new Color32(255, 255, 255, (byte)Mathf.RoundToInt(a * 255f));
+        }
+
+
+        static float Hash01(int a, int b)
+        {
+            unchecked
+            {
+                uint h = (uint)(a * 374761393 + b * 668265263);
+                h = (h ^ (h >> 13)) * 1274126177u;
+                return ((h ^ (h >> 16)) & 0xFFFFFF) / (float)0x1000000;
+            }
+        }
+
+        // Slender ink sword, tip at the top: blade, guard, wrapped handle, pommel, tassel.
+        // RGB = brightness (tinted by the prefab colour), alpha = silhouette.
+        static Color32 InkSwordPixel(int x, int y, int w, int h)
+        {
+            float px = x + 0.5f - w * 0.5f;
+            float ax = Mathf.Abs(px);
+            float s = 1f - (y + 0.5f) / h;
+            float alpha = 0f, br = 0f;
+
+            if (s < 0.70f)
+            {
+                float t = s / 0.70f;
+                float hw = 12f * Mathf.Sin(Mathf.Pow(t, 0.42f) * Mathf.PI * 0.5f) * (1f - 0.1f * t);
+                hw += (Hash01(y / 3, 7) - 0.5f) * 1.6f * Mathf.Clamp01(t * 6f);
+                if (ax < hw + 1f)
+                {
+                    alpha = Mathf.Clamp01(hw + 1f - ax);
+                    br = Mathf.Lerp(1.0f, 0.6f, t);
+                    if (px > 0f) br *= 0.42f; // ink-wash shaded side
+                    if (ax < 1.6f) br = 1f;    // bright spine
+                    if (ax > hw - 2.2f) br = 1f; // bright edge
+                    if (Hash01(x / 2, y / 36) > 0.82f) br *= 0.72f; // dry-brush streak
+                }
+            }
+            else if (s < 0.735f)
+            {
+                float g = (s - 0.70f) / 0.035f;
+                float hwG = 62f * (1f - 0.45f * g * g);
+                float lift = (ax / 62f) * (ax / 62f) * 0.5f; // ends curl upward
+                if (ax < hwG && g > lift * 0.6f - 0.1f)
+                {
+                    alpha = 1f;
+                    br = ax > hwG - 3f || g < 0.15f ? 1f : 0.62f;
+                }
+            }
+            else if (s < 0.90f)
+            {
+                if (ax < 7f)
+                {
+                    alpha = 1f;
+                    float wrap = Mathf.Repeat(y * 0.11f + px * 0.4f, 1f);
+                    br = wrap < 0.28f ? 0.95f : 0.28f;
+                }
+            }
+            else if (s < 0.925f)
+            {
+                float g = (s - 0.90f) / 0.025f;
+                float hwP = 11f * Mathf.Sqrt(Mathf.Max(0f, 1f - (g * 2f - 1f) * (g * 2f - 1f)));
+                if (ax < hwP)
+                {
+                    alpha = 1f;
+                    br = 0.85f;
+                }
+            }
+            else
+            {
+                float tt = (s - 0.925f) / 0.075f;
+                float cx = 8f * Mathf.Sin(tt * 5f);
+                if (Mathf.Abs(px - cx) < 2.4f * (1f - 0.5f * tt))
+                {
+                    alpha = 0.85f;
+                    br = 0.7f;
+                }
+            }
+
+            byte b = (byte)Mathf.RoundToInt(Mathf.Clamp01(br) * 255f);
+            return new Color32(b, b, b, (byte)Mathf.RoundToInt(Mathf.Clamp01(alpha) * 255f));
         }
 
         static void WriteTexture(string path, int w, int h, Func<int, int, int, int, Color32> pixel)

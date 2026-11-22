@@ -133,6 +133,7 @@ namespace YinYangVFX
         TendrilRise = 124,
         PillarRise = 125,
         RiseWall = 126,
+        InkSwords = 127,
     }
 
     /// <summary>
@@ -532,6 +533,7 @@ namespace YinYangVFX
                 case WeaponKind.TendrilRise: AnimTendrilRise(); break;
                 case WeaponKind.PillarRise: AnimPillarRise(); break;
                 case WeaponKind.RiseWall: AnimRiseWall(); break;
+                case WeaponKind.InkSwords: AnimInkSwords(); break;
             }
 
             EndFrame();
@@ -743,6 +745,7 @@ namespace YinYangVFX
 
         void EndFrame()
         {
+            EndSwords();
             for (int ti = 0; ti < _lines.Length; ti++)
             {
                 List<Ln> list = _lines[ti];
@@ -761,6 +764,8 @@ namespace YinYangVFX
             {
                 return;
             }
+
+            HideAllSwords();
 
             for (int ti = 0; ti < _lines.Length; ti++)
             {
