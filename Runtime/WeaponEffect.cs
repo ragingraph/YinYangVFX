@@ -90,6 +90,12 @@ namespace YinYangVFX
         DeathLight = 81,
         DeathSoul = 82,
         DeathBoss = 83,
+        SummonCircle = 84,
+        PortalOpen = 85,
+        TeleportOut = 86,
+        TeleportIn = 87,
+        Revive = 88,
+        LevelUp = 89,
     }
 
     /// <summary>
@@ -446,6 +452,12 @@ namespace YinYangVFX
                 case WeaponKind.DeathLight: AnimDeathLight(); break;
                 case WeaponKind.DeathSoul: AnimDeathSoul(); break;
                 case WeaponKind.DeathBoss: AnimDeathBoss(); break;
+                case WeaponKind.SummonCircle: AnimSummonCircle(); break;
+                case WeaponKind.PortalOpen: AnimPortalOpen(); break;
+                case WeaponKind.TeleportOut: AnimTeleportOut(); break;
+                case WeaponKind.TeleportIn: AnimTeleportIn(); break;
+                case WeaponKind.Revive: AnimRevive(); break;
+                case WeaponKind.LevelUp: AnimLevelUp(); break;
             }
 
             EndFrame();

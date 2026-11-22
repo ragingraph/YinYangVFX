@@ -153,6 +153,12 @@ WeaponEffect.Spawn(thrustFx, handPosition, angleDegrees: 0f, mirror: facingLeft,
 - Prefab 上可調：`thickness`（粗細）、`reach`（刺擊距離）、`impactOffset`（槌落點）、`qiTravel`（劍氣飛行距離）、`sweepRadius`、`groundY`、三個 HDR 顏色。
 - 美術小提醒：需要 URP 2D + Bloom（測試場景已附）。
 
+## 召喚／傳送特效
+
+選單 `Tools > YinYang VFX > Summon >`（每種一項，或 `Build ALL Summon Effects`）。
+SummonCircle 召喚陣（地面魔法陣＋光柱）、PortalOpen 傳送門（循環，`loop`，呼叫 `Stop()` 關閉）、TeleportOut 傳送消失、TeleportIn 傳送出現、Revive 復活、LevelUp 升級光柱。
+原點放在地面或角色身體中心；TeleportOut 的 `onImpact` 觸發時隱藏角色，TeleportIn 的 `onImpact` 觸發時顯示角色。
+
 ## 死亡／消散特效
 
 選單 `Tools > YinYang VFX > Death >`（每種一項，或 `Build ALL Death Effects`）。放在敵人身體中心，`onImpact` 觸發時再把敵人圖片隱藏或淡出。

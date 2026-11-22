@@ -165,6 +165,12 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.DeathLight, "Death to Light", "DeathLight", 1.8f, 3.4f, 0f, false, 0f),
             new KindInfo(WeaponKind.DeathSoul, "Death Soul", "DeathSoul", 2.2f, 3.4f, 0f, false, 0f),
             new KindInfo(WeaponKind.DeathBoss, "Boss Death", "DeathBoss", 3.0f, 5.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.SummonCircle, "Summon Circle", "SummonCircle", 1.8f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.PortalOpen, "Portal (loop)", "PortalOpen", 1.2f, 3.4f, 0f, true, 0f),
+            new KindInfo(WeaponKind.TeleportOut, "Teleport Out", "TeleportOut", 0.8f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.TeleportIn, "Teleport In", "TeleportIn", 0.8f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.Revive, "Revive", "Revive", 2.2f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.LevelUp, "Level Up", "LevelUp", 2.0f, 3.4f, 0f, false, 0f),
         };
 
         // ------------------------------------------------------------------ menu
@@ -421,10 +427,34 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/Death/Build Boss Death", false, 1405)]
         public static void BuildDeathBoss() { Run(WeaponKind.DeathBoss); }
 
+        [MenuItem("Tools/YinYang VFX/Summon/Build Summon Circle", false, 1601)]
+        public static void BuildSummonCircle() { Run(WeaponKind.SummonCircle); }
+
+        [MenuItem("Tools/YinYang VFX/Summon/Build Portal (loop)", false, 1602)]
+        public static void BuildPortalOpen() { Run(WeaponKind.PortalOpen); }
+
+        [MenuItem("Tools/YinYang VFX/Summon/Build Teleport Out", false, 1603)]
+        public static void BuildTeleportOut() { Run(WeaponKind.TeleportOut); }
+
+        [MenuItem("Tools/YinYang VFX/Summon/Build Teleport In", false, 1604)]
+        public static void BuildTeleportIn() { Run(WeaponKind.TeleportIn); }
+
+        [MenuItem("Tools/YinYang VFX/Summon/Build Revive", false, 1605)]
+        public static void BuildRevive() { Run(WeaponKind.Revive); }
+
+        [MenuItem("Tools/YinYang VFX/Summon/Build Level Up", false, 1606)]
+        public static void BuildLevelUp() { Run(WeaponKind.LevelUp); }
+
+        [MenuItem("Tools/YinYang VFX/Summon/Build ALL Summon Effects", false, 1700)]
+        public static void BuildAllSummon()
+        {
+            RunRange((int)WeaponKind.SummonCircle, int.MaxValue);
+        }
+
         [MenuItem("Tools/YinYang VFX/Death/Build ALL Death Effects", false, 1500)]
         public static void BuildAllDeath()
         {
-            RunRange((int)WeaponKind.DeathMonster, int.MaxValue);
+            RunRange((int)WeaponKind.DeathMonster, (int)WeaponKind.SummonCircle);
         }
 
         [MenuItem("Tools/YinYang VFX/Charge/Build ALL Charge Effects", false, 1300)]
