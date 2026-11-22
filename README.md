@@ -153,6 +153,15 @@ WeaponEffect.Spawn(thrustFx, handPosition, angleDegrees: 0f, mirror: facingLeft,
 - Prefab 上可調：`thickness`（粗細）、`reach`（刺擊距離）、`impactOffset`（槌落點）、`qiTravel`（劍氣飛行距離）、`sweepRadius`、`groundY`、三個 HDR 顏色。
 - 美術小提醒：需要 URP 2D + Bloom（測試場景已附）。
 
+## 蓄力／氣場特效
+
+選單 `Tools > YinYang VFX > Charge >`（每種一項，或 `Build ALL Charge Effects`）。放在角色身上。
+- ChargeAura 蓄力光環（持續；放開時呼叫 `Pulse()` 閃一下，再 `Stop()`）
+- RageBurst 怒氣爆發（一次性）
+- Awaken 覺醒（一次性約 2 秒：地面法陣→光柱→光翼爆發，爆發瞬間觸發 `onImpact`）
+- Berserk 狂暴（持續，鋸齒狀火焰氣場）
+- CharacterAura 角色氣場（持續，柔和的氣流外框）
+
 ## 強化／弱化特效（獲得時播放一次）
 
 選單 `Tools > YinYang VFX > Buffs >`（每種一項，或 `Build ALL Buff Effects`）。放在角色身上，約 1.3 秒。

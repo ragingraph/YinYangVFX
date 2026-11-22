@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.15.0
+
+- 5 charge / aura effects: charge aura, rage burst, awaken, berserk, character aura. Menus under `Tools/YinYang VFX/Charge/`.
+
 ## 0.14.0
 
 - 6 buff / debuff effects: attack up, speed up, defence up, crit up, attack down, defence down. Menus under `Tools/YinYang VFX/Buffs/`.

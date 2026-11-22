@@ -80,6 +80,11 @@ namespace YinYangVFX
         BuffCritUp = 71,
         DebuffAttackDown = 72,
         DebuffDefenseDown = 73,
+        ChargeAura = 74,
+        RageBurst = 75,
+        Awaken = 76,
+        Berserk = 77,
+        CharacterAura = 78,
     }
 
     /// <summary>
@@ -426,6 +431,11 @@ namespace YinYangVFX
                 case WeaponKind.BuffCritUp: AnimBuffCritUp(); break;
                 case WeaponKind.DebuffAttackDown: AnimDebuffAttackDown(); break;
                 case WeaponKind.DebuffDefenseDown: AnimDebuffDefenseDown(); break;
+                case WeaponKind.ChargeAura: AnimChargeAura(); break;
+                case WeaponKind.RageBurst: AnimRageBurst(); break;
+                case WeaponKind.Awaken: AnimAwaken(); break;
+                case WeaponKind.Berserk: AnimBerserk(); break;
+                case WeaponKind.CharacterAura: AnimCharacterAura(); break;
             }
 
             EndFrame();

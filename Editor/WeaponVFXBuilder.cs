@@ -155,6 +155,11 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.BuffCritUp, "Crit Up", "BuffCritUp", 1.3f, 3.0f, 0f, false, 0f),
             new KindInfo(WeaponKind.DebuffAttackDown, "Attack Down", "DebuffAttackDown", 1.3f, 3.0f, 0f, false, 0f),
             new KindInfo(WeaponKind.DebuffDefenseDown, "Defense Down", "DebuffDefenseDown", 1.3f, 3.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.ChargeAura, "Charge Aura", "ChargeAura", 1.0f, 3.4f, 0f, true, 0f),
+            new KindInfo(WeaponKind.RageBurst, "Rage Burst", "RageBurst", 1.2f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.Awaken, "Awaken", "Awaken", 2.0f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.Berserk, "Berserk", "Berserk", 1.0f, 3.4f, 0f, true, 0f),
+            new KindInfo(WeaponKind.CharacterAura, "Character Aura", "CharacterAura", 1.0f, 3.4f, 0f, true, 0f),
         };
 
         // ------------------------------------------------------------------ menu
@@ -381,10 +386,31 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/Buffs/Build Defense Down", false, 1006)]
         public static void BuildDebuffDefenseDown() { Run(WeaponKind.DebuffDefenseDown); }
 
+        [MenuItem("Tools/YinYang VFX/Charge/Build Charge Aura", false, 1201)]
+        public static void BuildChargeAura() { Run(WeaponKind.ChargeAura); }
+
+        [MenuItem("Tools/YinYang VFX/Charge/Build Rage Burst", false, 1202)]
+        public static void BuildRageBurst() { Run(WeaponKind.RageBurst); }
+
+        [MenuItem("Tools/YinYang VFX/Charge/Build Awaken", false, 1203)]
+        public static void BuildAwaken() { Run(WeaponKind.Awaken); }
+
+        [MenuItem("Tools/YinYang VFX/Charge/Build Berserk", false, 1204)]
+        public static void BuildBerserk() { Run(WeaponKind.Berserk); }
+
+        [MenuItem("Tools/YinYang VFX/Charge/Build Character Aura", false, 1205)]
+        public static void BuildCharacterAura() { Run(WeaponKind.CharacterAura); }
+
+        [MenuItem("Tools/YinYang VFX/Charge/Build ALL Charge Effects", false, 1300)]
+        public static void BuildAllCharge()
+        {
+            RunRange((int)WeaponKind.ChargeAura, int.MaxValue);
+        }
+
         [MenuItem("Tools/YinYang VFX/Buffs/Build ALL Buff Effects", false, 1100)]
         public static void BuildAllBuffs()
         {
-            RunRange((int)WeaponKind.BuffAttackUp, int.MaxValue);
+            RunRange((int)WeaponKind.BuffAttackUp, (int)WeaponKind.ChargeAura);
         }
 
         [MenuItem("Tools/YinYang VFX/Status/Build ALL Status Effects", false, 900)]
