@@ -115,6 +115,12 @@ namespace YinYangVFX
         SavePoint = 106,
         MechanismActivate = 107,
         SpikeTrap = 108,
+        BossEntrance = 109,
+        WarningCircle = 110,
+        DashWarning = 111,
+        BossPhaseChange = 112,
+        SceneTransition = 113,
+        EarthShake = 114,
     }
 
     /// <summary>
@@ -496,6 +502,12 @@ namespace YinYangVFX
                 case WeaponKind.SavePoint: AnimSavePoint(); break;
                 case WeaponKind.MechanismActivate: AnimMechanismActivate(); break;
                 case WeaponKind.SpikeTrap: AnimSpikeTrap(); break;
+                case WeaponKind.BossEntrance: AnimBossEntrance(); break;
+                case WeaponKind.WarningCircle: AnimWarningCircle(); break;
+                case WeaponKind.DashWarning: AnimDashWarning(); break;
+                case WeaponKind.BossPhaseChange: AnimBossPhaseChange(); break;
+                case WeaponKind.SceneTransition: AnimSceneTransition(); break;
+                case WeaponKind.EarthShake: AnimEarthShake(); break;
             }
 
             EndFrame();

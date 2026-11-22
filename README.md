@@ -153,6 +153,12 @@ WeaponEffect.Spawn(thrustFx, handPosition, angleDegrees: 0f, mirror: facingLeft,
 - Prefab 上可調：`thickness`（粗細）、`reach`（刺擊距離）、`impactOffset`（槌落點）、`qiTravel`（劍氣飛行距離）、`sweepRadius`、`groundY`、三個 HDR 顏色。
 - 美術小提醒：需要 URP 2D + Bloom（測試場景已附）。
 
+## Boss／場景特效
+
+選單 `Tools > YinYang VFX > Boss >`（每種一項，或 `Build ALL Boss Effects`）。原點放在 Boss 腳下／場景中心（地面在 `groundY`）。
+BossEntrance Boss 登場（地裂＋光柱＋衝擊波）、WarningCircle 地面警示圈（循環）、DashWarning 衝刺警示帶（循環，朝右）、BossPhaseChange Boss 換階段（蓄力後爆發）、SceneTransition 場景轉場（擴散環，覆蓋瞬間觸發 `onImpact` 換場景）、EarthShake 地震裂地。
+警示類建議用紅色（Crimson）版本。
+
 ## 拾取／環境特效
 
 選單 `Tools > YinYang VFX > World >`（每種一項，或 `Build ALL World Effects`）。原點放在物件中心（地面在 `groundY`）。

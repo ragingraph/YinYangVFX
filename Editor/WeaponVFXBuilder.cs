@@ -190,6 +190,12 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.SavePoint, "Save Point (loop)", "SavePoint", 1.5f, 3.4f, 0f, true, 0f),
             new KindInfo(WeaponKind.MechanismActivate, "Mechanism Activate", "MechanismActivate", 1.0f, 3.4f, 0f, false, 0f),
             new KindInfo(WeaponKind.SpikeTrap, "Spike Trap", "SpikeTrap", 1.4f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.BossEntrance, "Boss Entrance", "BossEntrance", 2.4f, 10.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.WarningCircle, "Warning Circle (loop)", "WarningCircle", 1.0f, 5.0f, 0f, true, 0f),
+            new KindInfo(WeaponKind.DashWarning, "Dash Warning (loop)", "DashWarning", 1.0f, 8.0f, 0f, true, 0f),
+            new KindInfo(WeaponKind.BossPhaseChange, "Boss Phase Change", "BossPhaseChange", 2.4f, 10.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.SceneTransition, "Scene Transition", "SceneTransition", 1.6f, 18.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.EarthShake, "Earth Shake", "EarthShake", 1.8f, 11.0f, 0f, false, 0f),
         };
 
         // ------------------------------------------------------------------ menu
@@ -521,10 +527,34 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/World/Build Spike Trap", false, 2207)]
         public static void BuildSpikeTrap() { Run(WeaponKind.SpikeTrap); }
 
+        [MenuItem("Tools/YinYang VFX/Boss/Build Boss Entrance", false, 2401)]
+        public static void BuildBossEntrance() { Run(WeaponKind.BossEntrance); }
+
+        [MenuItem("Tools/YinYang VFX/Boss/Build Warning Circle (loop)", false, 2402)]
+        public static void BuildWarningCircle() { Run(WeaponKind.WarningCircle); }
+
+        [MenuItem("Tools/YinYang VFX/Boss/Build Dash Warning (loop)", false, 2403)]
+        public static void BuildDashWarning() { Run(WeaponKind.DashWarning); }
+
+        [MenuItem("Tools/YinYang VFX/Boss/Build Boss Phase Change", false, 2404)]
+        public static void BuildBossPhaseChange() { Run(WeaponKind.BossPhaseChange); }
+
+        [MenuItem("Tools/YinYang VFX/Boss/Build Scene Transition", false, 2405)]
+        public static void BuildSceneTransition() { Run(WeaponKind.SceneTransition); }
+
+        [MenuItem("Tools/YinYang VFX/Boss/Build Earth Shake", false, 2406)]
+        public static void BuildEarthShake() { Run(WeaponKind.EarthShake); }
+
+        [MenuItem("Tools/YinYang VFX/Boss/Build ALL Boss Effects", false, 2500)]
+        public static void BuildAllBoss()
+        {
+            RunRange((int)WeaponKind.BossEntrance, int.MaxValue);
+        }
+
         [MenuItem("Tools/YinYang VFX/World/Build ALL World Effects", false, 2300)]
         public static void BuildAllWorld()
         {
-            RunRange((int)WeaponKind.CoinPickup, int.MaxValue);
+            RunRange((int)WeaponKind.CoinPickup, (int)WeaponKind.BossEntrance);
         }
 
         [MenuItem("Tools/YinYang VFX/Projectiles/Build ALL Projectile Effects", false, 2100)]

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.21.0
+
+- 6 boss/scene effects: boss entrance, warning circle (loop), dash warning (loop), boss phase change, scene transition, earth shake. Menus under `Tools/YinYang VFX/Boss/`.
+
 ## 0.20.0
 
 - 7 pickup/environment effects: coin, chest, item pickup, heal item, save point (loop), mechanism, spike trap. Menus under `Tools/YinYang VFX/World/`.
