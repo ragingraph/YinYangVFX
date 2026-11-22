@@ -196,6 +196,12 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.BossPhaseChange, "Boss Phase Change", "BossPhaseChange", 2.4f, 10.0f, 0f, false, 0f),
             new KindInfo(WeaponKind.SceneTransition, "Scene Transition", "SceneTransition", 1.6f, 18.0f, 0f, false, 0f),
             new KindInfo(WeaponKind.EarthShake, "Earth Shake", "EarthShake", 1.8f, 11.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.ButtonGlow, "Button Glow (loop)", "ButtonGlow", 2.0f, 4.0f, 0f, true, 0f),
+            new KindInfo(WeaponKind.RewardBurst, "Reward Burst", "RewardBurst", 1.6f, 6.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.UILevelUp, "UI Level Up", "UILevelUp", 1.8f, 8.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.Achievement, "Achievement", "Achievement", 2.0f, 5.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.CountdownRing, "Countdown Ring", "CountdownRing", 3.0f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.SparkleLoop, "Sparkle (loop)", "SparkleLoop", 1.5f, 4.0f, 0f, true, 0f),
         };
 
         // ------------------------------------------------------------------ menu
@@ -545,10 +551,34 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/Boss/Build Earth Shake", false, 2406)]
         public static void BuildEarthShake() { Run(WeaponKind.EarthShake); }
 
+        [MenuItem("Tools/YinYang VFX/UI/Build Button Glow (loop)", false, 2601)]
+        public static void BuildButtonGlow() { Run(WeaponKind.ButtonGlow); }
+
+        [MenuItem("Tools/YinYang VFX/UI/Build Reward Burst", false, 2602)]
+        public static void BuildRewardBurst() { Run(WeaponKind.RewardBurst); }
+
+        [MenuItem("Tools/YinYang VFX/UI/Build UI Level Up", false, 2603)]
+        public static void BuildUILevelUp() { Run(WeaponKind.UILevelUp); }
+
+        [MenuItem("Tools/YinYang VFX/UI/Build Achievement", false, 2604)]
+        public static void BuildAchievement() { Run(WeaponKind.Achievement); }
+
+        [MenuItem("Tools/YinYang VFX/UI/Build Countdown Ring", false, 2605)]
+        public static void BuildCountdownRing() { Run(WeaponKind.CountdownRing); }
+
+        [MenuItem("Tools/YinYang VFX/UI/Build Sparkle (loop)", false, 2606)]
+        public static void BuildSparkleLoop() { Run(WeaponKind.SparkleLoop); }
+
+        [MenuItem("Tools/YinYang VFX/UI/Build ALL UI Effects", false, 2700)]
+        public static void BuildAllUI()
+        {
+            RunRange((int)WeaponKind.ButtonGlow, int.MaxValue);
+        }
+
         [MenuItem("Tools/YinYang VFX/Boss/Build ALL Boss Effects", false, 2500)]
         public static void BuildAllBoss()
         {
-            RunRange((int)WeaponKind.BossEntrance, int.MaxValue);
+            RunRange((int)WeaponKind.BossEntrance, (int)WeaponKind.ButtonGlow);
         }
 
         [MenuItem("Tools/YinYang VFX/World/Build ALL World Effects", false, 2300)]

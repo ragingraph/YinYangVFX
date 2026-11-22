@@ -153,6 +153,12 @@ WeaponEffect.Spawn(thrustFx, handPosition, angleDegrees: 0f, mirror: facingLeft,
 - Prefab 上可調：`thickness`（粗細）、`reach`（刺擊距離）、`impactOffset`（槌落點）、`qiTravel`（劍氣飛行距離）、`sweepRadius`、`groundY`、三個 HDR 顏色。
 - 美術小提醒：需要 URP 2D + Bloom（測試場景已附）。
 
+## UI 特效
+
+選單 `Tools > YinYang VFX > UI >`（每種一項，或 `Build ALL UI Effects`）。原點放在 UI 元件中心。
+這些是世界座標的特效（線條＋粒子），請搭配 Screen Space - Camera 或 World Space 的 Canvas，或直接放在鏡頭前；`sortingOrder` 要設得比 UI 高。
+ButtonGlow 按鈕流光（循環）、RewardBurst 獎勵爆發、UILevelUp 升級橫幅、Achievement 成就徽章、CountdownRing 倒數圓環（`duration` 即倒數秒數，結束觸發 `onImpact`）、SparkleLoop 閃爍星光（循環）。
+
 ## Boss／場景特效
 
 選單 `Tools > YinYang VFX > Boss >`（每種一項，或 `Build ALL Boss Effects`）。原點放在 Boss 腳下／場景中心（地面在 `groundY`）。

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.22.0
+
+- 6 UI effects: button glow (loop), reward burst, UI level up, achievement, countdown ring, sparkle (loop). Menus under `Tools/YinYang VFX/UI/`.
+
 ## 0.21.0
 
 - 6 boss/scene effects: boss entrance, warning circle (loop), dash warning (loop), boss phase change, scene transition, earth shake. Menus under `Tools/YinYang VFX/Boss/`.

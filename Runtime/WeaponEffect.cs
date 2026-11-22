@@ -121,6 +121,12 @@ namespace YinYangVFX
         BossPhaseChange = 112,
         SceneTransition = 113,
         EarthShake = 114,
+        ButtonGlow = 115,
+        RewardBurst = 116,
+        UILevelUp = 117,
+        Achievement = 118,
+        CountdownRing = 119,
+        SparkleLoop = 120,
     }
 
     /// <summary>
@@ -508,6 +514,12 @@ namespace YinYangVFX
                 case WeaponKind.BossPhaseChange: AnimBossPhaseChange(); break;
                 case WeaponKind.SceneTransition: AnimSceneTransition(); break;
                 case WeaponKind.EarthShake: AnimEarthShake(); break;
+                case WeaponKind.ButtonGlow: AnimButtonGlow(); break;
+                case WeaponKind.RewardBurst: AnimRewardBurst(); break;
+                case WeaponKind.UILevelUp: AnimUILevelUp(); break;
+                case WeaponKind.Achievement: AnimAchievement(); break;
+                case WeaponKind.CountdownRing: AnimCountdownRing(); break;
+                case WeaponKind.SparkleLoop: AnimSparkleLoop(); break;
             }
 
             EndFrame();
