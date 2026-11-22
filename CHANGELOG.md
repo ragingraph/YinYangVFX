@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.19.0
+
+- 6 projectile effects: energy bolt, homing shot, boomerang, beam cannon, laser, shuriken. Menus under `Tools/YinYang VFX/Projectiles/`.
+
 ## 0.18.0
 
 - 6 ultimate effects: sky sword rain, full-screen slash, meteor rain, taiji ultimate, dragon qi, barrier expand. Menus under `Tools/YinYang VFX/Ultimate/`.

@@ -102,6 +102,12 @@ namespace YinYangVFX
         TaijiUltimate = 93,
         DragonQi = 94,
         BarrierExpand = 95,
+        EnergyBolt = 96,
+        HomingShot = 97,
+        Boomerang = 98,
+        BeamCannon = 99,
+        Laser = 100,
+        Shuriken = 101,
     }
 
     /// <summary>
@@ -470,6 +476,12 @@ namespace YinYangVFX
                 case WeaponKind.TaijiUltimate: AnimTaijiUltimate(); break;
                 case WeaponKind.DragonQi: AnimDragonQi(); break;
                 case WeaponKind.BarrierExpand: AnimBarrierExpand(); break;
+                case WeaponKind.EnergyBolt: AnimEnergyBolt(); break;
+                case WeaponKind.HomingShot: AnimHomingShot(); break;
+                case WeaponKind.Boomerang: AnimBoomerang(); break;
+                case WeaponKind.BeamCannon: AnimBeamCannon(); break;
+                case WeaponKind.Laser: AnimLaser(); break;
+                case WeaponKind.Shuriken: AnimShuriken(); break;
             }
 
             EndFrame();

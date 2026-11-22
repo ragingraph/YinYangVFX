@@ -153,6 +153,11 @@ WeaponEffect.Spawn(thrustFx, handPosition, angleDegrees: 0f, mirror: facingLeft,
 - Prefab 上可調：`thickness`（粗細）、`reach`（刺擊距離）、`impactOffset`（槌落點）、`qiTravel`（劍氣飛行距離）、`sweepRadius`、`groundY`、三個 HDR 顏色。
 - 美術小提醒：需要 URP 2D + Bloom（測試場景已附）。
 
+## 飛行物特效
+
+選單 `Tools > YinYang VFX > Projectiles >`（每種一項，或 `Build ALL Projectile Effects`）。原點放在發射點，往右飛約 `qiTravel × 1.4～1.5` 單位（向左要鏡像）；抵達時觸發 `onImpact`。
+EnergyBolt 能量彈、HomingShot 追蹤彈（弧線）、Boomerang 迴旋鏢（去回）、BeamCannon 光束砲（蓄力＋粗光束）、Laser 雷射、Shuriken 手裡劍。
+
 ## 大招特效
 
 選單 `Tools > YinYang VFX > Ultimate >`（每種一項，或 `Build ALL Ultimate Effects`）。尺寸很大（約 8～12 單位寬），原點在施放者身體中心（劍雨、流星雨在目標區域中心）。

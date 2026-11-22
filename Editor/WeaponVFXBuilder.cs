@@ -177,6 +177,12 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.TaijiUltimate, "Taiji Ultimate", "TaijiUltimate", 3.0f, 9.0f, 0f, false, 0f),
             new KindInfo(WeaponKind.DragonQi, "Dragon Qi", "DragonQi", 2.0f, 10.0f, 0f, false, 0f),
             new KindInfo(WeaponKind.BarrierExpand, "Barrier Expand", "BarrierExpand", 1.8f, 9.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.EnergyBolt, "Energy Bolt", "EnergyBolt", 1.1f, 6.5f, 2.0f, false, 0f),
+            new KindInfo(WeaponKind.HomingShot, "Homing Shot", "HomingShot", 1.4f, 6.5f, 2.0f, false, 0f),
+            new KindInfo(WeaponKind.Boomerang, "Boomerang", "Boomerang", 1.9f, 6.5f, 1.5f, false, 0f),
+            new KindInfo(WeaponKind.BeamCannon, "Beam Cannon", "BeamCannon", 2.2f, 11.0f, 3.0f, false, 0f),
+            new KindInfo(WeaponKind.Laser, "Laser", "Laser", 0.6f, 11.0f, 2.0f, false, 0f),
+            new KindInfo(WeaponKind.Shuriken, "Shuriken", "Shuriken", 1.1f, 6.5f, 2.0f, false, 0f),
         };
 
         // ------------------------------------------------------------------ menu
@@ -469,10 +475,34 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/Ultimate/Build Barrier Expand", false, 1806)]
         public static void BuildBarrierExpand() { Run(WeaponKind.BarrierExpand); }
 
+        [MenuItem("Tools/YinYang VFX/Projectiles/Build Energy Bolt", false, 2001)]
+        public static void BuildEnergyBolt() { Run(WeaponKind.EnergyBolt); }
+
+        [MenuItem("Tools/YinYang VFX/Projectiles/Build Homing Shot", false, 2002)]
+        public static void BuildHomingShot() { Run(WeaponKind.HomingShot); }
+
+        [MenuItem("Tools/YinYang VFX/Projectiles/Build Boomerang", false, 2003)]
+        public static void BuildBoomerang() { Run(WeaponKind.Boomerang); }
+
+        [MenuItem("Tools/YinYang VFX/Projectiles/Build Beam Cannon", false, 2004)]
+        public static void BuildBeamCannon() { Run(WeaponKind.BeamCannon); }
+
+        [MenuItem("Tools/YinYang VFX/Projectiles/Build Laser", false, 2005)]
+        public static void BuildLaser() { Run(WeaponKind.Laser); }
+
+        [MenuItem("Tools/YinYang VFX/Projectiles/Build Shuriken", false, 2006)]
+        public static void BuildShuriken() { Run(WeaponKind.Shuriken); }
+
+        [MenuItem("Tools/YinYang VFX/Projectiles/Build ALL Projectile Effects", false, 2100)]
+        public static void BuildAllProjectiles()
+        {
+            RunRange((int)WeaponKind.EnergyBolt, int.MaxValue);
+        }
+
         [MenuItem("Tools/YinYang VFX/Ultimate/Build ALL Ultimate Effects", false, 1900)]
         public static void BuildAllUltimate()
         {
-            RunRange((int)WeaponKind.SkySwordRain, int.MaxValue);
+            RunRange((int)WeaponKind.SkySwordRain, (int)WeaponKind.EnergyBolt);
         }
 
         [MenuItem("Tools/YinYang VFX/Summon/Build ALL Summon Effects", false, 1700)]
