@@ -750,12 +750,12 @@ namespace YinYangVFX.EditorTools
             Material lineMat = MakeMaterial(MatDir + "/MAT_WeaponLine.mat", particleShader, softLine, new Color(2.4f, 2.4f, 2.4f, 1f));
             Material dotMat = MakeMaterial(MatDir + "/MAT_WeaponDot.mat", particleShader, softDot, new Color(3.0f, 3.0f, 3.0f, 1f));
             Material starMat = MakeMaterial(MatDir + "/MAT_WeaponStar.mat", particleShader, star, new Color(3.8f, 3.8f, 3.8f, 1f));
-            WriteTexture(TexDir + "/VFX_InkSword.png", 192, 768, InkSwordPixel);
-            Texture2D inkSword = AssetDatabase.LoadAssetAtPath<Texture2D>(TexDir + "/VFX_InkSword.png");
-            Material swordMat = MakeMaterial(MatDir + "/MAT_WeaponSword.mat", particleShader, inkSword, new Color(1f, 1f, 1f, 1f));
-            swordMat.SetFloat("_SrcBlend", 5f);  // SrcAlpha
-            swordMat.SetFloat("_DstBlend", 10f); // OneMinusSrcAlpha -> solid ink body
-            EditorUtility.SetDirty(swordMat);
+            WriteTexture(TexDir + "/VFX_Shapes.png", ShapeAtlas.W, ShapeAtlas.H, ShapePixels.Atlas);
+            Texture2D shapeAtlas = AssetDatabase.LoadAssetAtPath<Texture2D>(TexDir + "/VFX_Shapes.png");
+            Material shapeMat = MakeMaterial(MatDir + "/MAT_WeaponShapes.mat", particleShader, shapeAtlas, new Color(1f, 1f, 1f, 1f));
+            shapeMat.SetFloat("_SrcBlend", 5f);  // SrcAlpha
+            shapeMat.SetFloat("_DstBlend", 10f); // OneMinusSrcAlpha -> solid ink body
+            EditorUtility.SetDirty(shapeMat);
             string lineMatPath = AssetDatabase.GetAssetPath(lineMat);
             string dotMatPath = AssetDatabase.GetAssetPath(dotMat);
             string starMatPath = AssetDatabase.GetAssetPath(starMat);
@@ -809,7 +809,7 @@ namespace YinYangVFX.EditorTools
             fx.lineMaterial = AssetDatabase.LoadAssetAtPath<Material>(lineMatPath);
             fx.dotMaterial = AssetDatabase.LoadAssetAtPath<Material>(dotMatPath);
             fx.starMaterial = AssetDatabase.LoadAssetAtPath<Material>(starMatPath);
-            fx.swordMaterial = AssetDatabase.LoadAssetAtPath<Material>(MatDir + "/MAT_WeaponSword.mat");
+            fx.shapeMaterial = AssetDatabase.LoadAssetAtPath<Material>(MatDir + "/MAT_WeaponShapes.mat");
 
             PrefabUtility.SaveAsPrefabAsset(root, path);
             UnityEngine.Object.DestroyImmediate(root);
@@ -939,7 +939,7 @@ namespace YinYangVFX.EditorTools
         }
 
 
-        static float Hash01(int a, int b)
+        internal static float Hash01(int a, int b)
         {
             unchecked
             {
@@ -951,7 +951,7 @@ namespace YinYangVFX.EditorTools
 
         // Slender ink sword, tip at the top: blade, guard, wrapped handle, pommel, tassel.
         // RGB = brightness (tinted by the prefab colour), alpha = silhouette.
-        static Color32 InkSwordPixel(int x, int y, int w, int h)
+        internal static Color32 InkSwordPixel(int x, int y, int w, int h)
         {
             float px = x + 0.5f - w * 0.5f;
             float ax = Mathf.Abs(px);

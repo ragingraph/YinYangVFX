@@ -406,27 +406,27 @@ namespace YinYangVFX
 
             switch (kind)
             {
-                case WeaponKind.SpearThrust: AnimThrust(); break;
-                case WeaponKind.SpearSweep: AnimSweep(); break;
-                case WeaponKind.HammerSmash: AnimHammer(); break;
-                case WeaponKind.SwordQi: AnimQi(); break;
-                case WeaponKind.CrossSlash: AnimCross(); break;
-                case WeaponKind.SpearRising: AnimRising(); break;
-                case WeaponKind.SpearFlurry: AnimFlurry(); break;
-                case WeaponKind.HammerSweep: AnimHammerSweep(); break;
-                case WeaponKind.HammerQuake: AnimQuake(); break;
-                case WeaponKind.SwordSlash: AnimSwordSlash(); break;
-                case WeaponKind.SwordWhirl: AnimWhirl(); break;
-                case WeaponKind.SwordLunge: AnimLunge(); break;
-                case WeaponKind.BladeChop: AnimChop(); break;
-                case WeaponKind.BladeDrag: AnimDrag(); break;
-                case WeaponKind.HalberdCrescent: AnimHalberdCrescent(); break;
-                case WeaponKind.HalberdLiftThrust: AnimHalberdLift(); break;
-                case WeaponKind.WhipLash: AnimWhip(); break;
-                case WeaponKind.NunchakuFlurry: AnimNunchaku(); break;
-                case WeaponKind.PalmWave: AnimPalm(); break;
-                case WeaponKind.Dart: AnimDart(); break;
-                case WeaponKind.ArrowShot: AnimArrow(); break;
+                case WeaponKind.SpearThrust: AnimSSpearThrust(); break;
+                case WeaponKind.SpearSweep: AnimSSpearSweep(); break;
+                case WeaponKind.HammerSmash: AnimSHammerSmash(); break;
+                case WeaponKind.SwordQi: AnimSSwordQi(); break;
+                case WeaponKind.CrossSlash: AnimSCrossSlash(); break;
+                case WeaponKind.SpearRising: AnimSSpearRising(); break;
+                case WeaponKind.SpearFlurry: AnimSSpearFlurry(); break;
+                case WeaponKind.HammerSweep: AnimSHammerSweep(); break;
+                case WeaponKind.HammerQuake: AnimSHammerQuake(); break;
+                case WeaponKind.SwordSlash: AnimSSwordSlash(); break;
+                case WeaponKind.SwordWhirl: AnimSSwordWhirl(); break;
+                case WeaponKind.SwordLunge: AnimSSwordLunge(); break;
+                case WeaponKind.BladeChop: AnimSBladeChop(); break;
+                case WeaponKind.BladeDrag: AnimSBladeDrag(); break;
+                case WeaponKind.HalberdCrescent: AnimSHalberdCrescent(); break;
+                case WeaponKind.HalberdLiftThrust: AnimSHalberdLift(); break;
+                case WeaponKind.WhipLash: AnimSWhipLash(); break;
+                case WeaponKind.NunchakuFlurry: AnimSNunchaku(); break;
+                case WeaponKind.PalmWave: AnimSPalmWave(); break;
+                case WeaponKind.Dart: AnimSDart(); break;
+                case WeaponKind.ArrowShot: AnimSArrow(); break;
                 case WeaponKind.ShieldOrb: AnimShieldOrb(); break;
                 case WeaponKind.ShieldArc: AnimShieldArc(); break;
                 case WeaponKind.YinYangShield: AnimYinYangShield(); break;

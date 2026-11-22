@@ -235,6 +235,10 @@ FireBall 火球、Flamethrower 火焰噴射、IceSpike 冰錐、FreezeBurst 冰�
 WaterBall 水球、WaterColumn 水柱、RockSpike 岩刺、FallingRocks 落石、PoisonMist 毒霧、PoisonShot 毒彈、HolyLight 聖光、ShadowOrb 暗影球。
 用法同武器特效：`WeaponEffect.Spawn(prefab, 位置, 角度, 是否朝左, 大小)`，從施法者的手發出；`onImpact` 在命中瞬間觸發。
 
+## 實體化（具體外型）
+
+全部特效會分批改成「實體外型」：武器就是真的劍／槍／錘／戟／箭／苦無／雙節棍的實心形狀，揮動時留下實心的水墨筆刷拖尾。所有形狀存在一張自動產生的貼圖 `VFX_Shapes.png`（建置時產生，不用準備圖）。已完成：武器（21 種）、水墨升劍。其餘類別陸續改。
+
 ## 防禦特效（護盾・格擋・反彈・迴避・強化・破防）
 
 選單 `Tools > YinYang VFX > Defense >`，每種一項，或 `Build ALL Defense Effects` 全做。每種 6 個單色版本，prefab 名 `VFX_<Id>_<Colour>`。

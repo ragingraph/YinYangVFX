@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.27.0
+
+- Solid shapes: new shape atlas (`VFX_Shapes.png`: sword, spear, hammer, halberd, arrow, kunai, nunchaku stick, ink brush stroke) and `shapeMaterial` (replaces `swordMaterial`). All 21 weapon effects now draw the real weapon plus solid ink-brush swing trails. Rebuild every prefab.
+
 ## 0.26.0
 
 - InkSwords: swords now accelerate straight up until they leave the screen (no hover), all light particles removed, airflow added (wind ribbons + vortex rings around the swords). Duration 1.1s. Rebuild the prefab.
