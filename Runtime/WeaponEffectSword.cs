@@ -124,23 +124,22 @@ namespace YinYangVFX
             _swordUsed = 0;
         }
 
-        // Five solid ink swords shoot out of the ground FAST (launch, streak upward, decelerate, hang, fade).
-        // Origin = ground point.
+        // Five solid ink swords launch from the ground and keep accelerating straight up until they leave the screen.
+        // No light particles; airflow (wind ribbons + vortex rings) wraps the flying swords. Origin = ground point.
         void AnimInkSwords()
         {
             Vector2 c = sweepCenter;
-            float g = FadeFrom(1.5f);
             float[] dx = { -0.62f, -0.31f, 0f, 0.31f, 0.62f };
             float[] sz = { 1.5f, 2.0f, 2.5f, 2.1f, 1.6f };
             float[] ts = { 0.0f, 0.05f, 0.09f, 0.06f, 0.02f };
-            float[] up = { 1.6f, 2.4f, 3.2f, 2.6f, 1.9f }; // how far each sword flies (pommel height at the end)
             if (Once(1)) Fire();
 
+            // ground shock rings at launch (lines only)
             for (int j = 0; j < 3; j++)
             {
-                float d = Mathf.Clamp01((_t - 0.06f * j) / 0.6f);
+                float d = Mathf.Clamp01((_t - 0.05f * j) / 0.45f);
                 int rn = Ring(c.x, groundY, 1.9f * EaseOut(d), 0.3f * EaseOut(d));
-                Draw(Taper.Flat, rn, 0.04f * (1f - d) * thickness, primary, (1f - d) * g);
+                Draw(Taper.Flat, rn, 0.04f * (1f - d) * thickness, primary, 1f - d);
             }
 
             for (int i = 0; i < 5; i++)
@@ -148,50 +147,48 @@ namespace YinYangVFX
                 float x = c.x + dx[i];
                 float tt = _t - ts[i];
                 if (tt < 0f) continue;
-                float p = Mathf.Clamp01(tt / 0.22f);
-                float e = 1f - Mathf.Pow(1f - p, 4f);            // explosive start, quick brake
-                float v = Mathf.Pow(1f - p, 3f);                 // 1 = full speed, 0 = stopped
-                float bottom = groundY - sz[i] + e * (sz[i] + up[i]) + Mathf.Max(0f, tt - 0.22f) * 0.3f;
-                float a = g * Mathf.Clamp01(tt * 25f);
+                float S = sz[i];
+                // starts buried, explodes upward and keeps accelerating until it is far off the top of the screen
+                float bottom = groundY - S + 16f * tt + 34f * tt * tt;
+                float a = Mathf.Clamp01(tt * 30f);
+                float v = Mathf.Clamp01(0.55f + tt * 1.6f); // streak strength grows with speed
+                float tip = bottom + S;
 
-                // speed streaks behind the blade
-                float trailBottom = Mathf.Max(groundY, bottom - 0.4f - 2.6f * v);
-                float top = bottom + sz[i] * 0.75f;
-                if (top > trailBottom + 0.05f)
+                // long speed trail behind (below) the blade
+                float trailBottom = Mathf.Max(groundY, bottom - 3.5f - 6f * tt);
+                if (tip > trailBottom + 0.05f)
                 {
-                    int n = Seg(x, trailBottom, x, top, 2);
-                    Draw(Taper.Head, n, 0.34f * thickness * (0.35f + 0.65f * v), primary * 0.5f, 0.75f * a);
-                    for (int sd = -1; sd <= 1; sd += 2)
-                    {
-                        float sx = x + sd * (0.09f + 0.04f * Rnd(i, sd + 3));
-                        n = Seg(sx, Mathf.Max(groundY, bottom - 0.2f - 3.2f * v), sx, bottom + sz[i] * 0.4f, 2);
-                        Draw(Taper.Head, n, 0.03f * thickness, primary, v * a);
-                    }
+                    int n = Seg(x, trailBottom, x, bottom + S * 0.7f, 2);
+                    Draw(Taper.Head, n, 0.36f * thickness, primary * 0.5f, 0.7f * a);
+                    n = Seg(x, trailBottom, x, bottom + S * 0.5f, 2);
+                    Draw(Taper.Head, n, 0.1f * thickness, primary, 0.9f * a);
                 }
 
-                DrawSword(x, sz[i], bottom, a);
-
-                if (Once(1 << (i + 2)))
+                // airflow: wind ribbons streaming around the blade
+                for (int k = 0; k < 5; k++)
                 {
-                    Burst(x, groundY + 0.05f, 16, 5f, 4, 1.8f);
-                    for (int j = 0; j < 8; j++)
-                    {
-                        float ang = Random.value * 3.14f, sp = 2f + 3f * Random.value;
-                        Emit(_dots, x, groundY + 0.05f, Mathf.Cos(ang) * sp * (Random.value < .5f ? -1f : 1f), Mathf.Sin(ang) * sp * 0.6f, 0.06f + 0.08f * Random.value, 0.8f, Hue(primary));
-                    }
-
-                    Emit(_dots, x, groundY + 0.15f, 0f, 0f, 1.4f, 0.18f, Hue(primary));
+                    float side = (k % 2 == 0 ? 1f : -1f);
+                    float off = side * (0.14f + 0.07f * (k / 2) + 0.04f * Rnd(i * 7 + k, 1));
+                    float y0 = Mathf.Max(groundY, bottom - 1.0f - 1.6f * Rnd(i * 5 + k, 2));
+                    float y1 = bottom + S * (0.95f + 0.4f * Rnd(i * 3 + k, 3));
+                    if (y1 <= y0 + 0.1f) continue;
+                    int n = WaveDir(x + off, y0, 90f, y1 - y0, 26, 0.07f + 0.05f * Rnd(i * 11 + k, 4), 3.0f + 1.5f * Rnd(i * 13 + k, 5), -tt * 26f + k * 1.7f + i);
+                    Draw(Taper.Head, n, 0.035f * thickness, primary, 0.55f * v * a);
                 }
 
-                if (p < 1f)
+                // air vortex rings spreading behind the blade
+                for (int j = 0; j < 3; j++)
                 {
-                    // sparks thrown off the tail while it is fast
-                    Emit(_sparks, x + (Random.value - 0.5f) * 0.2f, Mathf.Max(groundY, bottom), (Random.value - 0.5f) * 1.2f, -1f - 2f * Random.value, 0.06f, 0.4f, Hue(primary));
-                    Emit(_stars, x, Mathf.Max(groundY, bottom) + 0.1f, 0f, 0f, 0.12f + 0.1f * Random.value, 0.4f, Hue(primary));
+                    float f = Mathf.Repeat(tt * 5f + j / 3f + i * 0.17f, 1f);
+                    float ry = bottom - 0.2f - f * 2.2f;
+                    if (ry <= groundY) continue;
+                    float rx = 0.18f + 0.5f * f;
+                    int n = Ring(x, ry, rx, rx * 0.2f);
+                    Draw(Taper.Flat, n, 0.025f * thickness, primary, (1f - f) * 0.7f * a);
                 }
+
+                DrawSword(x, S, bottom, a);
             }
-
-            Emit(_dots, c.x, groundY + 0.1f, 0f, 0f, 2.4f * Mathf.Clamp01(1f - _t * 2f), 0.07f, Tint(0.15f * g));
         }
     }
 }

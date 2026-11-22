@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.26.0
+
+- InkSwords: swords now accelerate straight up until they leave the screen (no hover), all light particles removed, airflow added (wind ribbons + vortex rings around the swords). Duration 1.1s. Rebuild the prefab.
+
 ## 0.25.0
 
 - Ground effects now shoot upward FAST (explosive launch, quick brake, speed streaks) instead of slowly bulging up. InkSwords: swords launch out of the ground and fly up, with speed trails. Rebuild existing Ground prefabs.

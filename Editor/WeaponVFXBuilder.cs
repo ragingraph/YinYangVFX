@@ -208,7 +208,7 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.TendrilRise, "Tendril Rise", "TendrilRise", 2.0f, 4.5f, 0.0f, false, 0f),
             new KindInfo(WeaponKind.PillarRise, "Pillar Rise", "PillarRise", 2.2f, 4.5f, 0.0f, false, 0f),
             new KindInfo(WeaponKind.RiseWall, "Rise Wall", "RiseWall", 2.2f, 7.0f, 0.0f, false, 0f),
-            new KindInfo(WeaponKind.InkSwords, "Ink Swords", "InkSwords", 2.4f, 4.5f, 0f, false, 0f),
+            new KindInfo(WeaponKind.InkSwords, "Ink Swords", "InkSwords", 1.1f, 4.5f, 0f, false, 0f),
         };
 
         // ------------------------------------------------------------------ menu
