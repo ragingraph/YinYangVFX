@@ -127,6 +127,12 @@ namespace YinYangVFX
         Achievement = 118,
         CountdownRing = 119,
         SparkleLoop = 120,
+        GroundSpikeWave = 121,
+        GroundBurst = 122,
+        RisingBlades = 123,
+        TendrilRise = 124,
+        PillarRise = 125,
+        RiseWall = 126,
     }
 
     /// <summary>
@@ -520,6 +526,12 @@ namespace YinYangVFX
                 case WeaponKind.Achievement: AnimAchievement(); break;
                 case WeaponKind.CountdownRing: AnimCountdownRing(); break;
                 case WeaponKind.SparkleLoop: AnimSparkleLoop(); break;
+                case WeaponKind.GroundSpikeWave: AnimGroundSpikeWave(); break;
+                case WeaponKind.GroundBurst: AnimGroundBurst(); break;
+                case WeaponKind.RisingBlades: AnimRisingBlades(); break;
+                case WeaponKind.TendrilRise: AnimTendrilRise(); break;
+                case WeaponKind.PillarRise: AnimPillarRise(); break;
+                case WeaponKind.RiseWall: AnimRiseWall(); break;
             }
 
             EndFrame();

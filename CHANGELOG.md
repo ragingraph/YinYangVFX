@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.23.0
+
+- 6 rise-from-ground effects: spike wave, ground burst, rising blades, tendril rise, pillar rise, rise wall. Menus under `Tools/YinYang VFX/Ground/`.
+
 ## 0.22.0
 
 - 6 UI effects: button glow (loop), reward burst, UI level up, achievement, countdown ring, sparkle (loop). Menus under `Tools/YinYang VFX/UI/`.

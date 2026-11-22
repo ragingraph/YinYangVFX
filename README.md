@@ -153,6 +153,11 @@ WeaponEffect.Spawn(thrustFx, handPosition, angleDegrees: 0f, mirror: facingLeft,
 - Prefab 上可調：`thickness`（粗細）、`reach`（刺擊距離）、`impactOffset`（槌落點）、`qiTravel`（劍氣飛行距離）、`sweepRadius`、`groundY`、三個 HDR 顏色。
 - 美術小提醒：需要 URP 2D + Bloom（測試場景已附）。
 
+## 地面升起特效
+
+選單 `Tools > YinYang VFX > Ground >`（每種一項，或 `Build ALL Ground Effects`）。原點放在地面接觸點（地面高度 `groundY`）；GroundSpikeWave 往右延伸（向左要鏡像）。
+GroundSpikeWave 地刺波（依序往前刺出）、GroundBurst 地面爆裂（光柱＋碎石）、RisingBlades 地面升劍、TendrilRise 藤蔓／觸手升起、PillarRise 光柱升起（螺旋）、RiseWall 升起光牆（由中央往兩側）。
+
 ## UI 特效
 
 選單 `Tools > YinYang VFX > UI >`（每種一項，或 `Build ALL UI Effects`）。原點放在 UI 元件中心。

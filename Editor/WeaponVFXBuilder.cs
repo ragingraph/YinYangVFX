@@ -202,6 +202,12 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.Achievement, "Achievement", "Achievement", 2.0f, 5.0f, 0f, false, 0f),
             new KindInfo(WeaponKind.CountdownRing, "Countdown Ring", "CountdownRing", 3.0f, 3.4f, 0f, false, 0f),
             new KindInfo(WeaponKind.SparkleLoop, "Sparkle (loop)", "SparkleLoop", 1.5f, 4.0f, 0f, true, 0f),
+            new KindInfo(WeaponKind.GroundSpikeWave, "Ground Spike Wave", "GroundSpikeWave", 1.8f, 7.0f, 1.0f, false, 0f),
+            new KindInfo(WeaponKind.GroundBurst, "Ground Burst", "GroundBurst", 1.3f, 5.0f, 0.0f, false, 0f),
+            new KindInfo(WeaponKind.RisingBlades, "Rising Blades", "RisingBlades", 2.2f, 4.5f, 0.0f, false, 0f),
+            new KindInfo(WeaponKind.TendrilRise, "Tendril Rise", "TendrilRise", 2.0f, 4.5f, 0.0f, false, 0f),
+            new KindInfo(WeaponKind.PillarRise, "Pillar Rise", "PillarRise", 2.2f, 4.5f, 0.0f, false, 0f),
+            new KindInfo(WeaponKind.RiseWall, "Rise Wall", "RiseWall", 2.2f, 7.0f, 0.0f, false, 0f),
         };
 
         // ------------------------------------------------------------------ menu
@@ -569,10 +575,34 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/UI/Build Sparkle (loop)", false, 2606)]
         public static void BuildSparkleLoop() { Run(WeaponKind.SparkleLoop); }
 
+        [MenuItem("Tools/YinYang VFX/Ground/Build Ground Spike Wave", false, 2801)]
+        public static void BuildGroundSpikeWave() { Run(WeaponKind.GroundSpikeWave); }
+
+        [MenuItem("Tools/YinYang VFX/Ground/Build Ground Burst", false, 2802)]
+        public static void BuildGroundBurst() { Run(WeaponKind.GroundBurst); }
+
+        [MenuItem("Tools/YinYang VFX/Ground/Build Rising Blades", false, 2803)]
+        public static void BuildRisingBlades() { Run(WeaponKind.RisingBlades); }
+
+        [MenuItem("Tools/YinYang VFX/Ground/Build Tendril Rise", false, 2804)]
+        public static void BuildTendrilRise() { Run(WeaponKind.TendrilRise); }
+
+        [MenuItem("Tools/YinYang VFX/Ground/Build Pillar Rise", false, 2805)]
+        public static void BuildPillarRise() { Run(WeaponKind.PillarRise); }
+
+        [MenuItem("Tools/YinYang VFX/Ground/Build Rise Wall", false, 2806)]
+        public static void BuildRiseWall() { Run(WeaponKind.RiseWall); }
+
+        [MenuItem("Tools/YinYang VFX/Ground/Build ALL Ground Effects", false, 2900)]
+        public static void BuildAllGround()
+        {
+            RunRange((int)WeaponKind.GroundSpikeWave, int.MaxValue);
+        }
+
         [MenuItem("Tools/YinYang VFX/UI/Build ALL UI Effects", false, 2700)]
         public static void BuildAllUI()
         {
-            RunRange((int)WeaponKind.ButtonGlow, int.MaxValue);
+            RunRange((int)WeaponKind.ButtonGlow, (int)WeaponKind.GroundSpikeWave);
         }
 
         [MenuItem("Tools/YinYang VFX/Boss/Build ALL Boss Effects", false, 2500)]
