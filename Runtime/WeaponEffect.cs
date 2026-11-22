@@ -85,6 +85,11 @@ namespace YinYangVFX
         Awaken = 76,
         Berserk = 77,
         CharacterAura = 78,
+        DeathMonster = 79,
+        DeathAsh = 80,
+        DeathLight = 81,
+        DeathSoul = 82,
+        DeathBoss = 83,
     }
 
     /// <summary>
@@ -436,6 +441,11 @@ namespace YinYangVFX
                 case WeaponKind.Awaken: AnimAwaken(); break;
                 case WeaponKind.Berserk: AnimBerserk(); break;
                 case WeaponKind.CharacterAura: AnimCharacterAura(); break;
+                case WeaponKind.DeathMonster: AnimDeathMonster(); break;
+                case WeaponKind.DeathAsh: AnimDeathAsh(); break;
+                case WeaponKind.DeathLight: AnimDeathLight(); break;
+                case WeaponKind.DeathSoul: AnimDeathSoul(); break;
+                case WeaponKind.DeathBoss: AnimDeathBoss(); break;
             }
 
             EndFrame();

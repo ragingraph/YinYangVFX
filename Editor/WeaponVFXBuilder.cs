@@ -160,6 +160,11 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.Awaken, "Awaken", "Awaken", 2.0f, 3.4f, 0f, false, 0f),
             new KindInfo(WeaponKind.Berserk, "Berserk", "Berserk", 1.0f, 3.4f, 0f, true, 0f),
             new KindInfo(WeaponKind.CharacterAura, "Character Aura", "CharacterAura", 1.0f, 3.4f, 0f, true, 0f),
+            new KindInfo(WeaponKind.DeathMonster, "Monster Death", "DeathMonster", 1.0f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.DeathAsh, "Death to Ash", "DeathAsh", 2.0f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.DeathLight, "Death to Light", "DeathLight", 1.8f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.DeathSoul, "Death Soul", "DeathSoul", 2.2f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.DeathBoss, "Boss Death", "DeathBoss", 3.0f, 5.0f, 0f, false, 0f),
         };
 
         // ------------------------------------------------------------------ menu
@@ -401,10 +406,31 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/Charge/Build Character Aura", false, 1205)]
         public static void BuildCharacterAura() { Run(WeaponKind.CharacterAura); }
 
+        [MenuItem("Tools/YinYang VFX/Death/Build Monster Death", false, 1401)]
+        public static void BuildDeathMonster() { Run(WeaponKind.DeathMonster); }
+
+        [MenuItem("Tools/YinYang VFX/Death/Build Death to Ash", false, 1402)]
+        public static void BuildDeathAsh() { Run(WeaponKind.DeathAsh); }
+
+        [MenuItem("Tools/YinYang VFX/Death/Build Death to Light", false, 1403)]
+        public static void BuildDeathLight() { Run(WeaponKind.DeathLight); }
+
+        [MenuItem("Tools/YinYang VFX/Death/Build Death Soul", false, 1404)]
+        public static void BuildDeathSoul() { Run(WeaponKind.DeathSoul); }
+
+        [MenuItem("Tools/YinYang VFX/Death/Build Boss Death", false, 1405)]
+        public static void BuildDeathBoss() { Run(WeaponKind.DeathBoss); }
+
+        [MenuItem("Tools/YinYang VFX/Death/Build ALL Death Effects", false, 1500)]
+        public static void BuildAllDeath()
+        {
+            RunRange((int)WeaponKind.DeathMonster, int.MaxValue);
+        }
+
         [MenuItem("Tools/YinYang VFX/Charge/Build ALL Charge Effects", false, 1300)]
         public static void BuildAllCharge()
         {
-            RunRange((int)WeaponKind.ChargeAura, int.MaxValue);
+            RunRange((int)WeaponKind.ChargeAura, (int)WeaponKind.DeathMonster);
         }
 
         [MenuItem("Tools/YinYang VFX/Buffs/Build ALL Buff Effects", false, 1100)]

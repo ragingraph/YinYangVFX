@@ -153,6 +153,11 @@ WeaponEffect.Spawn(thrustFx, handPosition, angleDegrees: 0f, mirror: facingLeft,
 - Prefab 上可調：`thickness`（粗細）、`reach`（刺擊距離）、`impactOffset`（槌落點）、`qiTravel`（劍氣飛行距離）、`sweepRadius`、`groundY`、三個 HDR 顏色。
 - 美術小提醒：需要 URP 2D + Bloom（測試場景已附）。
 
+## 死亡／消散特效
+
+選單 `Tools > YinYang VFX > Death >`（每種一項，或 `Build ALL Death Effects`）。放在敵人身體中心，`onImpact` 觸發時再把敵人圖片隱藏或淡出。
+DeathMonster 怪物死亡爆散、DeathAsh 化灰、DeathLight 化光點、DeathSoul 魂魄升天、DeathBoss Boss 死亡大爆炸（約 3 秒，前 1.2 秒連續小爆裂＋裂痕，之後大爆炸）。
+
 ## 蓄力／氣場特效
 
 選單 `Tools > YinYang VFX > Charge >`（每種一項，或 `Build ALL Charge Effects`）。放在角色身上。

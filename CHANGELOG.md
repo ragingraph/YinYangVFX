@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.16.0
+
+- 5 death effects: monster death, to ash, to light, soul, boss death. Menus under `Tools/YinYang VFX/Death/`.
+
 ## 0.15.0
 
 - 5 charge / aura effects: charge aura, rage burst, awaken, berserk, character aura. Menus under `Tools/YinYang VFX/Charge/`.
