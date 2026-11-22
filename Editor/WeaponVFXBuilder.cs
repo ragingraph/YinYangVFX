@@ -171,6 +171,12 @@ namespace YinYangVFX.EditorTools
             new KindInfo(WeaponKind.TeleportIn, "Teleport In", "TeleportIn", 0.8f, 3.4f, 0f, false, 0f),
             new KindInfo(WeaponKind.Revive, "Revive", "Revive", 2.2f, 3.4f, 0f, false, 0f),
             new KindInfo(WeaponKind.LevelUp, "Level Up", "LevelUp", 2.0f, 3.4f, 0f, false, 0f),
+            new KindInfo(WeaponKind.SkySwordRain, "Sky Sword Rain", "SkySwordRain", 2.4f, 6.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.FullScreenSlash, "Full-Screen Slash", "FullScreenSlash", 1.0f, 12.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.MeteorRain, "Meteor Rain", "MeteorRain", 3.2f, 8.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.TaijiUltimate, "Taiji Ultimate", "TaijiUltimate", 3.0f, 9.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.DragonQi, "Dragon Qi", "DragonQi", 2.0f, 10.0f, 0f, false, 0f),
+            new KindInfo(WeaponKind.BarrierExpand, "Barrier Expand", "BarrierExpand", 1.8f, 9.0f, 0f, false, 0f),
         };
 
         // ------------------------------------------------------------------ menu
@@ -445,10 +451,34 @@ namespace YinYangVFX.EditorTools
         [MenuItem("Tools/YinYang VFX/Summon/Build Level Up", false, 1606)]
         public static void BuildLevelUp() { Run(WeaponKind.LevelUp); }
 
+        [MenuItem("Tools/YinYang VFX/Ultimate/Build Sky Sword Rain", false, 1801)]
+        public static void BuildSkySwordRain() { Run(WeaponKind.SkySwordRain); }
+
+        [MenuItem("Tools/YinYang VFX/Ultimate/Build Full-Screen Slash", false, 1802)]
+        public static void BuildFullScreenSlash() { Run(WeaponKind.FullScreenSlash); }
+
+        [MenuItem("Tools/YinYang VFX/Ultimate/Build Meteor Rain", false, 1803)]
+        public static void BuildMeteorRain() { Run(WeaponKind.MeteorRain); }
+
+        [MenuItem("Tools/YinYang VFX/Ultimate/Build Taiji Ultimate", false, 1804)]
+        public static void BuildTaijiUltimate() { Run(WeaponKind.TaijiUltimate); }
+
+        [MenuItem("Tools/YinYang VFX/Ultimate/Build Dragon Qi", false, 1805)]
+        public static void BuildDragonQi() { Run(WeaponKind.DragonQi); }
+
+        [MenuItem("Tools/YinYang VFX/Ultimate/Build Barrier Expand", false, 1806)]
+        public static void BuildBarrierExpand() { Run(WeaponKind.BarrierExpand); }
+
+        [MenuItem("Tools/YinYang VFX/Ultimate/Build ALL Ultimate Effects", false, 1900)]
+        public static void BuildAllUltimate()
+        {
+            RunRange((int)WeaponKind.SkySwordRain, int.MaxValue);
+        }
+
         [MenuItem("Tools/YinYang VFX/Summon/Build ALL Summon Effects", false, 1700)]
         public static void BuildAllSummon()
         {
-            RunRange((int)WeaponKind.SummonCircle, int.MaxValue);
+            RunRange((int)WeaponKind.SummonCircle, (int)WeaponKind.SkySwordRain);
         }
 
         [MenuItem("Tools/YinYang VFX/Death/Build ALL Death Effects", false, 1500)]

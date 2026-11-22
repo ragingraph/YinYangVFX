@@ -96,6 +96,12 @@ namespace YinYangVFX
         TeleportIn = 87,
         Revive = 88,
         LevelUp = 89,
+        SkySwordRain = 90,
+        FullScreenSlash = 91,
+        MeteorRain = 92,
+        TaijiUltimate = 93,
+        DragonQi = 94,
+        BarrierExpand = 95,
     }
 
     /// <summary>
@@ -458,6 +464,12 @@ namespace YinYangVFX
                 case WeaponKind.TeleportIn: AnimTeleportIn(); break;
                 case WeaponKind.Revive: AnimRevive(); break;
                 case WeaponKind.LevelUp: AnimLevelUp(); break;
+                case WeaponKind.SkySwordRain: AnimSkySwordRain(); break;
+                case WeaponKind.FullScreenSlash: AnimFullScreenSlash(); break;
+                case WeaponKind.MeteorRain: AnimMeteorRain(); break;
+                case WeaponKind.TaijiUltimate: AnimTaijiUltimate(); break;
+                case WeaponKind.DragonQi: AnimDragonQi(); break;
+                case WeaponKind.BarrierExpand: AnimBarrierExpand(); break;
             }
 
             EndFrame();

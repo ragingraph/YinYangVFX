@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.18.0
+
+- 6 ultimate effects: sky sword rain, full-screen slash, meteor rain, taiji ultimate, dragon qi, barrier expand. Menus under `Tools/YinYang VFX/Ultimate/`.
+
 ## 0.17.0
 
 - 6 summon/teleport effects: summon circle, portal (loop), teleport out/in, revive, level up. Menus under `Tools/YinYang VFX/Summon/`.
