@@ -10,6 +10,13 @@ namespace YinYangVFX
         void RiseSpike(float x, float h, float w, float a)
         {
             if (h <= 0.01f) return;
+            // fast upward streaks beside the body
+            for (int sd = -1; sd <= 1; sd += 2)
+            {
+                int sn = Seg(x + sd * w * 0.9f, groundY, x + sd * w * 0.9f, groundY + h * 0.8f, 2);
+                Draw(Taper.Head, sn, w * 0.25f * thickness, primary, 0.6f * a);
+            }
+
             int n = Seg(x, groundY + h, x, groundY, 2);
             Draw(Taper.Head, n, w * 1.8f * thickness, primary * 0.5f, a);
             n = Seg(x, groundY + h, x, groundY, 2);
@@ -19,7 +26,7 @@ namespace YinYangVFX
         float RiseK(float t, float rise, float hold, float fall)
         {
             if (t < 0f) return 0f;
-            if (t < rise) return EaseOut(t / rise);
+            if (t < rise) return 1f - Mathf.Pow(1f - t / rise, 4f); // explosive launch, quick brake
             if (t < rise + hold) return 1f;
             return 1f - Mathf.Clamp01((t - rise - hold) / fall);
         }
@@ -33,7 +40,7 @@ namespace YinYangVFX
             {
                 float ts = 0.06f * i;
                 float x = c.x + 0.35f + i * 0.45f;
-                float k = RiseK(_t - ts, 0.1f, 0.5f, 0.4f);
+                float k = RiseK(_t - ts, 0.07f, 0.5f, 0.4f);
                 float h = (0.8f + 0.5f * Rnd(i, 1)) * (0.6f + 0.4f * i / (float)(N - 1)) * k;
                 RiseSpike(x, h, 0.16f, 1f);
                 if (_t >= ts && Once(1 << (i + 2)))
@@ -58,7 +65,7 @@ namespace YinYangVFX
             Vector2 c = sweepCenter;
             float x = c.x;
             float g = FadeFrom(0.9f);
-            float e = EaseOut(_t / 0.18f);
+            float e = 1f - Mathf.Pow(1f - Mathf.Clamp01(_t / 0.1f), 4f);
             if (Once(1))
             {
                 Fire();
@@ -109,7 +116,7 @@ namespace YinYangVFX
                 int j = (i * 4) % N; // scatter the order
                 float x = c.x + (j - (N - 1) * 0.5f) * 0.3f;
                 float ts = 0.07f * i;
-                float k = RiseK(_t - ts, 0.12f, 0.9f, 0.45f);
+                float k = RiseK(_t - ts, 0.08f, 0.9f, 0.45f);
                 float h = (1.0f + 0.5f * Rnd(j, 2)) * k;
                 RiseSpike(x, h, 0.1f, 1f);
                 if (h > 0.2f)
@@ -149,7 +156,7 @@ namespace YinYangVFX
             {
                 float x = c.x + (i - (N - 1) * 0.5f) * 0.3f;
                 float ts = 0.05f * Mathf.Abs(i - (N - 1) * 0.5f);
-                float k = RiseK(_t - ts, 0.45f, 0.5f, 0.5f);
+                float k = RiseK(_t - ts, 0.2f, 0.5f, 0.5f);
                 float len = (1.2f + 0.9f * Rnd(i, 3)) * k;
                 if (len < 0.05f) continue;
                 int n = WaveDir(x, groundY, 90f, len, 20, 0.14f + 0.05f * Rnd(i, 4), 2.4f + Rnd(i, 5), _t * 5f + i);
@@ -181,7 +188,7 @@ namespace YinYangVFX
             Vector2 c = sweepCenter;
             float x = c.x;
             float g = FadeFrom(1.4f);
-            float e = EaseOut(_t / 0.35f);
+            float e = 1f - Mathf.Pow(1f - Mathf.Clamp01(_t / 0.15f), 4f);
             float H = 4.0f;
             if (Once(1))
             {
@@ -232,7 +239,7 @@ namespace YinYangVFX
                 float off = i - (N - 1) * 0.5f;
                 float x = c.x + off * 0.34f;
                 float ts = 0.04f * Mathf.Abs(off);
-                float k = RiseK(_t - ts, 0.15f, 0.9f, 0.4f);
+                float k = RiseK(_t - ts, 0.08f, 0.9f, 0.4f);
                 float h = (1.6f - 0.06f * off * off * 0.25f) * k;
                 RiseSpike(x, h, 0.22f, 1f);
                 if (h > 0.1f)

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.25.0
+
+- Ground effects now shoot upward FAST (explosive launch, quick brake, speed streaks) instead of slowly bulging up. InkSwords: swords launch out of the ground and fly up, with speed trails. Rebuild existing Ground prefabs.
+
 ## 0.24.0
 
 - New `InkSwords`: first effect with a solid, concrete shape (slender ink-style swords rising from the ground) via a procedural sword texture on cropped quads. New `swordMaterial` field. Menu: `Tools/YinYang VFX/Ground/Build Ink Swords` (also included in Build ALL Ground).

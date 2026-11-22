@@ -156,7 +156,7 @@ WeaponEffect.Spawn(thrustFx, handPosition, angleDegrees: 0f, mirror: facingLeft,
 ## 地面升起特效
 
 選單 `Tools > YinYang VFX > Ground >`（每種一項，或 `Build ALL Ground Effects`）。原點放在地面接觸點（地面高度 `groundY`）；GroundSpikeWave 往右延伸（向左要鏡像）。
-GroundSpikeWave 地刺波（依序往前刺出）、GroundBurst 地面爆裂（光柱＋碎石）、RisingBlades 地面升劍、TendrilRise 藤蔓／觸手升起、PillarRise 光柱升起（螺旋）、RiseWall 升起光牆（由中央往兩側）、**InkSwords 水墨升劍**（實體劍：細長劍身＋護手＋握柄，水墨質感；用貼圖 `VFX_InkSword.png`，建置時自動產生）。
+GroundSpikeWave 地刺波（依序往前刺出）、GroundBurst 地面爆裂（光柱＋碎石）、RisingBlades 地面升劍、TendrilRise 藤蔓／觸手升起、PillarRise 光柱升起（螺旋）、RiseWall 升起光牆（由中央往兩側）、**InkSwords 水墨升劍**（實體劍從地面「快速向上飛出」：爆發式起飛、速度拖尾、減速停住後淡出；用貼圖 `VFX_InkSword.png`，建置時自動產生）。
 
 ## UI 特效
 
