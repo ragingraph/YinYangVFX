@@ -58,6 +58,11 @@ namespace YinYangVFX.EditorTools
                 case Shape.Kunai: return Kunai(x, y, w, h);
                 case Shape.Stick: return Stick(x, y, w, h);
                 case Shape.Brush: return Brush(x, y, w, h);
+                case Shape.Taiji: return Taiji(x, y, w, h);
+                case Shape.Hex: return Hex(x, y, w, h);
+                case Shape.Shard: return Shard(x, y, w, h);
+                case Shape.Star5: return Star5(x, y, w, h);
+                case Shape.Cross: return Cross(x, y, w, h);
             }
 
             return new Color32(0, 0, 0, 0);
@@ -307,6 +312,124 @@ namespace YinYangVFX.EditorTools
             }
 
             return Out(A, B);
+        }
+
+        static bool InPoly(float x, float y, float[] p)
+        {
+            bool c = false;
+            int n = p.Length / 2;
+            for (int i = 0, j = n - 1; i < n; j = i++)
+            {
+                float xi = p[2 * i], yi = p[2 * i + 1], xj = p[2 * j], yj = p[2 * j + 1];
+                if (((yi > y) != (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi))
+                {
+                    c = !c;
+                }
+            }
+
+            return c;
+        }
+
+        static float EdgeD(float x, float y, float[] p)
+        {
+            int n = p.Length / 2;
+            float best = 1e9f;
+            for (int i = 0; i < n; i++)
+            {
+                int j = (i + 1) % n;
+                float ax = p[2 * i], ay = p[2 * i + 1], bx = p[2 * j], by = p[2 * j + 1];
+                float dx = bx - ax, dy = by - ay;
+                float t = Mathf.Clamp01(((x - ax) * dx + (y - ay) * dy) / (dx * dx + dy * dy + 1e-6f));
+                float ex = ax + dx * t - x, ey = ay + dy * t - y;
+                best = Mathf.Min(best, Mathf.Sqrt(ex * ex + ey * ey));
+            }
+
+            return best;
+        }
+
+        static Color32 Taiji(int x, int y, int w, int h)
+        {
+            float dx = x + 0.5f - w * 0.5f, dy = y + 0.5f - h * 0.5f;
+            const float R = 108f;
+            float r = Mathf.Sqrt(dx * dx + dy * dy);
+            if (r > R + 1f)
+            {
+                float ang = Mathf.Atan2(dy, dx) * Mathf.Rad2Deg;
+                float m = Mathf.Abs(Mathf.Repeat(ang + 22.5f, 45f) - 22.5f);
+                if (r > 114f && r < 118f) return Out(1f, 1f);
+                if (r > 121f && r < 127f && m < 3f) return Out(1f, 1f);
+                return Out(0f, 0f);
+            }
+
+            if (r > R - 6f) return Out(Mathf.Clamp01(R + 1f - r), 1f);
+            float d1 = Mathf.Sqrt(dx * dx + (dy - R * 0.5f) * (dy - R * 0.5f));
+            float d2 = Mathf.Sqrt(dx * dx + (dy + R * 0.5f) * (dy + R * 0.5f));
+            bool bright = (dx > 0f && d2 >= R * 0.5f) || d1 < R * 0.5f;
+            if (d1 < R * 0.125f) bright = false;
+            if (d2 < R * 0.125f) bright = true;
+            float edge = Mathf.Min(Mathf.Abs(d1 - R * 0.5f), Mathf.Abs(d2 - R * 0.5f));
+            if (edge < 2f && Mathf.Abs(dx) < 4f + R) return Out(1f, 1f);
+            return bright ? Out(0.95f, Mathf.Lerp(1f, 0.7f, r / R)) : Out(0.9f, 0.16f);
+        }
+
+        static Color32 Hex(int x, int y, int w, int h)
+        {
+            float dx = x + 0.5f - w * 0.5f, dy = y + 0.5f - h * 0.5f;
+            const float R = 92f;
+            float ax = Mathf.Abs(dx), ay = Mathf.Abs(dy);
+            float e = Mathf.Min(R * 0.866f - ay, R * 0.866f - ax * 0.866f - ay * 0.5f);
+            if (e < 0f) return Out(0f, 0f);
+            if (e < 6f) return Out(1f, 1f);
+            // inner honeycomb: smaller hex outline + spokes
+            float e2 = Mathf.Min(R * 0.5f - ay, R * 0.5f - ax * 0.866f - ay * 0.5f);
+            if (Mathf.Abs(e2) < 2.2f) return Out(0.9f, 1f);
+            float ang = Mathf.Atan2(dy, dx) * Mathf.Rad2Deg;
+            float m = Mathf.Abs(Mathf.Repeat(ang + 30f, 60f) - 30f);
+            float rr = Mathf.Sqrt(dx * dx + dy * dy);
+            if (m < 1.6f && rr > R * 0.45f && rr < R * 0.85f) return Out(0.8f, 0.9f);
+            return Out(0.4f + 0.2f * (rr / R), 0.55f + 0.4f * (rr / R));
+        }
+
+        static Color32 Shard(int x, int y, int w, int h)
+        {
+            float px = x + 0.5f, yt = h - (y + 0.5f);
+            float[] poly = { 64f, 2f, 118f, 150f, 104f, 252f, 22f, 254f, 8f, 140f };
+            if (!InPoly(px, yt, poly)) return Out(0f, 0f);
+            float e = EdgeD(px, yt, poly);
+            if (e < 4f) return Out(1f, 1f);
+            float b = px < 64f + (yt / 256f) * 2f ? 0.95f : 0.5f;
+            if (Mathf.Abs(px - (64f - yt * 0.1f + 12f)) < 1.6f && yt > 60f && yt < 190f) b = 1f;
+            return Out(0.95f, b);
+        }
+
+        static Color32 Star5(int x, int y, int w, int h)
+        {
+            float px = x + 0.5f - w * 0.5f, py = (h - (y + 0.5f)) - h * 0.5f;
+            float[] poly = new float[20];
+            for (int i = 0; i < 10; i++)
+            {
+                float a = (-90f + i * 36f) * Mathf.Deg2Rad;
+                float rr = (i % 2 == 0) ? 60f : 25f;
+                poly[2 * i] = Mathf.Cos(a) * rr;
+                poly[2 * i + 1] = Mathf.Sin(a) * rr;
+            }
+
+            if (!InPoly(px, py, poly)) return Out(0f, 0f);
+            float e = EdgeD(px, py, poly);
+            if (e < 3f) return Out(1f, 1f);
+            float ang = Mathf.Atan2(py, px) * Mathf.Rad2Deg + 90f;
+            float wedge = Mathf.Repeat(ang, 72f);
+            return Out(0.95f, wedge < 36f ? 1f : 0.62f);
+        }
+
+        static Color32 Cross(int x, int y, int w, int h)
+        {
+            float ax = Mathf.Abs(x + 0.5f - w * 0.5f), ay = Mathf.Abs(y + 0.5f - h * 0.5f);
+            bool In(float hw, float hl) => (ax < hw && ay < hl) || (ay < hw && ax < hl);
+            if (!In(22f, 60f)) return Out(0f, 0f);
+            if (!In(18f, 56f)) return Out(1f, 1f);
+            if (!In(10f, 46f)) return Out(0.95f, 0.6f);
+            return Out(0.95f, 1f);
         }
 
         static Color32 Brush(int x, int y, int w, int h)

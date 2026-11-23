@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.28.0
+
+- Solid defence effects (all 16): hex shield panels, yin-yang disc, shards, stars, heal crosses and ink-brush contour ghosts. New atlas shapes: Taiji, Hex, Shard, Star5, Cross. Rebuild all prefabs.
+
 ## 0.27.0
 
 - Solid shapes: new shape atlas (`VFX_Shapes.png`: sword, spear, hammer, halberd, arrow, kunai, nunchaku stick, ink brush stroke) and `shapeMaterial` (replaces `swordMaterial`). All 21 weapon effects now draw the real weapon plus solid ink-brush swing trails. Rebuild every prefab.

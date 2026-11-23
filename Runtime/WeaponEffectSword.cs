@@ -14,6 +14,11 @@ namespace YinYangVFX
         Kunai = 5,
         Stick = 6,
         Brush = 7,
+        Taiji = 8,
+        Hex = 9,
+        Shard = 10,
+        Star5 = 11,
+        Cross = 12,
     }
 
     public static class ShapeAtlas
@@ -32,11 +37,16 @@ namespace YinYangVFX
             new[] { 880, 0, 128, 384 },   // Kunai
             new[] { 0, 900, 96, 480 },    // Stick (nunchaku stick)
             new[] { 128, 900, 512, 128 }, // Brush (stroke strip: u = tail..head, v = across)
+            new[] { 0, 1040, 256, 256 },   // Taiji (yin-yang disc)
+            new[] { 260, 1040, 192, 192 }, // Hex (shield panel)
+            new[] { 460, 1040, 128, 256 }, // Shard (broken piece, tip up)
+            new[] { 600, 1040, 128, 128 }, // Star5
+            new[] { 740, 1040, 128, 128 }, // Cross (heal)
         };
 
         // Where the hand / pivot sits on each shape (u across, v from the bottom).
-        public static readonly float[] PivotU = { 0.5f, 0.5f, 0.5f, 0.27f, 0.5f, 0.5f, 0.5f, 0.5f };
-        public static readonly float[] PivotV = { 0.2f, 0.35f, 0.2f, 0.4f, 0.5f, 0.3f, 0.12f, 0.5f };
+        public static readonly float[] PivotU = { 0.5f, 0.5f, 0.5f, 0.27f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f };
+        public static readonly float[] PivotV = { 0.2f, 0.35f, 0.2f, 0.4f, 0.5f, 0.3f, 0.12f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f };
     }
 
     // Solid shapes: props (sword, spear, hammer ...) and brush strokes drawn as real meshes.
