@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.30.0
+
+- Solid hit effects (all 7): ink-brush slash marks, flying shards/rocks, solid stars, stabbing kunai, crit banner, kill skull. No new atlas shapes. Rebuild hit prefabs.
+
 ## 0.29.0
 
 - Solid element effects (all 16): layered flames, ice crystals, thick lightning bolts, rocks, water orbs/drops, feathers, skulls, shadow orb. New atlas shapes: Flame, Ice, Bolt, Rock, Orb, DarkOrb, Drop, Feather, Skull. Rebuild all prefabs.
