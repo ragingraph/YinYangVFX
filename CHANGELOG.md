@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.33.0
+
+- Solid charge/aura effects (5): converging kunai + flames + glowing orb, rage flame burst, awakening wings + pillar, berserk flames/skull, taiji character aura. Rebuild charge prefabs.
+
 ## 0.32.0
 
 - Solid buff/debuff effects (6): rising sword, solid arrows, shield panels, spinning stars; drooping/shattering sword and shield for debuffs. Rebuild buff prefabs.
