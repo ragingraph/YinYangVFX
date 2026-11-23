@@ -474,12 +474,12 @@ namespace YinYangVFX
                 case WeaponKind.StatusSilence: AnimSSilence(); break;
                 case WeaponKind.StatusCurse: AnimSCurse(); break;
                 case WeaponKind.StatusBleed: AnimSBleed(); break;
-                case WeaponKind.BuffAttackUp: AnimBuffAttackUp(); break;
-                case WeaponKind.BuffSpeedUp: AnimBuffSpeedUp(); break;
-                case WeaponKind.BuffDefenseUp: AnimBuffDefenseUp(); break;
-                case WeaponKind.BuffCritUp: AnimBuffCritUp(); break;
-                case WeaponKind.DebuffAttackDown: AnimDebuffAttackDown(); break;
-                case WeaponKind.DebuffDefenseDown: AnimDebuffDefenseDown(); break;
+                case WeaponKind.BuffAttackUp: AnimSBuffAttackUp(); break;
+                case WeaponKind.BuffSpeedUp: AnimSBuffSpeedUp(); break;
+                case WeaponKind.BuffDefenseUp: AnimSBuffDefenseUp(); break;
+                case WeaponKind.BuffCritUp: AnimSBuffCritUp(); break;
+                case WeaponKind.DebuffAttackDown: AnimSDebuffAttackDown(); break;
+                case WeaponKind.DebuffDefenseDown: AnimSDebuffDefenseDown(); break;
                 case WeaponKind.ChargeAura: AnimChargeAura(); break;
                 case WeaponKind.RageBurst: AnimRageBurst(); break;
                 case WeaponKind.Awaken: AnimAwaken(); break;

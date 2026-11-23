@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.32.0
+
+- Solid buff/debuff effects (6): rising sword, solid arrows, shield panels, spinning stars; drooping/shattering sword and shield for debuffs. Rebuild buff prefabs.
+
 ## 0.31.0
 
 - Solid status effects (all 8, looping): flames, ice crystals, poison drops + skull, lightning bolts, weights/arrows, sealed ring, curse chains + dark orb, blood drops. No particles. Rebuild status prefabs.
