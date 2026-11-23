@@ -63,6 +63,15 @@ namespace YinYangVFX.EditorTools
                 case Shape.Shard: return Shard(x, y, w, h);
                 case Shape.Star5: return Star5(x, y, w, h);
                 case Shape.Cross: return Cross(x, y, w, h);
+                case Shape.Flame: return Flame(x, y, w, h);
+                case Shape.Ice: return Ice(x, y, w, h);
+                case Shape.Bolt: return Bolt(x, y, w, h);
+                case Shape.Rock: return Rock(x, y, w, h);
+                case Shape.Orb: return Orb(x, y, w, h);
+                case Shape.DarkOrb: return DarkOrb(x, y, w, h);
+                case Shape.Drop: return Drop(x, y, w, h);
+                case Shape.Feather: return Feather(x, y, w, h);
+                case Shape.Skull: return Skull(x, y, w, h);
             }
 
             return new Color32(0, 0, 0, 0);
@@ -430,6 +439,231 @@ namespace YinYangVFX.EditorTools
             if (!In(18f, 56f)) return Out(1f, 1f);
             if (!In(10f, 46f)) return Out(0.95f, 0.6f);
             return Out(0.95f, 1f);
+        }
+
+        static float DistPoly(float x, float y, float[] p)
+        {
+            int n = p.Length / 2;
+            float best = 1e9f;
+            for (int i = 0; i < n - 1; i++)
+            {
+                float ax = p[2 * i], ay = p[2 * i + 1], bx = p[2 * i + 2], by = p[2 * i + 3];
+                float dx = bx - ax, dy = by - ay;
+                float t = Mathf.Clamp01(((x - ax) * dx + (y - ay) * dy) / (dx * dx + dy * dy + 1e-6f));
+                float ex = ax + dx * t - x, ey = ay + dy * t - y;
+                best = Mathf.Min(best, Mathf.Sqrt(ex * ex + ey * ey));
+            }
+
+            return best;
+        }
+
+        static readonly float[,] FlameT =
+        {
+            { 0f, 4f, 46f, 0f }, { -54f, 74f, 34f, 1f }, { 52f, 68f, 36f, 2f }, { -92f, 150f, 24f, 3f },
+            { 90f, 142f, 26f, 4f }, { -22f, 120f, 30f, 5f }, { 26f, 126f, 28f, 6f },
+        };
+
+        static Color32 Flame(int x, int y, int w, int h)
+        {
+            float px = x + 0.5f - w * 0.5f, yt = h - (y + 0.5f);
+            float baseY = h - 6f, A = 0f, B = 0f;
+            for (int k = 0; k < 7; k++)
+            {
+                float tipY = FlameT[k, 1], hwMax = FlameT[k, 2];
+                if (yt < tipY || yt > baseY) continue;
+                float t = (yt - tipY) / (baseY - tipY);
+                float hw = hwMax * Mathf.Sin(Mathf.Clamp01(Mathf.Pow(t, 0.55f)) * Mathf.PI * 0.5f) * Mathf.Clamp01((baseY - yt) / 14f + 0.35f);
+                float cen = FlameT[k, 0] + Mathf.Sin(t * 6f + FlameT[k, 3]) * hwMax * 0.3f * (1f - t * 0.5f);
+                float d = Mathf.Abs(px - cen);
+                if (d < hw + 1f)
+                {
+                    float a = Mathf.Clamp01(hw + 1f - d);
+                    float inner = 1f - d / Mathf.Max(hw, 1f);
+                    float b = Mathf.Lerp(0.5f, 1f, Mathf.Pow(inner, 0.6f));
+                    if (k >= 5) b = 1f;
+                    A = Mathf.Max(A, a);
+                    B = Mathf.Max(B, b);
+                }
+            }
+
+            return Out(A, B);
+        }
+
+        static readonly float[][] IceShards =
+        {
+            new[] { 18f, 150f, 44f, 210f, 40f, 316f, 4f, 316f, 2f, 200f },
+            new[] { 240f, 160f, 252f, 230f, 250f, 316f, 214f, 316f, 210f, 220f },
+            new[] { 64f, 76f, 96f, 150f, 92f, 316f, 30f, 316f, 24f, 170f },
+            new[] { 196f, 96f, 228f, 184f, 224f, 316f, 168f, 316f, 164f, 160f },
+            new[] { 128f, 4f, 164f, 112f, 156f, 316f, 100f, 316f, 92f, 112f },
+        };
+
+        static Color32 Ice(int x, int y, int w, int h)
+        {
+            float px = x + 0.5f, yt = h - (y + 0.5f);
+            float A = 0f, B = 0f;
+            foreach (float[] sh in IceShards)
+            {
+                if (!InPoly(px, yt, sh)) continue;
+                float cx = 0f;
+                for (int i = 0; i < sh.Length; i += 2) cx += sh[i];
+                cx /= sh.Length / 2;
+                float b = px < cx ? 0.95f : 0.5f;
+                if (Mathf.Abs(px - cx) < 1.5f) b = 1f;
+                if (EdgeD(px, yt, sh) < 3f) b = 1f;
+                if (H(x / 6, y / 30) > 0.9f) b *= 0.8f;
+                A = 0.93f;
+                B = b;
+            }
+
+            return Out(A, B);
+        }
+
+        static Color32 Bolt(int x, int y, int w, int h)
+        {
+            float px = x + 0.5f, yt = h - (y + 0.5f);
+            float[] main = { 112f, 2f, 74f, 118f, 120f, 186f, 64f, 312f, 106f, 372f, 86f, 509f };
+            float[][] br =
+            {
+                new[] { 74f, 118f, 24f, 186f, 12f, 262f },
+                new[] { 120f, 186f, 172f, 250f, 182f, 336f },
+                new[] { 64f, 312f, 22f, 372f, 14f, 430f },
+            };
+            float hwMain = 8f + 13f * Mathf.Sin(Mathf.PI * Mathf.Clamp01(yt / 512f));
+            float d = DistPoly(px, yt, main);
+            float A = 0f, B = 0f;
+            if (d < hwMain + 1f)
+            {
+                A = Mathf.Clamp01(hwMain + 1f - d);
+                B = d < hwMain * 0.5f ? 1f : 0.82f;
+            }
+
+            foreach (float[] b in br)
+            {
+                float db = DistPoly(px, yt, b);
+                if (db < 7f && Mathf.Clamp01(7f - db) > A)
+                {
+                    A = Mathf.Clamp01(7f - db);
+                    B = db < 3f ? 1f : 0.8f;
+                }
+            }
+
+            return Out(A, B);
+        }
+
+        static readonly float[] RockR = { 100f, 112f, 96f, 118f, 104f, 92f, 114f, 100f, 108f, 94f, 110f };
+        static readonly float[] RockFacet = { 1f, 0.55f, 0.8f, 0.4f, 0.95f, 0.5f, 0.7f, 0.35f, 0.85f, 0.6f, 0.45f };
+
+        static Color32 Rock(int x, int y, int w, int h)
+        {
+            float px = x + 0.5f - w * 0.5f, py = (h - (y + 0.5f)) - h * 0.5f;
+            int n = RockR.Length;
+            float[] poly = new float[n * 2];
+            for (int i = 0; i < n; i++)
+            {
+                float a = (i + 0.3f) * 2f * Mathf.PI / n;
+                poly[2 * i] = Mathf.Cos(a) * RockR[i] * 1.1f;
+                poly[2 * i + 1] = Mathf.Sin(a) * RockR[i] * 0.92f;
+            }
+
+            // note: poly y is up, px/py in this function has y down from centre -> flip py for the test
+            float qy = -py;
+            if (!InPoly(px, qy, poly)) return Out(0f, 0f);
+            float e = EdgeD(px, qy, poly);
+            if (e < 3.5f) return Out(1f, 1f);
+            float ang = Mathf.Atan2(qy / 0.92f, px / 1.1f);
+            if (ang < 0f) ang += 2f * Mathf.PI;
+            float f = ang / (2f * Mathf.PI) * n;
+            int idx = Mathf.Min(n - 1, Mathf.FloorToInt(f));
+            float b = RockFacet[idx] * Mathf.Lerp(1.15f, 0.6f, (py + h * 0.5f) / h);
+            if (f - idx < 0.025f || f - idx > 0.975f) b = 0.95f;
+            float[] crack = { -28f, 40f, -10f, 12f, -26f, -14f, -8f, -42f };
+            if (DistPoly(px, qy, crack) < 1.8f) b = 1f;
+            return Out(1f, b);
+        }
+
+        static Color32 Orb(int x, int y, int w, int h)
+        {
+            float dx = x + 0.5f - w * 0.5f, dy = y + 0.5f - h * 0.5f;
+            float r = Mathf.Sqrt(dx * dx + dy * dy);
+            const float R = 88f;
+            if (r > R + 1f) return Out(0f, 0f);
+            if (r > R - 8f) return Out(Mathf.Clamp01(R + 1f - r), 1f);
+            float ca = Mathf.Cos(0.6f), sa = Mathf.Sin(0.6f);
+            float ux = (dx + 34f) * ca + (dy - 36f) * sa, uy = -(dx + 34f) * sa + (dy - 36f) * ca;
+            if ((ux * ux) / (27f * 27f) + (uy * uy) / (13f * 13f) < 1f) return Out(1f, 1f);
+            float sx = dx - 36f, sy = dy + 34f;
+            if (sx * sx + sy * sy < 64f) return Out(0.95f, 0.9f);
+            float b = 0.3f + 0.3f * (r / R);
+            if (dy < -28f && r > 52f) b += 0.18f;
+            return Out(0.78f, b);
+        }
+
+        static Color32 DarkOrb(int x, int y, int w, int h)
+        {
+            float dx = x + 0.5f - w * 0.5f, dy = y + 0.5f - h * 0.5f;
+            float r = Mathf.Sqrt(dx * dx + dy * dy);
+            float ang = Mathf.Atan2(dy, dx);
+            const float R = 82f;
+            if (r > R + 1f)
+            {
+                int i = Mathf.FloorToInt((ang + Mathf.PI) / (2f * Mathf.PI) * 18f);
+                if (r < 90f + H(i, 4) * 9f && H(i, 3) > 0.42f) return Out(0.85f, 0.8f);
+                return Out(0f, 0f);
+            }
+
+            if (r > R - 6f) return Out(Mathf.Clamp01(R + 1f - r), 1f);
+            float u = Mathf.Repeat(ang + r * 0.045f, 2f * Mathf.PI / 3f);
+            if (u < 0.1f) return Out(1f, 0.6f);
+            return Out(0.97f, 0.05f);
+        }
+
+        static Color32 Drop(int x, int y, int w, int h)
+        {
+            float px = x + 0.5f - w * 0.5f, ax = Mathf.Abs(px), yt = h - (y + 0.5f);
+            float hw;
+            if (yt < 4f) return Out(0f, 0f);
+            if (yt < 86f) hw = 40f * Mathf.Pow((yt - 4f) / 82f, 1.5f);
+            else
+            {
+                float dy = yt - 86f;
+                hw = dy < 40f ? Mathf.Sqrt(Mathf.Max(0f, 1600f - dy * dy)) : 0f;
+            }
+
+            if (ax > hw + 1f) return Out(0f, 0f);
+            float a = Mathf.Clamp01(hw + 1f - ax);
+            float hx = px + 14f, hy = (yt - 92f) / 2f;
+            if (hx * hx / 36f + hy * hy / 36f < 1f && yt > 70f) return Out(1f, 1f);
+            if (hw - ax < 4f) return Out(a, 1f);
+            return Out(0.82f * a, 0.45f + 0.3f * (yt / h));
+        }
+
+        static Color32 Feather(int x, int y, int w, int h)
+        {
+            float px = x + 0.5f - w * 0.5f, ax = Mathf.Abs(px), yt = h - (y + 0.5f);
+            float t = yt / h;
+            if (t > 0.88f) return ax < 2f ? Out(Mathf.Clamp01(3f - ax), 0.9f) : Out(0f, 0f);
+            float hw = 30f * Mathf.Sin(Mathf.Pow(t / 0.88f, 0.8f) * Mathf.PI * 0.92f);
+            if (ax > hw + 1f && ax > 2f) return Out(0f, 0f);
+            if (ax < 1.8f) return Out(1f, 1f);
+            if (ax > hw - 2f) return Out(Mathf.Clamp01(hw + 1f - ax), 1f);
+            float stripe = Mathf.Repeat(yt * 0.2f - ax * 0.45f, 1f);
+            return Out(0.95f, stripe < 0.3f ? 0.55f : 1f);
+        }
+
+        static Color32 Skull(int x, int y, int w, int h)
+        {
+            float px = x + 0.5f - w * 0.5f, ax = Mathf.Abs(px), yt = h - (y + 0.5f);
+            float cr = (px * px) / (44f * 44f) + ((yt - 50f) * (yt - 50f)) / (40f * 40f);
+            bool jaw = ax < 27f && yt > 70f && yt < 116f && (yt < 108f || ax < 22f);
+            if (cr >= 1f && !jaw) return Out(0f, 0f);
+            float e1 = (px - 21f) * (px - 21f) + (yt - 54f) * (yt - 54f);
+            float e2 = (px + 21f) * (px + 21f) + (yt - 54f) * (yt - 54f);
+            if (e1 < 144f || e2 < 144f) return Out(1f, 0.03f);
+            if (ax < 8f && yt > 68f && yt < 86f && ax < (yt - 68f) * 0.6f + 1f) return Out(1f, 0.03f);
+            if (yt > 100f && yt < 116f && Mathf.Abs(Mathf.Repeat(px + 4.5f, 9f) - 4.5f) < 1f) return Out(1f, 0.03f);
+            if (cr > 0.8f || (jaw && (ax > 24f || yt > 112f))) return Out(1f, 1f);
+            return Out(1f, 0.78f + 0.2f * (1f - yt / h));
         }
 
         static Color32 Brush(int x, int y, int w, int h)

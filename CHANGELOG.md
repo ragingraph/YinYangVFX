@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.29.0
+
+- Solid element effects (all 16): layered flames, ice crystals, thick lightning bolts, rocks, water orbs/drops, feathers, skulls, shadow orb. New atlas shapes: Flame, Ice, Bolt, Rock, Orb, DarkOrb, Drop, Feather, Skull. Rebuild all prefabs.
+
 ## 0.28.0
 
 - Solid defence effects (all 16): hex shield panels, yin-yang disc, shards, stars, heal crosses and ink-brush contour ghosts. New atlas shapes: Taiji, Hex, Shard, Star5, Cross. Rebuild all prefabs.

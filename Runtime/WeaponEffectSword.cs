@@ -19,6 +19,15 @@ namespace YinYangVFX
         Shard = 10,
         Star5 = 11,
         Cross = 12,
+        Flame = 13,
+        Ice = 14,
+        Bolt = 15,
+        Rock = 16,
+        Orb = 17,
+        DarkOrb = 18,
+        Drop = 19,
+        Feather = 20,
+        Skull = 21,
     }
 
     public static class ShapeAtlas
@@ -42,11 +51,20 @@ namespace YinYangVFX
             new[] { 460, 1040, 128, 256 }, // Shard (broken piece, tip up)
             new[] { 600, 1040, 128, 128 }, // Star5
             new[] { 740, 1040, 128, 128 }, // Cross (heal)
+            new[] { 0, 1310, 192, 320 },    // Flame (layered tongues, tip up)
+            new[] { 200, 1310, 256, 320 },  // Ice (crystal cluster, tip up)
+            new[] { 720, 1310, 192, 512 },  // Bolt (thick lightning, top to bottom)
+            new[] { 460, 1310, 256, 256 },  // Rock (faceted chunk)
+            new[] { 0, 1830, 192, 192 },    // Orb (glassy water / bubble sphere)
+            new[] { 200, 1830, 192, 192 },  // DarkOrb (shadow sphere)
+            new[] { 400, 1830, 96, 128 },   // Drop (water drop, tip up)
+            new[] { 500, 1830, 96, 200 },   // Feather (tip up)
+            new[] { 600, 1830, 128, 128 },  // Skull
         };
 
         // Where the hand / pivot sits on each shape (u across, v from the bottom).
-        public static readonly float[] PivotU = { 0.5f, 0.5f, 0.5f, 0.27f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f };
-        public static readonly float[] PivotV = { 0.2f, 0.35f, 0.2f, 0.4f, 0.5f, 0.3f, 0.12f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f };
+        public static readonly float[] PivotU = { 0.5f, 0.5f, 0.5f, 0.27f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f };
+        public static readonly float[] PivotV = { 0.2f, 0.35f, 0.2f, 0.4f, 0.5f, 0.3f, 0.12f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.06f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f };
     }
 
     // Solid shapes: props (sword, spear, hammer ...) and brush strokes drawn as real meshes.
