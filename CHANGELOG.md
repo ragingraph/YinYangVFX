@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.31.0
+
+- Solid status effects (all 8, looping): flames, ice crystals, poison drops + skull, lightning bolts, weights/arrows, sealed ring, curse chains + dark orb, blood drops. No particles. Rebuild status prefabs.
+
 ## 0.30.0
 
 - Solid hit effects (all 7): ink-brush slash marks, flying shards/rocks, solid stars, stabbing kunai, crit banner, kill skull. No new atlas shapes. Rebuild hit prefabs.
