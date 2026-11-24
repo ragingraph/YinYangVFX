@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.34.0
+
+- Solid death effects (5): shard/rock burst with skull, drifting ash flakes, feather light pillar, soul with trailing tail, staged boss explosion. Rebuild death prefabs.
+
 ## 0.33.0
 
 - Solid charge/aura effects (5): converging kunai + flames + glowing orb, rage flame burst, awakening wings + pillar, berserk flames/skull, taiji character aura. Rebuild charge prefabs.
