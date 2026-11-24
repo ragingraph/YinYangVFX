@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.35.0
+
+- Solid summon/teleport effects (6): ink magic circle with rune plates, taiji portal, feather/star teleport, revive cross, level-up arrows. Rebuild summon prefabs.
+
 ## 0.34.0
 
 - Solid death effects (5): shard/rock burst with skull, drifting ash flakes, feather light pillar, soul with trailing tail, staged boss explosion. Rebuild death prefabs.

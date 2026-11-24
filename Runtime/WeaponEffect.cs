@@ -490,12 +490,12 @@ namespace YinYangVFX
                 case WeaponKind.DeathLight: AnimSDeathLight(); break;
                 case WeaponKind.DeathSoul: AnimSDeathSoul(); break;
                 case WeaponKind.DeathBoss: AnimSDeathBoss(); break;
-                case WeaponKind.SummonCircle: AnimSummonCircle(); break;
-                case WeaponKind.PortalOpen: AnimPortalOpen(); break;
-                case WeaponKind.TeleportOut: AnimTeleportOut(); break;
-                case WeaponKind.TeleportIn: AnimTeleportIn(); break;
-                case WeaponKind.Revive: AnimRevive(); break;
-                case WeaponKind.LevelUp: AnimLevelUp(); break;
+                case WeaponKind.SummonCircle: AnimSSummonCircle(); break;
+                case WeaponKind.PortalOpen: AnimSPortalOpen(); break;
+                case WeaponKind.TeleportOut: AnimSTeleportOut(); break;
+                case WeaponKind.TeleportIn: AnimSTeleportIn(); break;
+                case WeaponKind.Revive: AnimSRevive(); break;
+                case WeaponKind.LevelUp: AnimSLevelUp(); break;
                 case WeaponKind.SkySwordRain: AnimSkySwordRain(); break;
                 case WeaponKind.FullScreenSlash: AnimFullScreenSlash(); break;
                 case WeaponKind.MeteorRain: AnimMeteorRain(); break;
