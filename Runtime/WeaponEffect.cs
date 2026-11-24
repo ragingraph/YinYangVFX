@@ -496,12 +496,12 @@ namespace YinYangVFX
                 case WeaponKind.TeleportIn: AnimSTeleportIn(); break;
                 case WeaponKind.Revive: AnimSRevive(); break;
                 case WeaponKind.LevelUp: AnimSLevelUp(); break;
-                case WeaponKind.SkySwordRain: AnimSkySwordRain(); break;
-                case WeaponKind.FullScreenSlash: AnimFullScreenSlash(); break;
-                case WeaponKind.MeteorRain: AnimMeteorRain(); break;
-                case WeaponKind.TaijiUltimate: AnimTaijiUltimate(); break;
-                case WeaponKind.DragonQi: AnimDragonQi(); break;
-                case WeaponKind.BarrierExpand: AnimBarrierExpand(); break;
+                case WeaponKind.SkySwordRain: AnimSSkySwordRain(); break;
+                case WeaponKind.FullScreenSlash: AnimSFullScreenSlash(); break;
+                case WeaponKind.MeteorRain: AnimSMeteorRain(); break;
+                case WeaponKind.TaijiUltimate: AnimSTaijiUltimate(); break;
+                case WeaponKind.DragonQi: AnimSDragonQi(); break;
+                case WeaponKind.BarrierExpand: AnimSBarrierExpand(); break;
                 case WeaponKind.EnergyBolt: AnimEnergyBolt(); break;
                 case WeaponKind.HomingShot: AnimHomingShot(); break;
                 case WeaponKind.Boomerang: AnimBoomerang(); break;

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.36.0
+
+- Solid ultimate effects (6): sky sword rain with real swords, screen-wide ink slash, flaming rock meteors, giant taiji + trigram plates, ink dragon, plate barrier. Rebuild ultimate prefabs.
+
 ## 0.35.0
 
 - Solid summon/teleport effects (6): ink magic circle with rune plates, taiji portal, feather/star teleport, revive cross, level-up arrows. Rebuild summon prefabs.
