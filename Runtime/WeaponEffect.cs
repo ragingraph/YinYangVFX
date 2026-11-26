@@ -502,12 +502,12 @@ namespace YinYangVFX
                 case WeaponKind.TaijiUltimate: AnimSTaijiUltimate(); break;
                 case WeaponKind.DragonQi: AnimSDragonQi(); break;
                 case WeaponKind.BarrierExpand: AnimSBarrierExpand(); break;
-                case WeaponKind.EnergyBolt: AnimEnergyBolt(); break;
-                case WeaponKind.HomingShot: AnimHomingShot(); break;
-                case WeaponKind.Boomerang: AnimBoomerang(); break;
-                case WeaponKind.BeamCannon: AnimBeamCannon(); break;
-                case WeaponKind.Laser: AnimLaser(); break;
-                case WeaponKind.Shuriken: AnimShuriken(); break;
+                case WeaponKind.EnergyBolt: AnimSEnergyBolt(); break;
+                case WeaponKind.HomingShot: AnimSHomingShot(); break;
+                case WeaponKind.Boomerang: AnimSBoomerang(); break;
+                case WeaponKind.BeamCannon: AnimSBeamCannon(); break;
+                case WeaponKind.Laser: AnimSLaser(); break;
+                case WeaponKind.Shuriken: AnimSShuriken(); break;
                 case WeaponKind.CoinPickup: AnimCoinPickup(); break;
                 case WeaponKind.ChestOpen: AnimChestOpen(); break;
                 case WeaponKind.ItemPickup: AnimItemPickup(); break;

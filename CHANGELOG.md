@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.37.0
+
+- Solid projectile effects (6): star orb bolt, homing arrow, kunai boomerang, beam cannon with flame head, ink laser, four-kunai shuriken. Rebuild projectile prefabs.
+
 ## 0.36.0
 
 - Solid ultimate effects (6): sky sword rain with real swords, screen-wide ink slash, flaming rock meteors, giant taiji + trigram plates, ink dragon, plate barrier. Rebuild ultimate prefabs.
