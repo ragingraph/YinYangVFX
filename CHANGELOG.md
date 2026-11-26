@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.39.0
+
+- Solid boss/scene effects (6): boss entrance with flame wall + skull, rune warning circle, arrow lane warning, taiji phase change, ink wipe transition, rock-spike earthquake. Rebuild boss prefabs.
+
 ## 0.38.0
 
 - Solid pickup/environment effects (7): taiji coin, chest burst, item orb, heal cross, save lantern, gear plate, ground spikes. Rebuild world prefabs.

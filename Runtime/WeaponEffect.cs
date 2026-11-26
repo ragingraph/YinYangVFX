@@ -515,12 +515,12 @@ namespace YinYangVFX
                 case WeaponKind.SavePoint: AnimSSavePoint(); break;
                 case WeaponKind.MechanismActivate: AnimSMechanismActivate(); break;
                 case WeaponKind.SpikeTrap: AnimSSpikeTrap(); break;
-                case WeaponKind.BossEntrance: AnimBossEntrance(); break;
-                case WeaponKind.WarningCircle: AnimWarningCircle(); break;
-                case WeaponKind.DashWarning: AnimDashWarning(); break;
-                case WeaponKind.BossPhaseChange: AnimBossPhaseChange(); break;
-                case WeaponKind.SceneTransition: AnimSceneTransition(); break;
-                case WeaponKind.EarthShake: AnimEarthShake(); break;
+                case WeaponKind.BossEntrance: AnimSBossEntrance(); break;
+                case WeaponKind.WarningCircle: AnimSWarningCircle(); break;
+                case WeaponKind.DashWarning: AnimSDashWarning(); break;
+                case WeaponKind.BossPhaseChange: AnimSBossPhaseChange(); break;
+                case WeaponKind.SceneTransition: AnimSSceneTransition(); break;
+                case WeaponKind.EarthShake: AnimSEarthShake(); break;
                 case WeaponKind.ButtonGlow: AnimButtonGlow(); break;
                 case WeaponKind.RewardBurst: AnimRewardBurst(); break;
                 case WeaponKind.UILevelUp: AnimUILevelUp(); break;
