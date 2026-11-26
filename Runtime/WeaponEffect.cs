@@ -443,7 +443,7 @@ namespace YinYangVFX
                 case WeaponKind.InvincibleGlow: AnimDInvincible(); break;
                 case WeaponKind.ShieldBreak: AnimDShieldBreak(); break;
                 case WeaponKind.StunStars: AnimDStun(); break;
-                case WeaponKind.FireBall: AnimEFireball(); break;
+                case WeaponKind.FireBall: AnimEFireBall(); break;
                 case WeaponKind.Flamethrower: AnimEFlamethrower(); break;
                 case WeaponKind.IceSpike: AnimEIceSpike(); break;
                 case WeaponKind.FreezeBurst: AnimEFreezeBurst(); break;
