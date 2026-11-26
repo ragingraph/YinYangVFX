@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.40.0
+
+- Solid UI effects (6): button light, reward burst, level-up arrows, medal with wings, countdown ink ring, twinkling stars. Rebuild UI prefabs.
+
 ## 0.39.0
 
 - Solid boss/scene effects (6): boss entrance with flame wall + skull, rune warning circle, arrow lane warning, taiji phase change, ink wipe transition, rock-spike earthquake. Rebuild boss prefabs.

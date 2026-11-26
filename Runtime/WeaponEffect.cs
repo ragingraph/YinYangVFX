@@ -521,12 +521,12 @@ namespace YinYangVFX
                 case WeaponKind.BossPhaseChange: AnimSBossPhaseChange(); break;
                 case WeaponKind.SceneTransition: AnimSSceneTransition(); break;
                 case WeaponKind.EarthShake: AnimSEarthShake(); break;
-                case WeaponKind.ButtonGlow: AnimButtonGlow(); break;
-                case WeaponKind.RewardBurst: AnimRewardBurst(); break;
-                case WeaponKind.UILevelUp: AnimUILevelUp(); break;
-                case WeaponKind.Achievement: AnimAchievement(); break;
-                case WeaponKind.CountdownRing: AnimCountdownRing(); break;
-                case WeaponKind.SparkleLoop: AnimSparkleLoop(); break;
+                case WeaponKind.ButtonGlow: AnimSButtonGlow(); break;
+                case WeaponKind.RewardBurst: AnimSRewardBurst(); break;
+                case WeaponKind.UILevelUp: AnimSUILevelUp(); break;
+                case WeaponKind.Achievement: AnimSAchievement(); break;
+                case WeaponKind.CountdownRing: AnimSCountdownRing(); break;
+                case WeaponKind.SparkleLoop: AnimSSparkleLoop(); break;
                 case WeaponKind.GroundSpikeWave: AnimGroundSpikeWave(); break;
                 case WeaponKind.GroundBurst: AnimGroundBurst(); break;
                 case WeaponKind.RisingBlades: AnimRisingBlades(); break;
