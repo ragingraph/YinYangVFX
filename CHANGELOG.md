@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0
+
+- Solid ground effects (6): shard spike wave, rock burst, standing swords, tendrils with leaves, stone pillar, rock wall. All categories are now solid-shaped. Rebuild ground prefabs.
+
 ## 0.40.0
 
 - Solid UI effects (6): button light, reward burst, level-up arrows, medal with wings, countdown ink ring, twinkling stars. Rebuild UI prefabs.

@@ -527,12 +527,12 @@ namespace YinYangVFX
                 case WeaponKind.Achievement: AnimSAchievement(); break;
                 case WeaponKind.CountdownRing: AnimSCountdownRing(); break;
                 case WeaponKind.SparkleLoop: AnimSSparkleLoop(); break;
-                case WeaponKind.GroundSpikeWave: AnimGroundSpikeWave(); break;
-                case WeaponKind.GroundBurst: AnimGroundBurst(); break;
-                case WeaponKind.RisingBlades: AnimRisingBlades(); break;
-                case WeaponKind.TendrilRise: AnimTendrilRise(); break;
-                case WeaponKind.PillarRise: AnimPillarRise(); break;
-                case WeaponKind.RiseWall: AnimRiseWall(); break;
+                case WeaponKind.GroundSpikeWave: AnimSGroundSpikeWave(); break;
+                case WeaponKind.GroundBurst: AnimSGroundBurst(); break;
+                case WeaponKind.RisingBlades: AnimSRisingBlades(); break;
+                case WeaponKind.TendrilRise: AnimSTendrilRise(); break;
+                case WeaponKind.PillarRise: AnimSPillarRise(); break;
+                case WeaponKind.RiseWall: AnimSRiseWall(); break;
                 case WeaponKind.InkSwords: AnimInkSwords(); break;
             }
 
