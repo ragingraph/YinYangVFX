@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.38.0
+
+- Solid pickup/environment effects (7): taiji coin, chest burst, item orb, heal cross, save lantern, gear plate, ground spikes. Rebuild world prefabs.
+
 ## 0.37.0
 
 - Solid projectile effects (6): star orb bolt, homing arrow, kunai boomerang, beam cannon with flame head, ink laser, four-kunai shuriken. Rebuild projectile prefabs.
